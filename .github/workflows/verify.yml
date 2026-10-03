@@ -11,6 +11,10 @@ concurrency:
   group: verify
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -25,11 +29,11 @@ jobs:
           cache: true
 
       - name: Toolchain
-        run: flutter --version
+        run: flutter --version 2>&1 | tee -a /tmp/verify.log
 
       - name: Resolve dependencies
         working-directory: app
-        run: flutter pub get
+        run: flutter pub get 2>&1 | tee -a /tmp/verify.log
 
       - name: Commit resolved pubspec.lock
         run: |
@@ -46,21 +50,34 @@ jobs:
 
       - name: Generate localisation
         working-directory: app
-        run: flutter gen-l10n
+        run: flutter gen-l10n 2>&1 | tee -a /tmp/verify.log
 
       - name: Analyze
         working-directory: app
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze --no-fatal-infos 2>&1 | tee -a /tmp/verify.log
 
       - name: Forbidden-pattern and layering gate
         working-directory: app
-        run: sh tool/check_forbidden.sh
+        run: sh tool/check_forbidden.sh 2>&1 | tee -a /tmp/verify.log
 
       - name: Tests
         working-directory: app
         run: |
           if [ -d test ] && find test -name '*_test.dart' | grep -q .; then
-            flutter test
+            flutter test --reporter expanded 2>&1 | tee -a /tmp/verify.log
           else
-            echo "no tests yet"
+            echo "no tests yet" | tee -a /tmp/verify.log
           fi
+
+      - name: Publish log to ci-logs branch
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog && cp /tmp/verify.log /tmp/cilog/verify.log 2>/dev/null || echo "no log" > /tmp/cilog/verify.log
+          echo "commit=${GITHUB_SHA} run=${GITHUB_RUN_ID} at=$(date -u +%FT%TZ)" > /tmp/cilog/meta.txt
+          cd /tmp/cilog
+          git init -q -b ci-logs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "verify log ${GITHUB_RUN_ID}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-logs
