@@ -260,7 +260,7 @@ void main() {
 
     test('fromJson drops bad grant entries and keeps good ones', () {
       final AppSettings s = AppSettings.fromJson(<String, Object?>{
-        'grants': <String, Object?>{
+        'grants': <Object?, Object?>{
           'standard': standardGrant.toJson(),
           'business': <String, Object?>{'source': 'business'},
           'mars': standardGrant.toJson(),

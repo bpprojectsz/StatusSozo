@@ -1,4 +1,4 @@
-/// Strict and tolerant readers for JSON-shaped maps used by the models.
+// Strict and tolerant readers for JSON-shaped maps used by the models.
 
 /// Returns [json] [key] as a string, or throws [FormatException].
 String readString(Map<String, Object?> json, String key) {
