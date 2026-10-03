@@ -1,0 +1,43 @@
+name: bootstrap
+
+# One-time: generates the Android project scaffold with the pinned Flutter
+# version and commits it. Manual only. Never add a push: trigger.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.2"
+          channel: stable
+          cache: true
+
+      - name: Generate scaffold in a scratch directory
+        run: |
+          if [ -d app/android ]; then echo "app/android already exists"; exit 1; fi
+          flutter create --no-pub --platforms=android --org com.zdmgold --project-name statussozo /tmp/gen
+          cp -r /tmp/gen/android app/android
+          echo "--- generated android tree"
+          find app/android -type f | sort
+          echo "--- gradle wrapper"; cat app/android/gradle/wrapper/gradle-wrapper.properties
+          echo "--- settings"; cat app/android/settings.gradle* 2>/dev/null | head -40
+          echo "--- app build file"; cat app/android/app/build.gradle* 2>/dev/null
+
+      - name: Commit scaffold
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/android
+          git status --short | head -50
+          git commit -m "b1: android scaffold generated with flutter 3.29.2"
+          git pull --rebase origin main
+          git push origin HEAD:main

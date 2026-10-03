@@ -1,0 +1,640 @@
+{
+  "@@locale": "en",
+  "appName": "StatusSozo",
+  "@appName": {
+    "description": "The app's display name. Used in titles, disclaimers and email subjects."
+  },
+  "commonCancel": "Cancel",
+  "@commonCancel": {
+    "description": "Button that dismisses a dialog or sheet without acting."
+  },
+  "commonDone": "Done",
+  "@commonDone": {
+    "description": "Button that confirms completion."
+  },
+  "commonRetry": "Try again",
+  "@commonRetry": {
+    "description": "Button that repeats a failed operation."
+  },
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Accessibility label and button for closing a screen or sheet."
+  },
+  "commonBack": "Back",
+  "@commonBack": {
+    "description": "Accessibility label for the back button."
+  },
+  "commonOk": "OK",
+  "@commonOk": {
+    "description": "Button that acknowledges a message."
+  },
+  "commonLoading": "Loading",
+  "@commonLoading": {
+    "description": "Accessibility label while content is loading."
+  },
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "Button that saves the current item to the gallery."
+  },
+  "commonSaved": "Saved",
+  "@commonSaved": {
+    "description": "Disabled button state and badge for an item that is already saved."
+  },
+  "commonShare": "Share",
+  "@commonShare": {
+    "description": "Button that opens the system share sheet."
+  },
+  "commonDelete": "Delete",
+  "@commonDelete": {
+    "description": "Button that deletes saved items."
+  },
+  "commonRefresh": "Refresh",
+  "@commonRefresh": {
+    "description": "Button that reloads the list."
+  },
+  "commonSelectAll": "Select all",
+  "@commonSelectAll": {
+    "description": "Button that selects every visible item."
+  },
+  "commonReport": "Report a problem",
+  "@commonReport": {
+    "description": "Button that opens an email draft to report a problem."
+  },
+  "commonConnected": "Connected",
+  "@commonConnected": {
+    "description": "Chip shown when a folder is connected."
+  },
+  "commonNotConnected": "Not connected",
+  "@commonNotConnected": {
+    "description": "Chip shown when a folder is not connected."
+  },
+  "commonComingSoon": "Coming soon",
+  "@commonComingSoon": {
+    "description": "Chip shown on a feature that is not available yet."
+  },
+  "accessTitleFirst": "Connect your status folder",
+  "@accessTitleFirst": {
+    "description": "Title of the first-run folder connection screen."
+  },
+  "accessTitleRenewal": "Access needs to be renewed",
+  "@accessTitleRenewal": {
+    "description": "Title shown when the previously granted folder access was lost."
+  },
+  "accessTitleReconnect": "Choose the folder again",
+  "@accessTitleReconnect": {
+    "description": "Title shown when the user reconnects a folder from Settings."
+  },
+  "accessBody": "Pick the folder where your statuses are stored so {appName} can show the ones you've already viewed.",
+  "@accessBody": {
+    "description": "Explainer on the folder connection screen.",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "accessStep1": "Tap Choose folder.",
+  "@accessStep1": {
+    "description": "Step 1 of the folder picking instructions."
+  },
+  "accessStep2": "Check that the picker shows the status folder. If it doesn't, open the menu and turn on Show hidden files.",
+  "@accessStep2": {
+    "description": "Step 2 of the folder picking instructions. Show hidden files is a label in the system file picker."
+  },
+  "accessStep3": "Tap Use this folder, then Allow.",
+  "@accessStep3": {
+    "description": "Step 3 of the folder picking instructions. Use this folder and Allow are labels in the system file picker."
+  },
+  "accessChooseFolder": "Choose folder",
+  "@accessChooseFolder": {
+    "description": "Primary button on the folder connection screen."
+  },
+  "accessUseOther": "Use {source} instead",
+  "@accessUseOther": {
+    "description": "Secondary button that switches to the other source.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "accessPrivacyNote": "Only the folder you pick is read. Chats and contacts are never accessed.",
+  "@accessPrivacyNote": {
+    "description": "Privacy reassurance footnote on the folder connection screen."
+  },
+  "sourceStandard": "Standard",
+  "@sourceStandard": {
+    "description": "Name of the standard source."
+  },
+  "sourceBusiness": "Business",
+  "@sourceBusiness": {
+    "description": "Name of the business source."
+  },
+  "sourceSheetTitle": "Choose a source",
+  "@sourceSheetTitle": {
+    "description": "Title of the sheet used to switch source."
+  },
+  "tabPhotos": "Photos",
+  "@tabPhotos": {
+    "description": "Tab label for photos."
+  },
+  "tabVideos": "Videos",
+  "@tabVideos": {
+    "description": "Tab label for videos."
+  },
+  "tabSemantics": "{label}, {count, plural, =0{no items} =1{1 item} other{{count} items}}",
+  "@tabSemantics": {
+    "description": "Accessibility label of a tab with its item count.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeEmptyTitle": "No statuses yet",
+  "@homeEmptyTitle": {
+    "description": "Title of the empty state on Home."
+  },
+  "homeEmptyMessage": "Statuses appear here after you've viewed them. Open one, then come back.",
+  "@homeEmptyMessage": {
+    "description": "Message of the empty state on Home."
+  },
+  "navSaved": "Saved",
+  "@navSaved": {
+    "description": "Accessibility label of the button that opens the Saved screen."
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Accessibility label of the button that opens Settings."
+  },
+  "selectedCount": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "@selectedCount": {
+    "description": "Selection mode title showing how many items are selected.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectionSave": "Save {count}",
+  "@selectionSave": {
+    "description": "Selection bar button that saves the selected items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "semSwitchSource": "Switch source",
+  "@semSwitchSource": {
+    "description": "Accessibility label of the source chip."
+  },
+  "tileLabelPhoto": "Photo",
+  "@tileLabelPhoto": {
+    "description": "Accessibility label of a photo tile."
+  },
+  "tileLabelPhotoSaved": "Photo, saved",
+  "@tileLabelPhotoSaved": {
+    "description": "Accessibility label of a saved photo tile."
+  },
+  "tileLabelPhotoSelected": "Photo, selected",
+  "@tileLabelPhotoSelected": {
+    "description": "Accessibility label of a selected photo tile."
+  },
+  "tileLabelPhotoSavedSelected": "Photo, saved, selected",
+  "@tileLabelPhotoSavedSelected": {
+    "description": "Accessibility label of a saved and selected photo tile."
+  },
+  "tileLabelVideo": "Video",
+  "@tileLabelVideo": {
+    "description": "Accessibility label of a video tile."
+  },
+  "tileLabelVideoSaved": "Video, saved",
+  "@tileLabelVideoSaved": {
+    "description": "Accessibility label of a saved video tile."
+  },
+  "tileLabelVideoSelected": "Video, selected",
+  "@tileLabelVideoSelected": {
+    "description": "Accessibility label of a selected video tile."
+  },
+  "tileLabelVideoSavedSelected": "Video, saved, selected",
+  "@tileLabelVideoSavedSelected": {
+    "description": "Accessibility label of a saved and selected video tile."
+  },
+  "viewerCounter": "{current} of {total}",
+  "@viewerCounter": {
+    "description": "Position indicator in the viewer.",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "viewerLoadFailed": "Couldn't open this item.",
+  "@viewerLoadFailed": {
+    "description": "Shown when an image cannot be opened in the viewer."
+  },
+  "viewerVideoFailed": "Couldn't play this video.",
+  "@viewerVideoFailed": {
+    "description": "Shown when a video cannot be played."
+  },
+  "viewerPlay": "Play",
+  "@viewerPlay": {
+    "description": "Accessibility label of the play control."
+  },
+  "viewerPause": "Pause",
+  "@viewerPause": {
+    "description": "Accessibility label of the pause control."
+  },
+  "viewerReplay": "Replay",
+  "@viewerReplay": {
+    "description": "Accessibility label of the replay control."
+  },
+  "viewerPosition": "Video position",
+  "@viewerPosition": {
+    "description": "Accessibility label of the video scrubber."
+  },
+  "viewerElapsed": "{position} of {duration}",
+  "@viewerElapsed": {
+    "description": "Accessibility value of the video scrubber.",
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "semCloseViewer": "Close viewer",
+  "@semCloseViewer": {
+    "description": "Accessibility label of the close button in the viewer."
+  },
+  "savedTitle": "Saved",
+  "@savedTitle": {
+    "description": "Title of the Saved screen."
+  },
+  "savedEmptyTitle": "Nothing saved yet",
+  "@savedEmptyTitle": {
+    "description": "Title of the empty state on the Saved screen."
+  },
+  "savedEmptyMessage": "Items you save will appear here.",
+  "@savedEmptyMessage": {
+    "description": "Message of the empty state on the Saved screen."
+  },
+  "savedFooter": "Also in your gallery: Pictures/{folder} and Movies/{folder}",
+  "@savedFooter": {
+    "description": "Footnote explaining where saved files are stored.",
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTitle": "{count, plural, =1{Delete 1 item?} other{Delete {count} items?}}",
+  "@deleteTitle": {
+    "description": "Title of the delete confirmation sheet.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteMessage": "They'll be removed from your gallery too.",
+  "@deleteMessage": {
+    "description": "Message of the delete confirmation sheet."
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title of the Settings screen."
+  },
+  "settingsSectionAppearance": "Appearance",
+  "@settingsSectionAppearance": {
+    "description": "Section header in Settings: Appearance."
+  },
+  "settingsSectionFolders": "Folders",
+  "@settingsSectionFolders": {
+    "description": "Section header in Settings: Folders."
+  },
+  "settingsSectionLanguage": "Language",
+  "@settingsSectionLanguage": {
+    "description": "Section header in Settings: Language."
+  },
+  "settingsSectionPro": "Pro",
+  "@settingsSectionPro": {
+    "description": "Section header in Settings: Pro."
+  },
+  "settingsSectionSupport": "Support",
+  "@settingsSectionSupport": {
+    "description": "Section header in Settings: Support."
+  },
+  "settingsSectionAbout": "About",
+  "@settingsSectionAbout": {
+    "description": "Section header in Settings: About."
+  },
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "Label of the theme control."
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme option that follows the system setting."
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Light theme option."
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Dark theme option."
+  },
+  "folderActionChoose": "Choose folder again",
+  "@folderActionChoose": {
+    "description": "Action that reopens the folder picker."
+  },
+  "folderActionDisconnect": "Disconnect",
+  "@folderActionDisconnect": {
+    "description": "Action that releases the folder access."
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Settings row that opens the language sheet."
+  },
+  "languageSystemDefault": "System default",
+  "@languageSystemDefault": {
+    "description": "Language option that follows the system language."
+  },
+  "languageSheetTitle": "Language",
+  "@languageSheetTitle": {
+    "description": "Title of the language sheet."
+  },
+  "settingsRemoveAds": "Remove ads",
+  "@settingsRemoveAds": {
+    "description": "Settings row for the future ad-free purchase."
+  },
+  "proComingSoonSubtitle": "One-time purchase to remove ads.",
+  "@proComingSoonSubtitle": {
+    "description": "Subtitle of the Remove ads row."
+  },
+  "settingsRate": "Rate the app",
+  "@settingsRate": {
+    "description": "Settings row that opens the store listing."
+  },
+  "settingsFeedback": "Send feedback",
+  "@settingsFeedback": {
+    "description": "Settings row that opens an email draft."
+  },
+  "settingsPrivacy": "Privacy policy",
+  "@settingsPrivacy": {
+    "description": "Settings row that opens the privacy policy."
+  },
+  "settingsPrivacyChoices": "Privacy choices",
+  "@settingsPrivacyChoices": {
+    "description": "Settings row that opens the ad consent options."
+  },
+  "settingsVersion": "Version",
+  "@settingsVersion": {
+    "description": "Settings row that shows the app version."
+  },
+  "settingsDisclaimer": "{appName} is an independent app and is not affiliated with or endorsed by any messaging service. Only save and share content you have the right to use.",
+  "@settingsDisclaimer": {
+    "description": "Disclaimer shown in Settings.",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "adSlotLabel": "Advertisement",
+  "@adSlotLabel": {
+    "description": "Accessibility label of the ad banner."
+  },
+  "feedbackSubject": "{appName} feedback ({version})",
+  "@feedbackSubject": {
+    "description": "Subject of the feedback email.",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "reportSubject": "{appName} problem report ({version})",
+  "@reportSubject": {
+    "description": "Subject of the problem report email.",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackBodyIntro": "Write your feedback above this line.",
+  "@feedbackBodyIntro": {
+    "description": "First line of the feedback email body."
+  },
+  "reportBodyIntro": "Describe what happened above this line. The log below stays on your device unless you send this email.",
+  "@reportBodyIntro": {
+    "description": "First lines of the problem report email body."
+  },
+  "toastSaved": "{count, plural, =1{Saved 1 item} other{Saved {count} items}}",
+  "@toastSaved": {
+    "description": "Toast after saving items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "toastSavedPartial": "{saved} saved, {failed} couldn't be saved",
+  "@toastSavedPartial": {
+    "description": "Toast after a partially successful save.",
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "toastAlreadySaved": "Already saved",
+  "@toastAlreadySaved": {
+    "description": "Toast when every selected item was already saved."
+  },
+  "toastSaveFailed": "Couldn't save. Try again.",
+  "@toastSaveFailed": {
+    "description": "Toast when saving failed."
+  },
+  "toastDeleted": "{count, plural, =1{Deleted 1 item} other{Deleted {count} items}}",
+  "@toastDeleted": {
+    "description": "Toast after deleting items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "toastDeleteFailed": "Couldn't delete. Remove it from your gallery app instead.",
+  "@toastDeleteFailed": {
+    "description": "Toast when deleting failed."
+  },
+  "toastShareFailed": "Couldn't share this item.",
+  "@toastShareFailed": {
+    "description": "Toast when sharing failed."
+  },
+  "toastFolderConnected": "Folder connected",
+  "@toastFolderConnected": {
+    "description": "Toast after connecting a folder."
+  },
+  "toastFolderDisconnected": "Folder disconnected",
+  "@toastFolderDisconnected": {
+    "description": "Toast after disconnecting a folder."
+  },
+  "toastWrongFolder": "That isn't the status folder. Choose the folder named .Statuses.",
+  "@toastWrongFolder": {
+    "description": "Toast when the picked folder is not the status folder. .Statuses is a literal folder name."
+  },
+  "toastPickerCancelled": "No folder chosen",
+  "@toastPickerCancelled": {
+    "description": "Toast when the folder picker was cancelled."
+  },
+  "toastAccessLost": "Access to the folder was lost. Reconnect it.",
+  "@toastAccessLost": {
+    "description": "Toast when folder access was lost."
+  },
+  "toastSettingsRecovered": "Settings were reset because they couldn't be read.",
+  "@toastSettingsRecovered": {
+    "description": "Toast after corrupted settings were reset."
+  },
+  "toastPersistenceWarning": "Settings can't be saved right now. Changes will be lost when you close the app.",
+  "@toastPersistenceWarning": {
+    "description": "Sticky toast when settings cannot be written."
+  },
+  "toastLinkFailed": "Couldn't open the link.",
+  "@toastLinkFailed": {
+    "description": "Toast when a link cannot be opened."
+  },
+  "toastIoError": "Something went wrong reading the files.",
+  "@toastIoError": {
+    "description": "Toast for a file read error."
+  },
+  "toastUnexpected": "Something unexpected happened.",
+  "@toastUnexpected": {
+    "description": "Toast for an unexpected error."
+  },
+  "toastRetry": "Retry",
+  "@toastRetry": {
+    "description": "Retry button inside a toast."
+  },
+  "errorAccessLostTitle": "Access needs to be renewed",
+  "@errorAccessLostTitle": {
+    "description": "Error state title: AccessLost."
+  },
+  "errorAccessLostMessage": "Choose the status folder again to keep seeing your statuses.",
+  "@errorAccessLostMessage": {
+    "description": "Error state message: AccessLost."
+  },
+  "errorAccessLostAction": "Reconnect",
+  "@errorAccessLostAction": {
+    "description": "Error state action button: AccessLost."
+  },
+  "errorWrongFolderTitle": "That's not the status folder",
+  "@errorWrongFolderTitle": {
+    "description": "Error state title: WrongFolder."
+  },
+  "errorWrongFolderMessage": "Choose the folder named .Statuses.",
+  "@errorWrongFolderMessage": {
+    "description": "Error state message: WrongFolder."
+  },
+  "errorWrongFolderAction": "Choose folder",
+  "@errorWrongFolderAction": {
+    "description": "Error state action button: WrongFolder."
+  },
+  "errorNotFoundTitle": "Folder not found",
+  "@errorNotFoundTitle": {
+    "description": "Error state title: NotFound."
+  },
+  "errorNotFoundMessage": "Open the messaging app once, view a status, then try again.",
+  "@errorNotFoundMessage": {
+    "description": "Error state message: NotFound."
+  },
+  "errorNotFoundAction": "Refresh",
+  "@errorNotFoundAction": {
+    "description": "Error state action button: NotFound."
+  },
+  "errorIoTitle": "Couldn't read the files",
+  "@errorIoTitle": {
+    "description": "Error state title: Io."
+  },
+  "errorIoMessage": "Check that your storage is available, then try again.",
+  "@errorIoMessage": {
+    "description": "Error state message: Io."
+  },
+  "errorIoAction": "Try again",
+  "@errorIoAction": {
+    "description": "Error state action button: Io."
+  },
+  "errorPermissionLostTitle": "Can't change this file",
+  "@errorPermissionLostTitle": {
+    "description": "Error state title: PermissionLost."
+  },
+  "errorPermissionLostMessage": "Remove it from your gallery app instead.",
+  "@errorPermissionLostMessage": {
+    "description": "Error state message: PermissionLost."
+  },
+  "errorUnsupportedTitle": "Not supported on this device",
+  "@errorUnsupportedTitle": {
+    "description": "Error state title: Unsupported."
+  },
+  "errorUnsupportedMessage": "This feature isn't available on your version of Android.",
+  "@errorUnsupportedMessage": {
+    "description": "Error state message: Unsupported."
+  },
+  "errorUnsupportedAction": "Report a problem",
+  "@errorUnsupportedAction": {
+    "description": "Error state action button: Unsupported."
+  },
+  "errorUnexpectedTitle": "Something went wrong",
+  "@errorUnexpectedTitle": {
+    "description": "Error state title: Unexpected."
+  },
+  "errorUnexpectedMessage": "Try again. If it keeps happening, report a problem.",
+  "@errorUnexpectedMessage": {
+    "description": "Error state message: Unexpected."
+  },
+  "errorUnexpectedAction": "Try again",
+  "@errorUnexpectedAction": {
+    "description": "Error state action button: Unexpected."
+  },
+  "fallbackTitle": "Something went wrong",
+  "@fallbackTitle": {
+    "description": "Title of the full-screen crash fallback."
+  },
+  "fallbackMessage": "The app ran into a problem. You can try again or report it.",
+  "@fallbackMessage": {
+    "description": "Message of the full-screen crash fallback."
+  },
+  "fallbackRetry": "Try again",
+  "@fallbackRetry": {
+    "description": "Retry button of the crash fallback."
+  },
+  "fallbackReport": "Report a problem",
+  "@fallbackReport": {
+    "description": "Report button of the crash fallback."
+  },
+  "semLoading": "Loading",
+  "@semLoading": {
+    "description": "Accessibility label of the loading indicator."
+  }
+}

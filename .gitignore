@@ -1,0 +1,25 @@
+# Dart / Flutter
+.dart_tool/
+build/
+.packages
+.pub-cache/
+.pub/
+.flutter-plugins*
+.idea/
+*.iml
+
+# Android signing and local config (never commit)
+app/android/key.properties
+*.jks
+*.keystore
+local.properties
+.gradle/
+captures/
+
+# Build symbols and generated localisation code
+app/symbols/
+app/lib/l10n/gen/
+
+# Misc
+*.log
+.DS_Store
