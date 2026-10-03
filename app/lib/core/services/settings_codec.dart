@@ -64,8 +64,8 @@ abstract final class SettingsCodec {
     }
 
     Map<String, Object?> json = stringKeyed(parsed);
-    int? version = tryReadInt(json, 'schemaVersion');
-    if (version == null || version < 0) {
+    int version = tryReadInt(json, 'schemaVersion') ?? -1;
+    if (version < 0) {
       return recoveredDefaults;
     }
 

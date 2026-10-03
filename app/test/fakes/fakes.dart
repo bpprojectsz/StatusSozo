@@ -1,7 +1,6 @@
 // Shared in-memory test doubles for every contract in lib/core/contracts.
 // Each fake has switches to inject failures and delays, and call counters.
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
