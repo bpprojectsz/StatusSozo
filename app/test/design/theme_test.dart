@@ -1,5 +1,3 @@
-import 'dart:ui' show FontFeature, FontVariation;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/design/design.dart';

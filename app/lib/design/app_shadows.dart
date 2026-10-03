@@ -1,3 +1,5 @@
+import 'dart:ui' show Brightness;
+
 import 'package:flutter/painting.dart';
 
 /// The single permitted shadow in the app: the floating selection bar.
