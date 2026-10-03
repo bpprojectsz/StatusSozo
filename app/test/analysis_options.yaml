@@ -1,0 +1,7 @@
+# Tests share doubles from test/fakes/, which cannot be reached through a
+# package: import, so relative imports are allowed here.
+include: ../analysis_options.yaml
+
+linter:
+  rules:
+    always_use_package_imports: false
