@@ -1,0 +1,564 @@
+Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision c236373904 (1 year, 7 months ago) • 2025-03-13 16:17:06 -0400
+Engine • revision 18b71d647a
+Tools • Dart 3.7.2 • DevTools 2.42.3
+openjdk version "17.0.20.1" 2026-08-18
+OpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)
+OpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ The Google Privacy Policy describes how data is handled in this service.   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/to/crash-reporting                                     ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ║                                                                            ║
+  ║ To disable animations in this tool, use                                    ║
+  ║ 'flutter config --no-cli-animations'.                                      ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+Resolving dependencies...
+Downloading packages...
+  async 2.12.0 (2.13.1 available)
+  characters 1.4.0 (1.4.1 available)
+  checked_yaml 2.0.3 (2.0.4 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cross_file 0.3.5 (0.4.0 available)
+  fake_async 1.3.2 (1.3.3 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  flutter_native_splash 2.4.6 (2.4.8 available)
+  flutter_svg 2.2.2 (2.3.0 available)
+  intl 0.19.0 (0.20.3 available)
+  json_annotation 4.9.0 (4.12.0 available)
+  leak_tracker 10.0.8 (11.0.2 available)
+  leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+  leak_tracker_testing 3.0.1 (3.0.2 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_android 2.2.19 (2.3.1 available)
+  path_provider_foundation 2.4.2 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 6.1.0 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences 2.5.3 (2.5.5 available)
+  shared_preferences_android 2.4.13 (2.4.28 available)
+  shared_preferences_foundation 2.5.4 (2.5.7 available)
+  shared_preferences_platform_interface 2.4.1 (2.4.2 available)
+  source_span 1.10.1 (1.10.2 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.4 (0.7.14 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.20 (6.3.33 available)
+  url_launcher_ios 6.3.4 (6.4.2 available)
+  url_launcher_linux 3.2.1 (3.2.3 available)
+  url_launcher_macos 3.2.3 (3.2.6 available)
+  url_launcher_web 2.4.1 (2.4.3 available)
+  url_launcher_windows 3.1.4 (3.1.6 available)
+  vector_graphics 1.1.19 (1.2.3 available)
+  vector_graphics_compiler 1.1.19 (1.3.0 available)
+  vector_math 2.1.4 (2.4.3 available)
+  video_player 2.10.1 (2.14.1 available)
+  video_player_android 2.8.15 (2.12.2 available)
+  video_player_avfoundation 2.8.4 (2.12.0 available)
+  video_player_platform_interface 6.6.0 (6.9.0 available)
+  vm_service 14.3.1 (15.3.0 available)
+  win32 5.13.0 (6.4.0 available)
+  xml 6.5.0 (7.1.0 available)
+Got dependencies!
+54 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+Analyzing app...                                                
+No issues found! (ran in 14.9s)
+check_forbidden: clean (47 dart file(s) scanned)
+
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing every value is a multiple of 2
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing main steps sit on the 4 px grid
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing semantic aliases
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: radii match the design specification
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: radii sheet radius rounds the top corners only
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes touch target is 48
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes icon stroke is 2.0
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes chrome sizes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: shadows light has exactly one floating-bar shadow
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: shadows dark has no shadow
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: motion durations match the specification
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: motion no spring or bounce curve is exposed
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme light and dark build with both extensions
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme brightness and scaffold colours come from tokens
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme splash is disabled
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp at 0 and 1 returns the endpoints
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp at 0.5 gives intermediate values
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp with a foreign extension returns this
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors copyWith replaces only the named field
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors scrim is black at 55 percent
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles display roles use Manrope
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles chrome and body roles use Inter
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles sizes, weights and line heights match the specification
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles section header has positive letter spacing
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles tabular style enables tabular figures
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles variable weight axis matches the weight
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles secondary body uses the secondary text colour
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles lerp interpolates colours between modes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textPrimary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textPrimary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textTertiary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textTertiary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accent on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accent on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: error on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: error on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: success on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: success on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: warning on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: warning on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accentOn on accent is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgTertiary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textPrimary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textPrimary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textTertiary on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textTertiary on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accent on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accent on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: error on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: error on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: success on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: success on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: warning on bgPrimary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: warning on bgSecondary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accentOn on accent is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgTertiary is at least 4.5:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast helper sanity: black on white is 21:1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: starts empty
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: records level, tag and message
+2026-10-04T09:57:20.250697Z I/saf: listed 3
+2026-10-04T09:57:20.257700Z W/saf: slow
+2026-10-04T09:57:20.258801Z E/saf: failed | Bad state: boom
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: keeps only the last 50 lines
+2026-10-04T09:57:20.268971Z I/t: line 0
+2026-10-04T09:57:20.269369Z I/t: line 1
+2026-10-04T09:57:20.269617Z I/t: line 2
+2026-10-04T09:57:20.269870Z I/t: line 3
+2026-10-04T09:57:20.270128Z I/t: line 4
+2026-10-04T09:57:20.271115Z I/t: line 5
+2026-10-04T09:57:20.272339Z I/t: line 6
+2026-10-04T09:57:20.272848Z I/t: line 7
+2026-10-04T09:57:20.273242Z I/t: line 8
+2026-10-04T09:57:20.273469Z I/t: line 9
+2026-10-04T09:57:20.273770Z I/t: line 10
+2026-10-04T09:57:20.273991Z I/t: line 11
+2026-10-04T09:57:20.274299Z I/t: line 12
+2026-10-04T09:57:20.274542Z I/t: line 13
+2026-10-04T09:57:20.275408Z I/t: line 14
+2026-10-04T09:57:20.276140Z I/t: line 15
+2026-10-04T09:57:20.276437Z I/t: line 16
+2026-10-04T09:57:20.276661Z I/t: line 17
+2026-10-04T09:57:20.276949Z I/t: line 18
+2026-10-04T09:57:20.277212Z I/t: line 19
+2026-10-04T09:57:20.277425Z I/t: line 20
+2026-10-04T09:57:20.277678Z I/t: line 21
+2026-10-04T09:57:20.280059Z I/t: line 22
+2026-10-04T09:57:20.280448Z I/t: line 23
+2026-10-04T09:57:20.280677Z I/t: line 24
+2026-10-04T09:57:20.283452Z I/t: line 25
+2026-10-04T09:57:20.283897Z I/t: line 26
+2026-10-04T09:57:20.284163Z I/t: line 27
+2026-10-04T09:57:20.284638Z I/t: line 28
+2026-10-04T09:57:20.284844Z I/t: line 29
+2026-10-04T09:57:20.287628Z I/t: line 30
+2026-10-04T09:57:20.288313Z I/t: line 31
+2026-10-04T09:57:20.288690Z I/t: line 32
+2026-10-04T09:57:20.289098Z I/t: line 33
+2026-10-04T09:57:20.289507Z I/t: line 34
+2026-10-04T09:57:20.289919Z I/t: line 35
+2026-10-04T09:57:20.290353Z I/t: line 36
+2026-10-04T09:57:20.290757Z I/t: line 37
+2026-10-04T09:57:20.291147Z I/t: line 38
+2026-10-04T09:57:20.291550Z I/t: line 39
+2026-10-04T09:57:20.291912Z I/t: line 40
+2026-10-04T09:57:20.292311Z I/t: line 41
+2026-10-04T09:57:20.292571Z I/t: line 42
+2026-10-04T09:57:20.292766Z I/t: line 43
+2026-10-04T09:57:20.292954Z I/t: line 44
+2026-10-04T09:57:20.293175Z I/t: line 45
+2026-10-04T09:57:20.293379Z I/t: line 46
+2026-10-04T09:57:20.293636Z I/t: line 47
+2026-10-04T09:57:20.293834Z I/t: line 48
+2026-10-04T09:57:20.294011Z I/t: line 49
+2026-10-04T09:57:20.294228Z I/t: line 50
+2026-10-04T09:57:20.294701Z I/t: line 51
+2026-10-04T09:57:20.294911Z I/t: line 52
+2026-10-04T09:57:20.295118Z I/t: line 53
+2026-10-04T09:57:20.295306Z I/t: line 54
+2026-10-04T09:57:20.295484Z I/t: line 55
+2026-10-04T09:57:20.295665Z I/t: line 56
+2026-10-04T09:57:20.295932Z I/t: line 57
+2026-10-04T09:57:20.296173Z I/t: line 58
+2026-10-04T09:57:20.296385Z I/t: line 59
+2026-10-04T09:57:20.296590Z I/t: line 60
+2026-10-04T09:57:20.296796Z I/t: line 61
+2026-10-04T09:57:20.297084Z I/t: line 62
+2026-10-04T09:57:20.297278Z I/t: line 63
+2026-10-04T09:57:20.297454Z I/t: line 64
+2026-10-04T09:57:20.297633Z I/t: line 65
+2026-10-04T09:57:20.297807Z I/t: line 66
+2026-10-04T09:57:20.298119Z I/t: line 67
+2026-10-04T09:57:20.298583Z I/t: line 68
+2026-10-04T09:57:20.298861Z I/t: line 69
+2026-10-04T09:57:20.299161Z I/t: line 70
+2026-10-04T09:57:20.299400Z I/t: line 71
+2026-10-04T09:57:20.299621Z I/t: line 72
+2026-10-04T09:57:20.299844Z I/t: line 73
+2026-10-04T09:57:20.300091Z I/t: line 74
+2026-10-04T09:57:20.300357Z I/t: line 75
+2026-10-04T09:57:20.300574Z I/t: line 76
+2026-10-04T09:57:20.300795Z I/t: line 77
+2026-10-04T09:57:20.301068Z I/t: line 78
+2026-10-04T09:57:20.301330Z I/t: line 79
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: clear empties the buffer
+2026-10-04T09:57:20.306195Z I/t: x
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize bytes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize kilobytes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize megabytes and gigabytes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize rolls over instead of showing 1,024 KB
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize negative values show as zero
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize uses the locale decimal separator
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration under a minute
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration minutes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration over an hour
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration negative durations show as zero
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration fractions of a second are dropped
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatCount groups digits per locale
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: the table covers all 9 kinds
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in listLoad
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in userAction
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in startup
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags accessLost
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags wrongFolder
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags pickerCancelled
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags notFound
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags io
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags permissionLost
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags unsupported
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags persistence
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags unexpected
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode maps every native code
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode unknown codes become unexpected
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode keeps the code, message and cause for logs
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode code strings match the native contract
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst orders by modified time, newest first
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst ties are ordered by name descending
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst is deterministic for identical time and name
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst does not change the input list
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst empty list
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split photos
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split videos
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split the two tabs together cover every item
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNames collects distinct names
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNames empty list
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: Ok exposes its value
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: Err exposes its error
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: when folds both cases
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: map transforms success and passes failure through
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: a void result works
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppConfig derived URLs
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppConfig values
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: MediaKind fromMime
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: MediaKind isVideo
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusSource fromId
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusSource folder paths and picker URI
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem json round trip
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem id kind and copyWith
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem equality and hash
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem fromJson rejects bad shapes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem accepts integral doubles from the wire
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: SavedItem json round trip, id, kind
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: SavedItem copyWith, equality and hash
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant json round trip
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant copyWith, equality and hash
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant unknown source is rejected
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings defaults
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings json round trip
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings grants map is unmodifiable
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings copyWith can clear the language
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings equality and hash use map equality
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings fromJson tolerates garbage
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings fromJson drops bad grant entries and keeps good ones
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings an empty language code means follow the system
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings keeps a newer schema version number it did not write
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState starts idle
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState progress is zero without a duration
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState progress is position over duration, clamped
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState copyWith, equality and hash
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory tracks alive sessions
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory initialise, play, pause and seek update state
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory failed initialise sets hasError
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: all succeed
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: names that are already saved are skipped
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: duplicates inside the batch are saved once
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: the caller's name set is not modified
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: an io failure mid batch continues with the rest
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: permissionLost stops the batch and counts the rest as failed
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: accessLost stops the batch
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: stopping on the last item reports progress once
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: firstError is the first one only
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: a repository that throws becomes an unexpected failure
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: an empty batch succeeds without progress
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: SaveSummary exposes an unmodifiable saved list
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: encode stamps the current schema version
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: round trip keeps every field
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: null input gives defaults and is not a recovery
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true invalid JSON
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true empty string
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a list
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a string
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a number
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a map without a version
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a non-numeric version
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a negative version
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: a newer version is read leniently and stamped current
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: grant entries with a bad source are dropped
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations the shipped table is empty for version 1
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations an older version with no migration still decodes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations an older version runs its migration
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations a current version does not run migrations
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: asks the native side once per (uri, px)
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: a different px is a different entry
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: sends uri, mime and px
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: evicts the least recently used entry beyond capacity
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: a failed decode is not cached, so it can be retried
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: the default capacity comes from AppConfig
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage requests the file with the configured byte limit
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage refuses oversized files without calling native
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage passes native errors through
+2026-10-04T09:57:23.492754Z W/saf: readBytes failed with NOT_FOUND
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl opens the uri
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl returns false when the opener throws
+2026-10-04T09:57:26.551286Z W/links: could not open https://x.y | Bad state: no handler
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl returns false when nothing handles the uri
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher buildMailto encodes the subject and body
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher composeEmail opens a mailto uri
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing tries the market uri first
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing falls back to the https listing
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing is false when both fail
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService copies each item to the cache, then shares the files
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService stops and returns the error when a copy fails
+2026-10-04T09:57:26.591578Z W/saf: copyToCache failed with NOT_FOUND
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService returns an error when the share sheet throws
+2026-10-04T09:57:26.595446Z E/share: share sheet failed | Bad state: sheet failed
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService sharing nothing succeeds without touching native
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService pruneCache sends the configured time to live
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: SystemHaptics maps each call to the matching feedback type
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format uses the agreed channel name
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pickFolder sends initialUri and parses the reply
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pickFolder returns Ok(null) when cancelled
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format hasAccess sends uri and returns the bool
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format hasAccess is false when the native call fails
+2026-10-04T09:57:26.721633Z W/saf: hasAccess failed with IO
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format releaseFolder sends uri and swallows errors
+2026-10-04T09:57:26.729293Z W/saf: releaseFolder failed with IO
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format listFolder sends uri and parses rows
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format thumbnail sends uri, mime and px
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format thumbnail returns null when undecodable or on error
+2026-10-04T09:57:26.741664Z W/saf: thumbnail failed with IO
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format readBytes sends uri and maxBytes
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format saveToGallery sends all four arguments
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format listSaved sends subfolder
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format deleteSaved sends uri and returns the bool
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format copyToCache sends uri and name and returns the path
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pruneShareCache sends olderThanMs and returns the count
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes ACCESS_LOST becomes accessLost
+2026-10-04T09:57:26.766438Z W/saf: listFolder failed with ACCESS_LOST | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes NOT_FOUND becomes notFound
+2026-10-04T09:57:26.769936Z W/saf: listFolder failed with NOT_FOUND | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes IO becomes io
+2026-10-04T09:57:26.772720Z W/saf: listFolder failed with IO | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes PERMISSION_LOST becomes permissionLost
+2026-10-04T09:57:26.775347Z W/saf: listFolder failed with PERMISSION_LOST | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes TOO_LARGE becomes io
+2026-10-04T09:57:26.778219Z W/saf: listFolder failed with TOO_LARGE | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes UNSUPPORTED becomes unsupported
+2026-10-04T09:57:26.781109Z W/saf: listFolder failed with UNSUPPORTED | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes SOMETHING_ELSE becomes unexpected
+2026-10-04T09:57:26.783884Z W/saf: listFolder failed with SOMETHING_ELSE | native said so
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a missing native handler becomes unsupported
+2026-10-04T09:57:26.787288Z E/saf: listFolder has no native handler | MissingPluginException(No implementation found for method listFolder on channel statussozo/saf)
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a malformed payload becomes unexpected
+2026-10-04T09:57:26.790693Z E/saf: listFolder returned an unexpected payload | FormatException: Expected a list of rows
+not a list
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a row that is not a map becomes unexpected
+2026-10-04T09:57:26.795369Z E/saf: listFolder returned an unexpected payload | FormatException: Expected a map row
+oops
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a pick reply with missing fields becomes unexpected
+2026-10-04T09:57:26.798320Z E/saf: pickFolder returned an unexpected payload | FormatException: Expected a string for "name"
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment readBytes with a non-bytes reply becomes unexpected
+2026-10-04T09:57:26.801361Z E/saf: readBytes returned an unexpected payload | FormatException: Expected bytes
+text
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue an uninitialised controller is idle
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue a playing video maps position and duration
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue reaching the end marks it ended and not playing
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue an erroneous controller reports an error
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder starts the picker at the source folder
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder accepts a folder named .Statuses
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder releases and rejects any other folder
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder a cancelled picker is pickerCancelled
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder a native failure is passed through
+2026-10-04T09:57:28.202693Z W/saf: pickFolder failed with IO
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing hasAccess and release use the tree uri
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list maps rows to items
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list drops unsupported mime types and malformed rows
+2026-10-04T09:57:28.220052Z W/status: dropped a malformed row | FormatException: Expected a string for "uri"
+2026-10-04T09:57:28.221462Z W/status: dropped a malformed row | FormatException: Expected an integer for "size"
+huge
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list passes errors through
+2026-10-04T09:57:28.225589Z W/saf: listFolder failed with ACCESS_LOST
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save sends the item and the configured subfolder
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save passes native errors through
+2026-10-04T09:57:28.233405Z W/saf: saveToGallery failed with IO
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save with a malformed reply is unexpected
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository list maps rows and drops bad ones
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository list passes errors through
+2026-10-04T09:57:28.243300Z W/saf: listSaved failed with IO
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete succeeds when the native side deleted the row
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete reports notFound when nothing was deleted
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete maps PERMISSION_LOST to permissionLost
+2026-10-04T09:57:28.252228Z W/saf: deleteSaved failed with PERMISSION_LOST
+::endgroup::
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: first run returns defaults without a recovery
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a saved value round-trips
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: writes a single JSON string under the configured key
+✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a corrupt string is recovered to defaults
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a value of the wrong type is recovered to defaults
+2026-10-04T09:57:28.474326Z W/settings: stored value has the wrong type
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a throwing backend reports persistence as unavailable
+2026-10-04T09:57:28.483392Z E/settings: could not read settings | Bad state: no disk
+::endgroup::
+::group::✅ /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: save returns false instead of throwing when the backend fails
+2026-10-04T09:57:28.486910Z E/settings: could not save settings | Bad state: no disk
+::endgroup::
+
+🎉 272 tests passed.
+
+Running Gradle task 'assembleRelease'...                        
+Checking the license for package NDK (Side by side) 26.3.11579264 in /usr/local/lib/android/sdk/licenses
+License for package NDK (Side by side) 26.3.11579264 accepted.
+Preparing "Install NDK (Side by side) 26.3.11579264 v.26.3.11579264".
+"Install NDK (Side by side) 26.3.11579264 v.26.3.11579264" ready.
+Installing NDK (Side by side) 26.3.11579264 in /usr/local/lib/android/sdk/ndk/26.3.11579264
+"Install NDK (Side by side) 26.3.11579264 v.26.3.11579264" complete.
+"Install NDK (Side by side) 26.3.11579264 v.26.3.11579264" finished.
+Your project is configured with Android NDK 26.3.11579264, but the following plugin(s) depend on a different Android NDK version:
+- flutter_native_splash requires Android NDK 27.0.12077973
+- package_info_plus requires Android NDK 27.0.12077973
+- path_provider_android requires Android NDK 27.0.12077973
+- share_plus requires Android NDK 27.0.12077973
+- shared_preferences_android requires Android NDK 27.0.12077973
+- url_launcher_android requires Android NDK 27.0.12077973
+- video_player_android requires Android NDK 27.0.12077973
+Fix this issue by using the highest Android NDK version (they are backward compatible).
+Add the following to /home/runner/work/StatusSozo/StatusSozo/app/android/app/build.gradle.kts:
+
+    android {
+        ndkVersion = "27.0.12077973"
+        ...
+    }
+
+Expected to find fonts for (MaterialIcons), but found (). This usually means you are referring to font families in an IconData class but not including them in the assets section of your pubspec.yaml, are missing the package that would include them, or are missing "uses-material-design: true".
+Checking the license for package CMake 3.22.1 in /usr/local/lib/android/sdk/licenses
+License for package CMake 3.22.1 accepted.
+Preparing "Install CMake 3.22.1 v.3.22.1".
+"Install CMake 3.22.1 v.3.22.1" ready.
+Installing CMake 3.22.1 in /usr/local/lib/android/sdk/cmake/3.22.1
+"Install CMake 3.22.1 v.3.22.1" complete.
+"Install CMake 3.22.1 v.3.22.1" finished.
+Caught exception: Already watching path: /home/runner/work/StatusSozo/StatusSozo/app/android
+Running Gradle task 'assembleRelease'...                          319.6s
+✓ Built build/app/outputs/flutter-apk/app-release.apk (18.6MB)
+-rw-r--r-- 1 runner runner 18590356 Oct  4 10:02 statussozo-test-arm64.apk
+https://github.com/bpprojectsz/StatusSozo/releases/tag/test-2
