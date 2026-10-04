@@ -22,6 +22,24 @@ abstract final class StatusOrganizer {
     return sorted;
   }
 
+  /// A new list of saved items, newest first. Ties are ordered by name
+  /// descending, then by URI.
+  static List<SavedItem> savedNewestFirst(List<SavedItem> items) {
+    final List<SavedItem> sorted = List<SavedItem>.of(items);
+    sorted.sort((SavedItem a, SavedItem b) {
+      final int byTime = b.savedAtMs.compareTo(a.savedAtMs);
+      if (byTime != 0) {
+        return byTime;
+      }
+      final int byName = b.name.compareTo(a.name);
+      if (byName != 0) {
+        return byName;
+      }
+      return a.uri.compareTo(b.uri);
+    });
+    return sorted;
+  }
+
   static List<StatusItem> photos(List<StatusItem> items) => items
       .where((StatusItem item) => item.kind == MediaKind.image)
       .toList(growable: false);

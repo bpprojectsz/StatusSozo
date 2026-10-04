@@ -62,6 +62,33 @@ void main() {
     });
   });
 
+  group('savedNewestFirst', () {
+    test('orders by saved time, then name descending, then uri', () {
+      final List<SavedItem> sorted = StatusOrganizer.savedNewestFirst(<SavedItem>[
+        savedItem('a.jpg', savedAtMs: 5),
+        savedItem('z.jpg', savedAtMs: 9),
+        savedItem('b.jpg', savedAtMs: 5),
+        savedItem('b.jpg', savedAtMs: 5, uri: 'content://saved/b2'),
+      ]);
+      expect(sorted.map((SavedItem i) => i.name), <String>[
+        'z.jpg',
+        'b.jpg',
+        'b.jpg',
+        'a.jpg',
+      ]);
+      expect(sorted[1].uri.compareTo(sorted[2].uri) < 0, isTrue);
+    });
+
+    test('does not change the input', () {
+      final List<SavedItem> input = <SavedItem>[
+        savedItem('a.jpg', savedAtMs: 1),
+        savedItem('b.jpg', savedAtMs: 2),
+      ];
+      StatusOrganizer.savedNewestFirst(input);
+      expect(input.first.name, 'a.jpg');
+    });
+  });
+
   group('tab split', () {
     final List<StatusItem> items = <StatusItem>[
       statusItem('a.jpg'),
