@@ -5,12 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       build_type:
-        description: "debug builds a debug-signed APK. release builds a signed AAB and APK and needs the four signing secrets."
+        description: "test: small arm64 release-mode APK signed with the debug key, published as a direct download on the Releases page. debug: arm64 debug APK artifact. release: signed AAB and APK, needs the four signing secrets."
         type: choice
         options:
+          - test
           - debug
           - release
-        default: debug
+        default: test
       perf_overlay:
         description: "Show Flutter's performance overlay"
         type: boolean
@@ -88,6 +89,36 @@ jobs:
             flutter test
           } 2>&1 | tee -a /tmp/cilog/build.log
 
+      - name: Build test APK (arm64, release mode, debug-signed)
+        if: ${{ inputs.build_type == 'test' }}
+        working-directory: app
+        env:
+          ORG_GRADLE_PROJECT_allowDebugSigning: "true"
+        run: |
+          set -o pipefail
+          DEFINE=""
+          if [ "${{ inputs.perf_overlay }}" = "true" ]; then DEFINE="--dart-define=PERF_OVERLAY=true"; fi
+          flutter build apk --release --target-platform android-arm64 $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+
+      - name: Publish test APK as a release asset
+        if: ${{ inputs.build_type == 'test' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          cp app/build/app/outputs/flutter-apk/app-release.apk statussozo-test-arm64.apk
+          ls -l statussozo-test-arm64.apk | tee -a /tmp/cilog/build.log
+          TAG="test-${GITHUB_RUN_NUMBER}"
+          SHORT=$(git rev-parse --short HEAD)
+          gh release create "$TAG" statussozo-test-arm64.apk \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease \
+            --title "Test build ${GITHUB_RUN_NUMBER} (${SHORT})" \
+            --notes "arm64 release-mode build signed with a temporary key. Uninstall any earlier test build before installing this one." 2>&1 | tee -a /tmp/cilog/build.log
+          # Keep only the three newest test releases.
+          gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName --jq '.[].tagName' \
+            | grep '^test-' | tail -n +4 \
+            | while read -r old; do gh release delete "$old" --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes; done || true
+
       - name: Build debug APK
         if: ${{ inputs.build_type == 'debug' }}
         working-directory: app
@@ -95,7 +126,7 @@ jobs:
           set -o pipefail
           DEFINE=""
           if [ "${{ inputs.perf_overlay }}" = "true" ]; then DEFINE="--dart-define=PERF_OVERLAY=true"; fi
-          flutter build apk --debug $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+          flutter build apk --debug --target-platform android-arm64 $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
 
       - name: Build release AAB and APK
         if: ${{ inputs.build_type == 'release' }}

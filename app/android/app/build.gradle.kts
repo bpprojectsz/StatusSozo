@@ -10,6 +10,11 @@ plugins {
 // Release signing comes from android/key.properties, which CI writes from
 // repository secrets. It is never committed (see .gitignore).
 val keystorePropertiesFile = rootProject.file("key.properties")
+// Test builds (E1/E2) are release-mode but signed with the debug key. That is an
+// explicit opt-in through ORG_GRADLE_PROJECT_allowDebugSigning=true, set only by
+// the build_android workflow's "test" build type. Real release builds never
+// fall back to debug keys.
+val allowDebugSigning = (findProperty("allowDebugSigning") as String?) == "true"
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
@@ -52,7 +57,11 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = if (!keystorePropertiesFile.exists() && allowDebugSigning) {
+                signingConfigs.getByName("debug")
+            } else {
+                signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -71,7 +80,7 @@ gradle.taskGraph.whenReady {
     val releaseRequested = allTasks.any {
         Regex("(assemble|bundle|package)Release").containsMatchIn(it.name)
     }
-    if (releaseRequested && !keystorePropertiesFile.exists()) {
+    if (releaseRequested && !keystorePropertiesFile.exists() && !allowDebugSigning) {
         throw GradleException(
             "Release build requested but android/key.properties is missing. " +
                 "CI writes it from the signing secrets.",
