@@ -48,6 +48,33 @@ jobs:
             echo "pubspec.lock unchanged"
           fi
 
+      - name: Inspect hugeicons (temporary)
+        working-directory: app
+        run: |
+          python3 - <<'PYEOF' 2>&1 | tee -a /tmp/verify.log
+          import json, os, re, glob
+          cfg = json.load(open('.dart_tool/package_config.json'))
+          pkg = [p for p in cfg['packages'] if p['name'] == 'hugeicons'][0]
+          root = pkg['rootUri']
+          root = root[7:] if root.startswith('file://') else root
+          lib = os.path.join(root, 'lib')
+          print('HUGEICONS ROOT', root)
+          for f in sorted(glob.glob(root + '/**/*.dart', recursive=True))[:40]:
+              print('FILE', f, os.path.getsize(f))
+          names = ['cancel','arrow','tick','download','share','delete','play','pause','reload','video','image','folder','settings','album','moon','help','star','mail','shield','info','alert','globe','crown','link','refresh']
+          for f in glob.glob(root + '/**/*.dart', recursive=True):
+              txt = open(f, errors='ignore').read()
+              if len(txt) < 5000: continue
+              print('SCANNING', f, len(txt))
+              ids = re.findall(r'static const [A-Za-z<>]+ (strokeRounded[A-Za-z0-9]+)', txt)
+              print('COUNT', len(ids))
+              for n in names:
+                  hits = [i for i in ids if n in i.lower()]
+                  print('NAME', n, hits[:14])
+              print('SAMPLE', txt[:900].replace(chr(10), ' | '))
+              break
+          PYEOF
+
       - name: Generate localisation
         working-directory: app
         run: flutter gen-l10n 2>&1 | tee -a /tmp/verify.log
