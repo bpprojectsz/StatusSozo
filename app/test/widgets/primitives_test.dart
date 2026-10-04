@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:statussozo/design/design.dart';
@@ -51,7 +53,7 @@ Widget _everything() {
           onPressed: () {},
         ),
         const SizedBox(height: 8),
-        AppCard(child: const Text('Plain card content that may wrap')),
+        const AppCard(child: Text('Plain card content that may wrap')),
         const SizedBox(height: 8),
         PrimaryButton(label: 'Choose folder', icon: AppIcons.folder, onPressed: () {}),
         const SizedBox(height: 8),
@@ -90,15 +92,6 @@ Widget _everything() {
       ],
     ),
   );
-}
-
-Future<void> _tapAndRelease(WidgetTester tester, Finder finder) async {
-  final TestGesture gesture = await tester.startGesture(
-    tester.getCenter(finder),
-  );
-  await tester.pump(const Duration(milliseconds: 200));
-  await gesture.up();
-  await tester.pump(const Duration(milliseconds: 200));
 }
 
 void main() {
