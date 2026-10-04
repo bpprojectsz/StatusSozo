@@ -5,7 +5,7 @@ import 'package:statussozo/core/models/app_settings.dart';
 /// What the settings provider publishes.
 @immutable
 class SettingsState {
-  SettingsState({
+  const SettingsState({
     required this.settings,
     this.loaded = false,
     this.persistenceWarning = false,
