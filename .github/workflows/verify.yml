@@ -57,22 +57,20 @@ jobs:
           pkg = [p for p in cfg['packages'] if p['name'] == 'hugeicons'][0]
           root = pkg['rootUri']
           root = root[7:] if root.startswith('file://') else root
-          lib = os.path.join(root, 'lib')
-          print('HUGEICONS ROOT', root)
-          for f in sorted(glob.glob(root + '/**/*.dart', recursive=True))[:40]:
-              print('FILE', f, os.path.getsize(f))
-          names = ['cancel','arrow','tick','download','share','delete','play','pause','reload','video','image','folder','settings','album','moon','help','star','mail','shield','info','alert','globe','crown','link','refresh']
-          for f in glob.glob(root + '/**/*.dart', recursive=True):
-              txt = open(f, errors='ignore').read()
-              if len(txt) < 5000: continue
-              print('SCANNING', f, len(txt))
-              ids = re.findall(r'static const [A-Za-z<>]+ (strokeRounded[A-Za-z0-9]+)', txt)
-              print('COUNT', len(ids))
-              for n in names:
-                  hits = [i for i in ids if n in i.lower()]
-                  print('NAME', n, hits[:14])
-              print('SAMPLE', txt[:900].replace(chr(10), ' | '))
+          txt = open(root + '/lib/hugeicons.dart', errors='ignore').read()
+          ids = set(re.findall(r'static const [A-Za-z<>, ]+ (strokeRounded[A-Za-z0-9]+)', txt))
+          cands = ['Cancel01','ArrowLeft01','ArrowRight01','Tick02','Tick01','CheckmarkCircle01','CheckmarkCircle02','Download01','Download02','Download04','Share01','Share08','Delete02','Delete01','Play','Pause','Reload','Video01','Image01','Folder01','FolderLinks','FolderLibrary','FolderAdd','Settings01','Album01','Album02','Moon02','Moon01','HelpCircle','Star','StarCircle','Mail01','Shield01','InformationCircle','Info','Refresh','Alert02','Alert01','AlertCircle','Globe','Crown','Crown02','Link01','Image02']
+          print('EXISTS', {c: ('strokeRounded'+c) in ids for c in cands})
+          i = txt.find('class HugeIcon ')
+          print('HUGEICON_CLASS_AT', i)
+          for m in re.finditer(r'class HugeIcon\b', txt):
+              print('CLASS', txt[m.start():m.start()+1800].replace(chr(10), ' | '))
               break
+          for f in glob.glob(root + '/lib/**/*.dart', recursive=True):
+              t = open(f, errors='ignore').read()
+              if 'class HugeIcon ' in t and f.endswith('hugeicons.dart') is False:
+                  print('CLASSFILE', f)
+          print('FIRSTICON', re.findall(r'static const [^;]{0,80}strokeRoundedHome01[^;]{0,200};', txt)[:1])
           PYEOF
 
       - name: Generate localisation
