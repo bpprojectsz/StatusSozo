@@ -114,6 +114,13 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease \
             --title "Test build ${GITHUB_RUN_NUMBER} (${SHORT})" \
             --notes "arm64 release-mode build signed with a temporary key. Uninstall any earlier test build before installing this one." 2>&1 | tee -a /tmp/cilog/build.log
+          {
+            echo "### Test APK"
+            echo ""
+            echo "Direct download: https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/statussozo-test-arm64.apk"
+            echo ""
+            echo "All test builds: https://github.com/${GITHUB_REPOSITORY}/releases"
+          } >> "$GITHUB_STEP_SUMMARY"
           # Keep only the three newest test releases.
           gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName --jq '.[].tagName' \
             | grep '^test-' | tail -n +4 \
