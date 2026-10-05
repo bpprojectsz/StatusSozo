@@ -157,20 +157,18 @@ class _Segment<T> extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: AppSpacing.xs,
                 children: <Widget>[
-                  Flexible(
-                    child: Text(
-                      item.label,
-                      textAlign: TextAlign.center,
-                      style: styles.footnote.copyWith(color: text),
-                    ),
+                  Text(
+                    item.label,
+                    textAlign: TextAlign.center,
+                    style: styles.footnote.copyWith(color: text),
                   ),
-                  if (number != null) ...<Widget>[
-                    const SizedBox(width: AppSpacing.xs),
+                  if (number != null)
                     Text(number, style: styles.tabular.copyWith(color: text)),
-                  ],
                 ],
               ),
             ),

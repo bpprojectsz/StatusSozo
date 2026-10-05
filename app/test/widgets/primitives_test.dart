@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -14,8 +13,8 @@ import 'package:statussozo/widgets/primitives/loading_indicator.dart';
 import 'package:statussozo/widgets/primitives/nav_icon_button.dart';
 import 'package:statussozo/widgets/primitives/pressable.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
-import 'package:statussozo/widgets/primitives/section_header.dart';
 import 'package:statussozo/widgets/primitives/secondary_button.dart';
+import 'package:statussozo/widgets/primitives/section_header.dart';
 import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 
 import 'harness.dart';
@@ -112,7 +111,12 @@ void main() {
                 ),
               );
               await tester.pump();
-              expect(tester.takeException(), isNull);
+              final Object? problem = tester.takeException();
+              expect(
+                problem,
+                isNull,
+                reason: problem is FlutterError ? problem.toStringDeep() : '',
+              );
               expect(find.text('Choose folder'), findsOneWidget);
               expect(find.text('FOLDERS'), findsOneWidget);
             },
@@ -251,7 +255,7 @@ void main() {
       final TestGesture gesture = await tester.startGesture(
         tester.getCenter(find.byType(Pressable)),
       );
-      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 0.7);
       await gesture.up();
       await tester.pump();
@@ -274,7 +278,7 @@ void main() {
       final TestGesture gesture = await tester.startGesture(
         tester.getCenter(find.byType(Pressable)),
       );
-      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       final AnimatedScale scale = tester.widget<AnimatedScale>(
         find.descendant(
           of: find.byType(Pressable),
@@ -306,7 +310,7 @@ void main() {
       final TestGesture gesture = await tester.startGesture(
         tester.getCenter(find.byType(Pressable)),
       );
-      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       expect(tester.widget<AnimatedOpacity>(opacityFinder).opacity, 1);
       final AnimatedContainer tint = tester.widget<AnimatedContainer>(
         find.descendant(
@@ -387,7 +391,13 @@ void main() {
       await tester.pumpWidget(
         harness(const AppIcon(AppIcons.back, mirrorInRtl: true)),
       );
-      expect(find.byType(Transform), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byType(AppIcon),
+          matching: find.byType(Transform),
+        ),
+        findsNothing,
+      );
       await tester.pumpWidget(
         harness(
           const AppIcon(AppIcons.back, mirrorInRtl: true),
@@ -493,7 +503,7 @@ void main() {
       final TestGesture gesture = await tester.startGesture(
         tester.getCenter(find.byType(PrimaryButton)),
       );
-      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       final AnimatedScale scale = tester.widget<AnimatedScale>(
         find.descendant(
           of: find.byType(PrimaryButton),
