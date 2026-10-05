@@ -55,7 +55,11 @@ class AppRow extends StatelessWidget {
             ),
             const SizedBox(width: iconGap),
           ],
+          // The label gets two thirds of the free width and a trailing widget at
+          // most one third, so a wide chip can never push the label out at
+          // large text sizes.
           Expanded(
+            flex: 2,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +71,7 @@ class AppRow extends StatelessWidget {
           ),
           if (end != null) ...<Widget>[
             const SizedBox(width: AppSpacing.sm),
-            end,
+            Flexible(child: end),
           ] else if (showChevron) ...<Widget>[
             const SizedBox(width: AppSpacing.sm),
             AppIcon(
