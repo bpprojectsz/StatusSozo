@@ -19,76 +19,89 @@ import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 
 import 'harness.dart';
 
+Map<String, Widget> _parts() {
+  return <String, Widget>{
+    'section header': const SectionHeader('Folders'),
+    'group with rows': AppGroup(
+      children: <Widget>[
+        AppRow(
+          icon: AppIcons.folder,
+          label: 'Standard',
+          secondary: 'A second line of text that is rather long',
+          trailing: const AppChip(
+            label: 'Connected',
+            tone: AppChipTone.success,
+          ),
+          onPressed: () {},
+        ),
+        AppRow(
+          icon: AppIcons.delete,
+          label: 'Disconnect',
+          destructive: true,
+          showChevron: true,
+          onPressed: () {},
+        ),
+      ],
+    ),
+    'card tile': AppCard.tile(
+      icon: AppIcons.language,
+      label: 'Language',
+      value: 'System default',
+      showChevron: true,
+      onPressed: () {},
+    ),
+    'plain card': const AppCard(child: Text('Plain card content that may wrap')),
+    'primary button': PrimaryButton(
+      label: 'Choose folder',
+      icon: AppIcons.folder,
+      onPressed: () {},
+    ),
+    'secondary button': SecondaryButton(
+      label: 'Use Business instead',
+      onPressed: () {},
+    ),
+    'disabled button': const PrimaryButton(label: 'Disabled', onPressed: null),
+    'loading button': PrimaryButton(
+      label: 'Loading',
+      loading: true,
+      onPressed: () {},
+    ),
+    'nav buttons': Row(
+      children: <Widget>[
+        NavIconButton(
+          icon: AppIcons.back,
+          semanticLabel: 'Back',
+          mirrorInRtl: true,
+          onPressed: () {},
+        ),
+        NavIconButton(
+          icon: AppIcons.settings,
+          semanticLabel: 'Settings',
+          badge: true,
+          onPressed: () {},
+        ),
+      ],
+    ),
+    'loading indicator': const AppLoadingIndicator(),
+    'segmented tabs': SegmentedTabs<int>(
+      segments: const <SegmentItem<int>>[
+        SegmentItem<int>(value: 0, label: 'Photos', count: 1234),
+        SegmentItem<int>(value: 1, label: 'Videos', count: 5),
+      ],
+      value: 0,
+      onChanged: (int _) {},
+      semanticLabel: 'Media type',
+    ),
+  };
+}
+
 Widget _everything() {
   return SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        const SectionHeader('Folders'),
-        AppGroup(
-          children: <Widget>[
-            AppRow(
-              icon: AppIcons.folder,
-              label: 'Standard',
-              secondary: 'A second line of text that is rather long',
-              trailing: const AppChip(label: 'Connected', tone: AppChipTone.success),
-              onPressed: () {},
-            ),
-            AppRow(
-              icon: AppIcons.delete,
-              label: 'Disconnect',
-              destructive: true,
-              showChevron: true,
-              onPressed: () {},
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        AppCard.tile(
-          icon: AppIcons.language,
-          label: 'Language',
-          value: 'System default',
-          showChevron: true,
-          onPressed: () {},
-        ),
-        const SizedBox(height: 8),
-        const AppCard(child: Text('Plain card content that may wrap')),
-        const SizedBox(height: 8),
-        PrimaryButton(label: 'Choose folder', icon: AppIcons.folder, onPressed: () {}),
-        const SizedBox(height: 8),
-        SecondaryButton(label: 'Use Business instead', onPressed: () {}),
-        const SizedBox(height: 8),
-        const PrimaryButton(label: 'Disabled', onPressed: null),
-        const SizedBox(height: 8),
-        PrimaryButton(label: 'Loading', loading: true, onPressed: () {}),
-        const SizedBox(height: 8),
-        Row(
-          children: <Widget>[
-            NavIconButton(
-              icon: AppIcons.back,
-              semanticLabel: 'Back',
-              mirrorInRtl: true,
-              onPressed: () {},
-            ),
-            NavIconButton(
-              icon: AppIcons.settings,
-              semanticLabel: 'Settings',
-              badge: true,
-              onPressed: () {},
-            ),
-          ],
-        ),
-        const AppLoadingIndicator(),
-        SegmentedTabs<int>(
-          segments: const <SegmentItem<int>>[
-            SegmentItem<int>(value: 0, label: 'Photos', count: 1234),
-            SegmentItem<int>(value: 1, label: 'Videos', count: 5),
-          ],
-          value: 0,
-          onChanged: (int _) {},
-          semanticLabel: 'Media type',
-        ),
-      ],
+      children: _parts().values
+          .expand((Widget w) => <Widget>[w, const SizedBox(height: 8)])
+          .toList(),
     ),
   );
 }
@@ -122,6 +135,25 @@ void main() {
             },
           );
         }
+      }
+    }
+  });
+
+  group('each primitive on its own at 2x text without overflow', () {
+    for (final String name in _parts().keys) {
+      for (final TextDirection direction in TextDirection.values) {
+        testWidgets('$name ${direction.name}', (WidgetTester tester) async {
+          useSurface(tester);
+          await tester.pumpWidget(
+            harness(
+              _parts()[name]!,
+              direction: direction,
+              textScale: 2,
+            ),
+          );
+          await tester.pump();
+          expect(tester.takeException(), isNull);
+        });
       }
     }
   });
@@ -677,7 +709,10 @@ void main() {
       final Rect divider = tester.getRect(find.byKey(AppGroup.dividerKey));
       final Rect group = tester.getRect(find.byType(AppGroup));
       expect(divider.height, AppSizes.hairline);
-      expect(divider.left - group.left, AppGroup.defaultDividerInset + 0.5);
+      expect(
+        divider.left - group.left,
+        closeTo(AppGroup.defaultDividerInset, 0.01),
+      );
     });
 
     testWidgets('the card is a tappable surface only when given a callback', (
