@@ -158,6 +158,42 @@ void main() {
     }
   });
 
+  group('AppRow variants at 2x text without overflow', () {
+    final Map<String, Widget> variants = <String, Widget>{
+      'label only': const AppRow(label: 'Standard'),
+      'icon and label': const AppRow(icon: AppIcons.folder, label: 'Standard'),
+      'with second line': const AppRow(
+        icon: AppIcons.folder,
+        label: 'Standard',
+        secondary: 'A second line of text that is rather long',
+      ),
+      'with chevron': const AppRow(
+        icon: AppIcons.folder,
+        label: 'Standard',
+        showChevron: true,
+      ),
+      'with chip': const AppRow(
+        icon: AppIcons.folder,
+        label: 'Standard',
+        trailing: AppChip(label: 'Connected'),
+      ),
+      'with success chip': const AppRow(
+        icon: AppIcons.folder,
+        label: 'Standard',
+        trailing: AppChip(label: 'Connected', tone: AppChipTone.success),
+      ),
+      'chip alone': const AppChip(label: 'Connected', tone: AppChipTone.success),
+    };
+    for (final MapEntry<String, Widget> entry in variants.entries) {
+      testWidgets(entry.key, (WidgetTester tester) async {
+        useSurface(tester);
+        await tester.pumpWidget(harness(entry.value, textScale: 2));
+        await tester.pump();
+        expect(tester.takeException(), isNull);
+      });
+    }
+  });
+
   group('Pressable', () {
     testWidgets('has a hit area of at least 48 x 48 around a tiny child', (
       WidgetTester tester,
