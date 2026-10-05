@@ -12,6 +12,7 @@ Widget harness(
   double width = 360,
   bool disableAnimations = false,
   EdgeInsets viewInsets = EdgeInsets.zero,
+  EdgeInsets padding = EdgeInsets.zero,
 }) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -27,6 +28,8 @@ Widget harness(
           textScaler: TextScaler.linear(textScale),
           disableAnimations: disableAnimations,
           viewInsets: viewInsets,
+          padding: padding,
+          viewPadding: padding,
         ),
         child: Directionality(textDirection: direction, child: app!),
       );
