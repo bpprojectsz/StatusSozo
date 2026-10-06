@@ -183,6 +183,10 @@ void main() {
       await services.settings.update(
         (AppSettings s) => s.copyWith(themePreference: ThemePreference.light),
       );
+      // Identical toasts inside one second are dropped on purpose, so wait for
+      // that window to pass and clear the first sticky toast.
+      await Future<void>.delayed(const Duration(milliseconds: 1100));
+      services.toasts.dismiss();
       store.failSave = true;
       await services.settings.update(
         (AppSettings s) => s.copyWith(themePreference: ThemePreference.dark),

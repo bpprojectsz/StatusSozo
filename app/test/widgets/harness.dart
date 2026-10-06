@@ -35,6 +35,7 @@ Widget harness(
       );
     },
     home: Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Align(
         alignment: AlignmentDirectional.topStart,
         child: SizedBox(width: width, child: child),

@@ -529,8 +529,10 @@ void main() {
       final ToastProvider provider = ToastProvider();
       await tester.pumpWidget(host(provider));
       provider.show(ToastCode.alreadySaved);
+      await tester.pump();
       await tester.pump(const Duration(milliseconds: 350));
       await tester.tap(find.text('Already saved'));
+      await tester.pump();
       await tester.pump(const Duration(milliseconds: 350));
       expect(find.text('Already saved'), findsNothing);
       expect(provider.value, isNull);
@@ -564,6 +566,7 @@ void main() {
       final ToastProvider provider = ToastProvider();
       await tester.pumpWidget(host(provider));
       provider.show(ToastCode.saveFailed);
+      await tester.pump();
       await tester.pump(const Duration(milliseconds: 350));
       final SemanticsData data = tester
           .getSemantics(find.bySemanticsLabel("Couldn't save. Try again."))
