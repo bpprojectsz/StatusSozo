@@ -25,6 +25,7 @@ abstract final class AppSizes {
   static const double gridMaxTileExtent = 140;
   static const int thumbnailRequestPx = 256;
   static const double selectionBadge = 24;
+  static const double selectionRing = 2;
 
   // Viewer.
   static const double playCircle = 64;
