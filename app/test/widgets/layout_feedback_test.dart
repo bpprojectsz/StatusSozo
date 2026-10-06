@@ -1,3 +1,4 @@
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/errors/app_error.dart';
@@ -275,9 +276,7 @@ void main() {
       );
       expect(find.text('No statuses yet'), findsOneWidget);
       expect(find.text('Open one, then come back.'), findsOneWidget);
-      await tester.tap(find.byType(PrimaryButton).evaluate().isEmpty
-          ? find.text('Refresh')
-          : find.byType(PrimaryButton));
+      await tester.tap(find.text('Refresh'));
       expect(taps, 1);
     });
 
