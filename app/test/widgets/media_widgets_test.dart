@@ -391,7 +391,7 @@ void main() {
     }
 
     test('the delegate uses a 140 max extent and an 8 gap', () {
-      final SliverGridDelegateWithMaxCrossAxisExtent delegate =
+      const SliverGridDelegateWithMaxCrossAxisExtent delegate =
           mediaGridDelegate as SliverGridDelegateWithMaxCrossAxisExtent;
       expect(delegate.maxCrossAxisExtent, 140);
       expect(delegate.mainAxisSpacing, 8);

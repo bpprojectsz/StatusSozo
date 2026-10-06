@@ -325,11 +325,11 @@ void main() {
       expect(data.hasAction(SemanticsAction.decrease), isTrue);
 
       tester.semantics.performAction(
-        find.bySemanticsLabel('Video position'),
+        find.semantics.byLabel('Video position'),
         SemanticsAction.increase,
       );
       tester.semantics.performAction(
-        find.bySemanticsLabel('Video position'),
+        find.semantics.byLabel('Video position'),
         SemanticsAction.decrease,
       );
       expect(seeks, <Duration>[

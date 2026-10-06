@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/core/contracts/video_playback.dart';
 import 'package:statussozo/design/design.dart';
