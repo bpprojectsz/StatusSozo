@@ -31,6 +31,7 @@ class ViewerOverlay extends StatelessWidget {
           duration: AppMotion.resolve(context, AppMotion.viewerControls),
           curve: AppMotion.easeOut,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               if (header != null)
                 DecoratedBox(
