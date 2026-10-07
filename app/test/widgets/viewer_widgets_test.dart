@@ -379,9 +379,10 @@ void main() {
           child: ViewerOverlay(
             visible: visible,
             top: GestureDetector(
+              key: const ValueKey<String>('top'),
               behavior: HitTestBehavior.opaque,
               onTap: onTapTop,
-              child: const SizedBox(key: ValueKey<String>('top'), height: 56),
+              child: const SizedBox(height: 56),
             ),
             bottom: const SizedBox(key: ValueKey<String>('bottom'), height: 80),
           ),
@@ -413,6 +414,8 @@ void main() {
       expect(taps, 0);
 
       await tester.pumpWidget(overlay(visible: true, onTapTop: () => taps++));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(find.byKey(const ValueKey<String>('top')));
       expect(taps, 1);
     });
@@ -477,6 +480,8 @@ void main() {
       await tester.pumpWidget(labelled(false));
       expect(find.bySemanticsLabel('Top chrome'), findsNothing);
       await tester.pumpWidget(labelled(true));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
       expect(find.bySemanticsLabel('Top chrome'), findsOneWidget);
       handle.dispose();
     });
