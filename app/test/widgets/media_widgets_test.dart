@@ -30,7 +30,10 @@ class _ThrowingSource implements ThumbnailSource {
       throw UnimplementedError();
 }
 
-Widget _sized(Widget child) => SizedBox(width: 120, height: 120, child: child);
+Widget _sized(Widget child) => Align(
+  alignment: AlignmentDirectional.topStart,
+  child: SizedBox(width: 120, height: 120, child: child),
+);
 
 void main() {
   late FakeThumbnailSource source;
@@ -545,7 +548,7 @@ void main() {
         const Offset(0, 1.5),
       );
       expect(
-        tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity)).opacity,
+        tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity).first).opacity,
         0,
       );
       await tester.tap(find.text('Save 3'), warnIfMissed: false);
@@ -617,6 +620,8 @@ void main() {
       await tester.pumpWidget(bar(visible: false));
       expect(find.bySemanticsLabel('Save 3'), findsNothing);
       await tester.pumpWidget(bar(visible: true));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.bySemanticsLabel('Save 3'), findsOneWidget);
       handle.dispose();
     });

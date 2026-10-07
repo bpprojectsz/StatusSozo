@@ -121,6 +121,13 @@ class _ScrubberState extends State<_Scrubber> {
     setState(() => _dragging = false); // ui-local
   }
 
+  Duration _clamped(Duration value, Duration total) {
+    if (value < Duration.zero) {
+      return Duration.zero;
+    }
+    return value > total ? total : value;
+  }
+
   void _seekBy(Duration delta) {
     final int total = widget.state.duration.inMicroseconds;
     final int target = (widget.state.position + delta).inMicroseconds;
@@ -147,6 +154,14 @@ class _ScrubberState extends State<_Scrubber> {
           label: l10n.viewerPosition,
           value: l10n.viewerElapsed(
             formatDuration(state.position),
+            formatDuration(state.duration),
+          ),
+          increasedValue: l10n.viewerElapsed(
+            formatDuration(_clamped(state.position + _step, state.duration)),
+            formatDuration(state.duration),
+          ),
+          decreasedValue: l10n.viewerElapsed(
+            formatDuration(_clamped(state.position - _step, state.duration)),
             formatDuration(state.duration),
           ),
           excludeSemantics: true,

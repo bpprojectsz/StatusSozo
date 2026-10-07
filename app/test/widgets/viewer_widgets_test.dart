@@ -124,6 +124,7 @@ void main() {
       await _doubleTap(tester, find.byType(ZoomableImage));
       await tester.pump();
       expect(_scale(tester), closeTo(2.5, 0.01));
+      await tester.pump(const Duration(milliseconds: 400));
     });
 
     testWidgets('a single tap reaches onTap, a double tap does not', (
@@ -150,6 +151,7 @@ void main() {
       await _doubleTap(tester, find.byType(ZoomableImage));
       await tester.pump(const Duration(milliseconds: 20));
       await tester.pumpWidget(harness(const SizedBox()));
+      await tester.pump(const Duration(milliseconds: 400));
       expect(tester.takeException(), isNull);
     });
   });
@@ -377,6 +379,7 @@ void main() {
           child: ViewerOverlay(
             visible: visible,
             top: GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: onTapTop,
               child: const SizedBox(key: ValueKey<String>('top'), height: 56),
             ),
@@ -402,7 +405,7 @@ void main() {
       int taps = 0;
       await tester.pumpWidget(overlay(visible: false, onTapTop: () => taps++));
       final AnimatedOpacity opacity = tester.widget<AnimatedOpacity>(
-        find.byType(AnimatedOpacity),
+        find.byType(AnimatedOpacity).first,
       );
       expect(opacity.opacity, 0);
       expect(opacity.duration, const Duration(milliseconds: 200));
@@ -419,7 +422,7 @@ void main() {
     ) async {
       await tester.pumpWidget(overlay(visible: true, reduce: true));
       expect(
-        tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity)).duration,
+        tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity).first).duration,
         Duration.zero,
       );
     });
@@ -682,7 +685,7 @@ void main() {
       expect(factory.created, hasLength(1));
 
       factory.failInitialise = false;
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('Try again'));
       await tester.pump();
       await tester.pump();
       await tester.pump();
