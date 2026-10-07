@@ -416,6 +416,8 @@ void main() {
       await tester.pumpWidget(overlay(visible: true, onTapTop: () => taps++));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
+      // ignore: avoid_print
+      print('DIAG ignoring=${tester.widget<IgnorePointer>(find.descendant(of: find.byType(ViewerOverlay), matching: find.byType(IgnorePointer)).first).ignoring} opacity=${tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity).first).opacity} overlays=${find.byType(ViewerOverlay).evaluate().length} ignorePointers=${find.descendant(of: find.byType(ViewerOverlay), matching: find.byType(IgnorePointer)).evaluate().length}');
       await tester.tap(find.byKey(const ValueKey<String>('top')));
       expect(taps, 1);
     });
