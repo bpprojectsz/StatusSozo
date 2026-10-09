@@ -1,0 +1,904 @@
+Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision c236373904 (1 year, 7 months ago) • 2025-03-13 16:17:06 -0400
+Engine • revision 18b71d647a
+Tools • Dart 3.7.2 • DevTools 2.42.3
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ The Google Privacy Policy describes how data is handled in this service.   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/to/crash-reporting                                     ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ║                                                                            ║
+  ║ To disable animations in this tool, use                                    ║
+  ║ 'flutter config --no-cli-animations'.                                      ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+Resolving dependencies...
+Downloading packages...
+  async 2.12.0 (2.13.1 available)
+  characters 1.4.0 (1.4.1 available)
+  checked_yaml 2.0.3 (2.0.4 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cross_file 0.3.5 (0.4.0 available)
+  fake_async 1.3.2 (1.3.3 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  flutter_native_splash 2.4.6 (2.4.8 available)
+  flutter_svg 2.2.2 (2.3.0 available)
+  intl 0.19.0 (0.20.3 available)
+  json_annotation 4.9.0 (4.12.0 available)
+  leak_tracker 10.0.8 (11.0.2 available)
+  leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+  leak_tracker_testing 3.0.1 (3.0.2 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_android 2.2.19 (2.3.1 available)
+  path_provider_foundation 2.4.2 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 6.1.0 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences 2.5.3 (2.5.6 available)
+  shared_preferences_android 2.4.13 (2.4.28 available)
+  shared_preferences_foundation 2.5.4 (2.5.7 available)
+  shared_preferences_platform_interface 2.4.1 (2.4.2 available)
+  source_span 1.10.1 (1.10.2 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.4 (0.7.15 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.20 (6.3.33 available)
+  url_launcher_ios 6.3.4 (6.4.2 available)
+  url_launcher_linux 3.2.1 (3.2.3 available)
+  url_launcher_macos 3.2.3 (3.2.6 available)
+  url_launcher_web 2.4.1 (2.4.3 available)
+  url_launcher_windows 3.1.4 (3.1.6 available)
+  vector_graphics 1.1.19 (1.2.3 available)
+  vector_graphics_compiler 1.1.19 (1.3.0 available)
+  vector_math 2.1.4 (2.4.3 available)
+  video_player 2.10.1 (2.14.1 available)
+  video_player_android 2.8.15 (2.12.2 available)
+  video_player_avfoundation 2.8.4 (2.12.1 available)
+  video_player_platform_interface 6.6.0 (6.9.0 available)
+  vm_service 14.3.1 (15.3.0 available)
+  win32 5.13.0 (6.4.0 available)
+  xml 6.5.0 (7.1.0 available)
+Got dependencies!
+54 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+Analyzing app...                                                
+
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/services.dart' • lib/screens/viewer_screen.dart:2:8 • unnecessary_import
+   info • Sort directive sections alphabetically • test/screens/viewer_saved_test.dart:19:1 • directives_ordering
+
+2 issues found. (ran in 19.4s)
+check_forbidden: clean (93 dart file(s) scanned)
+00:00 +0: loading /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart
+00:00 +0: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:00 +1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:00 +2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:00 +3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) Save becomes a disabled Saved state
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      SaveProvider._announce (package:statussozo/core/providers/save_provider.dart:82:15)
+#7      SaveProvider.save (package:statussozo/core/providers/save_provider.dart:69:5)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      SaveProvider._announce (package:statussozo/core/providers/save_provider.dart:82:15)
+#8      SaveProvider.save (package:statussozo/core/providers/save_provider.dart:69:5)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  Save becomes a disabled Saved state
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +5 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +5 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) Save becomes a disabled Saved state [E]
+  Test failed. See exception logs above.
+  The test description was: Save becomes a disabled Saved state
+  
+00:01 +6 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +7 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +8 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +9 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +9 -1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) a failed share shows a toast
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _ViewerScreenState._share (package:statussozo/screens/viewer_screen.dart:140:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _ViewerScreenState._share (package:statussozo/screens/viewer_screen.dart:140:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  a failed share shows a toast
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +9 -2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +9 -2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) a failed share shows a toast [E]
+  Test failed. See exception logs above.
+  The test description was: a failed share shows a toast
+  
+00:01 +10 -2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +10 -2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) an image that cannot be read shows a message and retry
+══╡ EXCEPTION CAUGHT BY GESTURE ╞═══════════════════════════════════════════════════════════════════
+The following assertion was thrown while handling a gesture:
+setState() callback argument returned a Future.
+The setState() method on _ViewerScreenState#b1453 was called with a closure or method that returned
+a Future. Maybe it is marked as "async".
+Instead of performing asynchronous work inside a call to setState(), first execute the work (without
+updating the widget state), and then synchronously update the state inside a call to setState().
+
+When the exception was thrown, this was the stack:
+#0      State.setState.<anonymous closure> (package:flutter/src/widgets/framework.dart:1210:9)
+#1      State.setState (package:flutter/src/widgets/framework.dart:1226:6)
+#2      _ViewerScreenState._retry (package:statussozo/screens/viewer_screen.dart:131:5)
+#3      _ViewerScreenState.build.<anonymous closure>.<anonymous closure> (package:statussozo/screens/viewer_screen.dart:247:32)
+#4      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:357:24)
+#5      TapGestureRecognizer.handleTapUp (package:flutter/src/gestures/tap.dart:653:11)
+#6      BaseTapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:307:5)
+#7      BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:277:7)
+#8      GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:173:27)
+#9      GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:534:20)
+#10     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:499:22)
+#11     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:460:11)
+#12     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:437:7)
+#13     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:394:5)
+#14     TestWidgetsFlutterBinding.handlePointerEventForSource.<anonymous closure> (package:flutter_test/src/binding.dart:678:42)
+#15     TestWidgetsFlutterBinding.withPointerEventSource (package:flutter_test/src/binding.dart:688:11)
+#16     TestWidgetsFlutterBinding.handlePointerEventForSource (package:flutter_test/src/binding.dart:678:5)
+#17     WidgetTester.sendEventToBinding.<anonymous closure> (package:flutter_test/src/widget_tester.dart:870:15)
+#20     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#21     WidgetTester.sendEventToBinding (package:flutter_test/src/widget_tester.dart:869:27)
+#22     TestGesture.up.<anonymous closure> (package:flutter_test/src/test_pointer.dart:538:26)
+#25     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#26     TestGesture.up (package:flutter_test/src/test_pointer.dart:531:27)
+#27     WidgetController.tapAt.<anonymous closure> (package:flutter_test/src/controller.dart:1113:21)
+<asynchronous suspension>
+#28     TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#29     main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:247:7)
+<asynchronous suspension>
+#30     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#31     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+Handler: "onTap"
+Recognizer:
+  TapGestureRecognizer#fa80b
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: no matching candidates
+  Actual: _TextWidgetFinder:<Found 1 widget with text "Couldn't open this item.": [
+            Text("Couldn't open this item.", inherit: true, color: Color(alpha: 1.0000, red: 1.0000,
+green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), family: Inter, size: 17.0, weight: 400,
+height: 1.5x, textAlign: center, dependencies: [DefaultSelectionStyle, DefaultTextStyle,
+MediaQuery]),
+          ]>
+   Which: means one was found but none were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:249:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart line 249
+The test description was:
+  an image that cannot be read shows a message and retry
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +10 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +10 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) an image that cannot be read shows a message and retry [E]
+  Test failed. See exception logs above.
+  The test description was: an image that cannot be read shows a message and retry
+  
+00:01 +11 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:01 +12 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +13 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +14 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +15 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +16 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +17 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +17 -3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting asks first, then removes the item and moves on
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:180:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:180:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  deleting asks first, then removes the item and moves on
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +17 -4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +17 -4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting asks first, then removes the item and moves on [E]
+  Test failed. See exception logs above.
+  The test description was: deleting asks first, then removes the item and moves on
+  
+00:02 +18 -4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +18 -4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting the last item closes the viewer
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:180:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:180:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  deleting the last item closes the viewer
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +18 -5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +18 -5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting the last item closes the viewer [E]
+  Test failed. See exception logs above.
+  The test description was: deleting the last item closes the viewer
+  
+00:02 +18 -5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) a failed delete shows a toast and keeps the item
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:177:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _ViewerScreenState._delete (package:statussozo/screens/viewer_screen.dart:177:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  a failed delete shows a toast and keeps the item
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +18 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +18 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) a failed delete shows a toast and keeps the item [E]
+  Test failed. See exception logs above.
+  The test description was: a failed delete shows a toast and keeps the item
+  
+00:02 +19 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +20 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +21 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:02 +22 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +22 -6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen long press selects, and Share sends the selection
+
+Warning: A call to tap() with finder "Found 1 widget with text "Share": [
+  Text("Share", inherit: true, color: Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), family: Inter, size: 16.0, weight: 600, height: 1.4x, textAlign: center, dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(172.0, 976.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(172.0, 976.0) is outside the bounds of the root of the render tree, Size(400.0, 900.0).
+The finder corresponds to this RenderBox: RenderParagraph#0e43d relayoutBoundary=up21 NEEDS-PAINT
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b94eb(_ReusableRenderView#cb9df), HitTestEntry<HitTestTarget>#17d7d(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:516:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      List.single (dart:core-patch/growable_array.dart:358:22)
+#1      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:518:31)
+<asynchronous suspension>
+#2      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  long press selects, and Share sends the selection
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +22 -7: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +22 -7: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen long press selects, and Share sends the selection [E]
+  Test failed. See exception logs above.
+  The test description was: long press selects, and Share sends the selection
+  
+00:03 +22 -7: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen Delete asks for confirmation and removes the selection
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+The finder "Found 0 widgets with element matching predicate: []" (used in a call to "tap()") could
+not find any matching widgets.
+
+When the exception was thrown, this was the stack:
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2009:7)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:535:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  Delete asks for confirmation and removes the selection
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +22 -8: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +22 -8: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen Delete asks for confirmation and removes the selection [E]
+  Test failed. See exception logs above.
+  The test description was: Delete asks for confirmation and removes the selection
+  
+00:03 +22 -8: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen cancelling the confirmation keeps everything
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+The finder "Found 0 widgets with element matching predicate: []" (used in a call to "tap()") could
+not find any matching widgets.
+
+When the exception was thrown, this was the stack:
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2009:7)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart:557:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  cancelling the confirmation keeps everything
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +22 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +22 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen cancelling the confirmation keeps everything [E]
+  Test failed. See exception logs above.
+  The test description was: cancelling the confirmation keeps everything
+  
+00:03 +23 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +24 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +25 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +26 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:03 +27 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:04 +28 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:04 +29 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +29 -9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy reconnect has a back chip and its own title
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: no matching candidates
+  Actual: _TextContainingWidgetFinder:<Found 1 widget with text containing Use : [
+            Text("Tap Use this folder, then Allow.", inherit: true, color: Color(alpha: 1.0000, red:
+0.0549, green: 0.0549, blue: 0.0784, colorSpace: ColorSpace.sRGB), family: Inter, size: 17.0,
+weight: 400, height: 1.5x, dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+          ]>
+   Which: means one was found but none were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart:78:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart line 78
+The test description was:
+  reconnect has a back chip and its own title
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +29 -10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +29 -10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy reconnect has a back chip and its own title [E]
+  Test failed. See exception logs above.
+  The test description was: reconnect has a back chip and its own title
+  
+00:05 +30 -10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder calls the provider and toasts success
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  calls the provider and toasts success
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +31 -11: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -11: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder calls the provider and toasts success [E]
+  Test failed. See exception logs above.
+  The test description was: calls the provider and toasts success
+  
+00:05 +31 -11: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a wrong folder shows the wrong-folder toast
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  a wrong folder shows the wrong-folder toast
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +31 -12: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -12: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a wrong folder shows the wrong-folder toast [E]
+  Test failed. See exception logs above.
+  The test description was: a wrong folder shows the wrong-folder toast
+  
+00:05 +31 -12: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a cancelled picker shows an info toast
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  a cancelled picker shows an info toast
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +31 -13: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -13: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a cancelled picker shows an info toast [E]
+  Test failed. See exception logs above.
+  The test description was: a cancelled picker shows an info toast
+  
+00:05 +31 -13: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder other failures map to a matching toast
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:75:23)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  other failures map to a matching toast
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +31 -14: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +31 -14: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder other failures map to a matching toast [E]
+  Test failed. See exception logs above.
+  The test description was: other failures map to a matching toast
+  
+00:05 +32 -14: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +32 -14: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder reconnect mode closes itself after success
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  reconnect mode closes itself after success
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +32 -15: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +32 -15: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder reconnect mode closes itself after success [E]
+  Test failed. See exception logs above.
+  The test description was: reconnect mode closes itself after success
+  
+00:05 +32 -15: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: switching source offers the other source and retargets the picker
+Pending timers:
+Timer (duration: 0:00:01.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:112:23)
+#6      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+Timer (duration: 0:00:03.000000, periodic: false), created:
+#0      new FakeTimer._ (package:fake_async/fake_async.dart:308:62)
+#1      FakeAsync._createTimer (package:fake_async/fake_async.dart:252:29)
+#2      FakeAsync.run.<anonymous closure> (package:fake_async/fake_async.dart:185:19)
+#5      ToastProvider._display (package:statussozo/core/providers/toast_provider.dart:158:23)
+#6      ToastProvider.show (package:statussozo/core/providers/toast_provider.dart:126:7)
+#7      _AccessScreenState._choose (package:statussozo/screens/access_screen.dart:78:21)
+<asynchronous suspension>
+(elided 2 frames from dart:async)
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A Timer is still pending even after the widget tree was disposed.
+'package:flutter_test/src/binding.dart':
+Failed assertion: line 1606 pos 12: '!timersPending'
+
+When the exception was thrown, this was the stack:
+#2      AutomatedTestWidgetsFlutterBinding._verifyInvariants (package:flutter_test/src/binding.dart:1606:12)
+#3      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1083:7)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from class _AssertionError and package:stack_trace)
+
+The test description was:
+  offers the other source and retargets the picker
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +32 -16: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:05 +32 -16: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: switching source offers the other source and retargets the picker [E]
+  Test failed. See exception logs above.
+  The test description was: offers the other source and retargets the picker
+  
+10:00 +32 -17: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: switching source when the other source works, selecting it leaves this screen
+10:00 +32 -17: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+10:05 +32 -18: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +32 -18: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: switching source when the other source works, selecting it leaves this screen [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+10:05 +33 -18: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +33 -18: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: layout does not scroll at normal text size
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: <0>
+  Actual: <177.0>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart:251:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart line 251
+The test description was:
+  does not scroll at normal text size
+════════════════════════════════════════════════════════════════════════════════════════════════════
+10:05 +33 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +33 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: layout does not scroll at normal text size [E]
+  Test failed. See exception logs above.
+  The test description was: does not scroll at normal text size
+  
+10:05 +34 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +35 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +36 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +37 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +38 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:05 +39 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +40 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +41 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +42 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +43 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +44 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:07 +45 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:08 +45 -19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance changing the theme applies it and persists it
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: ThemePreference:<ThemePreference.dark>
+  Actual: ThemePreference:<ThemePreference.system>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart:102:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart line 102
+The test description was:
+  changing the theme applies it and persists it
+════════════════════════════════════════════════════════════════════════════════════════════════════
+10:08 +45 -20: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid
+10:08 +45 -20: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance changing the theme applies it and persists it [E]
+  Test failed. See exception logs above.
+  The test description was: changing the theme applies it and persists it
+  
+20:00 +45 -21: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance the selected segment follows the current theme
+20:00 +45 -21: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tabs show live counts and filter the grid [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+20:08 +45 -22: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+20:08 +45 -22: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance the selected segment follows the current theme [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
