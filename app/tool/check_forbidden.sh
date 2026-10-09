@@ -100,7 +100,7 @@ layer utils "['\"](dart:|package:intl/|package:flutter/foundation\\.dart|package
 layer design "['\"](dart:|package:flutter/|package:statussozo/design/)" "design"
 layer_deny platform "package:statussozo/(widgets|screens|app|design|l10n)/" "platform"
 layer widgets "['\"](dart:|package:flutter/|package:statussozo/(core|design|utils|l10n/gen|widgets)/|package:(hugeicons|flutter_svg)/)" "widgets"
-layer screens "['\"](dart:|package:flutter/|package:statussozo/(core|design|utils|l10n/gen|widgets)/|package:statussozo/app/app_scope\\.dart)" "screens"
+layer screens "['\"](dart:|package:flutter/|package:statussozo/(core|design|utils|l10n/gen|widgets|screens)/|package:statussozo/app/app_scope\\.dart)" "screens"
 
 # ---- SVG renderers silently drop filters --------------------------------------
 find brand ../website -type f -name '*.svg' 2>/dev/null > "$TMP/svg"
