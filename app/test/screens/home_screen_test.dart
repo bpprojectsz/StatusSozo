@@ -21,6 +21,10 @@ import 'screen_harness.dart';
 
 void main() {
   late Rig rig;
+  void testScreen(
+    String description,
+    Future<void> Function(WidgetTester tester) body,
+  ) => screenTest(description, () => rig, body);
   late PlatformRecorder platform;
 
   setUp(() {
@@ -52,14 +56,14 @@ void main() {
   }
 
   Future<void> primeAndPump(WidgetTester tester) async {
-    await rig.prime();
+    await rig.primeIn(tester);
     await pumpHome(tester);
   }
 
   int tiles() => find.byType(StatusTile).evaluate().length;
 
   group('loaded list', () {
-    testWidgets('renders the photos from the fakes', (
+    testScreen('renders the photos from the fakes', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -67,7 +71,7 @@ void main() {
       expect(find.text('StatusSozo'), findsOneWidget);
     });
 
-    testWidgets('tabs show live counts and filter the grid', (
+    testScreen('tabs show live counts and filter the grid', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -83,7 +87,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('the nav bar has Saved and Settings chips that open screens', (
+    testScreen('the nav bar has Saved and Settings chips that open screens', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -99,7 +103,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('tapping a tile opens the viewer on that item', (
+    testScreen('tapping a tile opens the viewer on that item', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -108,7 +112,7 @@ void main() {
       expect(find.text('2 of 3'), findsOneWidget);
     });
 
-    testWidgets('the source chip shows the current source', (
+    testScreen('the source chip shows the current source', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -117,7 +121,7 @@ void main() {
   });
 
   group('selection', () {
-    testWidgets('long press enters, tap toggles, close exits', (
+    testScreen('long press enters, tap toggles, close exits', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -141,7 +145,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('deselecting the last item leaves selection mode', (
+    testScreen('deselecting the last item leaves selection mode', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -152,7 +156,7 @@ void main() {
       expect(rig.services.homeSelection.value.active, isFalse);
     });
 
-    testWidgets('select all selects everything on the tab', (
+    testScreen('select all selects everything on the tab', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -165,7 +169,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('each toggle gives a light haptic tick', (
+    testScreen('each toggle gives a light haptic tick', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -176,7 +180,7 @@ void main() {
       expect(rig.haptics.selectionCount, 2);
     });
 
-    testWidgets('the back button leaves selection before leaving the screen', (
+    testScreen('the back button leaves selection before leaving the screen', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -189,7 +193,7 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     });
 
-    testWidgets('switching tab clears the selection', (
+    testScreen('switching tab clears the selection', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -200,7 +204,7 @@ void main() {
       expect(rig.services.homeSelection.value.active, isFalse);
     });
 
-    testWidgets('the selection bar shows only in selection mode', (
+    testScreen('the selection bar shows only in selection mode', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -214,7 +218,7 @@ void main() {
   });
 
   group('save and share', () {
-    testWidgets('Save calls the provider, updates badges and toasts', (
+    testScreen('Save calls the provider, updates badges and toasts', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -239,7 +243,7 @@ void main() {
       );
     });
 
-    testWidgets('Share sends the selected items', (WidgetTester tester) async {
+    testScreen('Share sends the selected items', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
@@ -252,7 +256,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('a failed share shows a toast', (WidgetTester tester) async {
+    testScreen('a failed share shows a toast', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       rig.share.error = const AppError(AppErrorKind.io);
       await primeAndPump(tester);
@@ -267,9 +271,9 @@ void main() {
   });
 
   group('states', () {
-    testWidgets('loading shows a spinner', (WidgetTester tester) async {
-      await rig.services.settings.load();
-      await rig.prime();
+    testScreen('loading shows a spinner', (WidgetTester tester) async {
+      await rig.run(tester, () => rig.services.settings.load());
+      await rig.primeIn(tester);
       final Completer<void> gate = Completer<void>();
       rig.status.listGates[StatusSource.standard] = gate;
       await pumpHome(tester);
@@ -282,10 +286,10 @@ void main() {
       expect(find.byType(AppLoadingIndicator), findsNothing);
     });
 
-    testWidgets('empty shows the message and Refresh reloads', (
+    testScreen('empty shows the message and Refresh reloads', (
       WidgetTester tester,
     ) async {
-      await rig.prime(items: <StatusItem>[]);
+      await rig.primeIn(tester, items: <StatusItem>[]);
       await pumpHome(tester);
       expect(find.text('No statuses yet'), findsOneWidget);
       final int before = rig.status.listCalls;
@@ -299,24 +303,24 @@ void main() {
       expect(tiles(), 1);
     });
 
-    testWidgets('an empty videos tab shows the empty state too', (
+    testScreen('an empty videos tab shows the empty state too', (
       WidgetTester tester,
     ) async {
-      await rig.prime(items: <StatusItem>[statusItem('only.jpg')]);
+      await rig.primeIn(tester, items: <StatusItem>[statusItem('only.jpg')]);
       await pumpHome(tester);
       await tester.tap(find.text('Videos'));
       await tester.pump();
       expect(find.text('No statuses yet'), findsOneWidget);
     });
 
-    testWidgets('an error shows the message and Try again reloads', (
+    testScreen('an error shows the message and Try again reloads', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       rig.status.listErrors[StatusSource.standard] = const AppError(
         AppErrorKind.io,
       );
-      await rig.services.statusList.refresh();
+      await rig.run(tester, () => rig.services.statusList.refresh());
       await pumpHome(tester);
       expect(find.text("Couldn't read the files"), findsOneWidget);
       rig.status.listErrors.clear();
@@ -326,11 +330,11 @@ void main() {
       expect(tiles(), 3);
     });
 
-    testWidgets('a source without a grant asks to connect', (
+    testScreen('a source without a grant asks to connect', (
       WidgetTester tester,
     ) async {
-      await rig.services.settings.load();
-      await rig.services.bootstrap();
+      await rig.run(tester, () => rig.services.settings.load());
+      await rig.run(tester, () => rig.services.bootstrap());
       await pumpHome(tester);
       expect(find.text('Connect your status folder'), findsOneWidget);
       await tester.tap(find.text('Choose folder'));
@@ -338,10 +342,10 @@ void main() {
       expect(find.text('Choose the folder again'), findsOneWidget);
     });
 
-    testWidgets('lost access shows Reconnect', (WidgetTester tester) async {
-      await rig.prime();
+    testScreen('lost access shows Reconnect', (WidgetTester tester) async {
+      await rig.primeIn(tester);
       rig.status.lostAccess.add(StatusSource.standard);
-      await rig.services.folderAccess.verifyAll();
+      await rig.run(tester, () => rig.services.folderAccess.verifyAll());
       await pumpHome(tester);
       expect(
         rig.services.folderAccess.value.statusOf(StatusSource.standard),
@@ -355,7 +359,7 @@ void main() {
   });
 
   group('source sheet', () {
-    testWidgets('lists both sources with their connection state', (
+    testScreen('lists both sources with their connection state', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -366,10 +370,10 @@ void main() {
       expect(find.text('Not connected'), findsOneWidget);
     });
 
-    testWidgets('choosing a connected source switches to it', (
+    testScreen('choosing a connected source switches to it', (
       WidgetTester tester,
     ) async {
-      await rig.prime(
+      await rig.primeIn(tester, 
         sources: <StatusSource>[StatusSource.standard, StatusSource.business],
       );
       await pumpHome(tester);
@@ -380,7 +384,7 @@ void main() {
       expect(rig.services.source.value, StatusSource.business);
     });
 
-    testWidgets('choosing an unconnected source opens the connect screen', (
+    testScreen('choosing an unconnected source opens the connect screen', (
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
@@ -395,10 +399,10 @@ void main() {
   group('layout', () {
     for (final bool dark in <bool>[false, true]) {
       for (final TextDirection direction in TextDirection.values) {
-        testWidgets(
+        testScreen(
           '${dark ? 'dark' : 'light'} ${direction.name} at 2x text',
           (WidgetTester tester) async {
-            await rig.prime();
+            await rig.primeIn(tester);
             await pumpHome(tester, direction: direction, dark: dark, scale: 2);
             expect(tester.takeException(), isNull);
           },
@@ -406,7 +410,7 @@ void main() {
       }
     }
 
-    testWidgets('has no bottom embed in stage 1', (WidgetTester tester) async {
+    testScreen('has no bottom embed in stage 1', (WidgetTester tester) async {
       await primeAndPump(tester);
       expect(tester.takeException(), isNull);
     });

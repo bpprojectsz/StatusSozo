@@ -26,6 +26,10 @@ Widget _launcher() {
 
 void main() {
   late Rig rig;
+  void testScreen(
+    String description,
+    Future<void> Function(WidgetTester tester) body,
+  ) => screenTest(description, () => rig, body);
   setUp(() => rig = Rig());
   tearDown(() => rig.dispose());
 
@@ -50,7 +54,7 @@ void main() {
   }
 
   group('layout', () {
-    testWidgets('shows every section header in uppercase', (
+    testScreen('shows every section header in uppercase', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
@@ -67,7 +71,7 @@ void main() {
 
     for (final bool dark in <bool>[false, true]) {
       for (final TextDirection direction in TextDirection.values) {
-        testWidgets(
+        testScreen(
           '${dark ? 'dark' : 'light'} ${direction.name} at 2x text',
           (WidgetTester tester) async {
             await pumpSettings(tester, direction: direction, dark: dark, scale: 2);
@@ -77,7 +81,7 @@ void main() {
       }
     }
 
-    testWidgets('back returns to the previous screen', (
+    testScreen('back returns to the previous screen', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -90,7 +94,7 @@ void main() {
   });
 
   group('appearance', () {
-    testWidgets('changing the theme applies it and persists it', (
+    testScreen('changing the theme applies it and persists it', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
@@ -107,10 +111,10 @@ void main() {
       expect(rig.store.stored.themePreference, ThemePreference.light);
     });
 
-    testWidgets('the selected segment follows the current theme', (
+    testScreen('the selected segment follows the current theme', (
       WidgetTester tester,
     ) async {
-      await rig.services.theme.setPreference(ThemePreference.dark);
+      await rig.run(tester, () => rig.services.theme.setPreference(ThemePreference.dark));
       await pumpSettings(tester);
       final SegmentedTabs<ThemePreference> tabs = tester
           .widget<SegmentedTabs<ThemePreference>>(
@@ -121,10 +125,10 @@ void main() {
   });
 
   group('folders', () {
-    testWidgets('shows each source with its connection state', (
+    testScreen('shows each source with its connection state', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       await pumpSettings(tester);
       expect(find.text('Standard'), findsOneWidget);
       expect(find.text('Business'), findsOneWidget);
@@ -132,20 +136,20 @@ void main() {
       expect(find.text('Not connected'), findsOneWidget);
     });
 
-    testWidgets('a source whose access was lost says so', (
+    testScreen('a source whose access was lost says so', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       rig.status.lostAccess.add(StatusSource.standard);
-      await rig.services.folderAccess.verifyAll();
+      await rig.run(tester, () => rig.services.folderAccess.verifyAll());
       await pumpSettings(tester);
       expect(find.text('Access needs to be renewed'), findsOneWidget);
     });
 
-    testWidgets('a connected folder offers Choose again and Disconnect', (
+    testScreen('a connected folder offers Choose again and Disconnect', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       await pumpSettings(tester);
       await tester.tap(find.text('Standard'));
       await tester.pumpAndSettle();
@@ -153,10 +157,10 @@ void main() {
       expect(find.text('Disconnect'), findsOneWidget);
     });
 
-    testWidgets('an unconnected folder offers only Choose again', (
+    testScreen('an unconnected folder offers only Choose again', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       await pumpSettings(tester);
       await tester.tap(find.text('Business'));
       await tester.pumpAndSettle();
@@ -164,10 +168,10 @@ void main() {
       expect(find.text('Disconnect'), findsNothing);
     });
 
-    testWidgets('Disconnect releases the grant and says so', (
+    testScreen('Disconnect releases the grant and says so', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       await pumpSettings(tester);
       await tester.tap(find.text('Standard'));
       await tester.pumpAndSettle();
@@ -179,10 +183,10 @@ void main() {
       expect(find.text('Not connected'), findsNWidgets(2));
     });
 
-    testWidgets('Choose folder again opens the connect screen', (
+    testScreen('Choose folder again opens the connect screen', (
       WidgetTester tester,
     ) async {
-      await rig.prime();
+      await rig.primeIn(tester);
       await pumpSettings(tester);
       await tester.tap(find.text('Standard'));
       await tester.pumpAndSettle();
@@ -193,7 +197,7 @@ void main() {
   });
 
   group('support and about', () {
-    testWidgets('Rate the app opens the store listing', (
+    testScreen('Rate the app opens the store listing', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
@@ -202,7 +206,7 @@ void main() {
       expect(rig.links.storeListingOpened, 1);
     });
 
-    testWidgets('Send feedback prefills the version and the local log', (
+    testScreen('Send feedback prefills the version and the local log', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
@@ -215,7 +219,7 @@ void main() {
       expect(email.body, contains('---'));
     });
 
-    testWidgets('Privacy policy opens the policy page', (
+    testScreen('Privacy policy opens the policy page', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
@@ -224,7 +228,7 @@ void main() {
       expect(rig.links.opened.single.toString(), AppConfig.privacyUrl);
     });
 
-    testWidgets('a link that cannot be opened shows a toast', (
+    testScreen('a link that cannot be opened shows a toast', (
       WidgetTester tester,
     ) async {
       rig.links.succeed = false;
@@ -235,7 +239,7 @@ void main() {
       expect(rig.services.toasts.value?.code, ToastCode.linkFailed);
     });
 
-    testWidgets('shows the version and the unaffiliated disclaimer', (
+    testScreen('shows the version and the unaffiliated disclaimer', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);

@@ -19,6 +19,10 @@ import 'screen_harness.dart';
 
 void main() {
   late Rig rig;
+  void testScreen(
+    String description,
+    Future<void> Function(WidgetTester tester) body,
+  ) => screenTest(description, () => rig, body);
   setUp(() => rig = Rig());
   tearDown(() => rig.dispose());
 
@@ -42,7 +46,7 @@ void main() {
   }
 
   group('copy', () {
-    testWidgets('first run', (WidgetTester tester) async {
+    testScreen('first run', (WidgetTester tester) async {
       await pumpAccess(tester);
       expect(find.text('Connect your status folder'), findsOneWidget);
       expect(
@@ -62,28 +66,28 @@ void main() {
       expect(find.text('Choose folder'), findsOneWidget);
     });
 
-    testWidgets('renewal', (WidgetTester tester) async {
+    testScreen('renewal', (WidgetTester tester) async {
       await pumpAccess(tester, mode: AccessMode.renewal);
       expect(find.text('Access needs to be renewed'), findsOneWidget);
       expect(find.text('Connect your status folder'), findsNothing);
     });
 
-    testWidgets('reconnect has a back chip and its own title', (
+    testScreen('reconnect has a back chip and its own title', (
       WidgetTester tester,
     ) async {
       await pumpAccess(tester, mode: AccessMode.reconnect);
       expect(find.text('Choose the folder again'), findsOneWidget);
       expect(find.byType(NavIconButton), findsOneWidget);
       expect(find.text('Settings'), findsOneWidget);
-      expect(find.textContaining('Use '), findsNothing);
+      expect(find.byType(SecondaryButton), findsNothing);
     });
 
-    testWidgets('never shows the wordmark', (WidgetTester tester) async {
+    testScreen('never shows the wordmark', (WidgetTester tester) async {
       await pumpAccess(tester);
       expect(find.text('StatusSozo'), findsNothing);
     });
 
-    testWidgets('shows the numbered steps', (WidgetTester tester) async {
+    testScreen('shows the numbered steps', (WidgetTester tester) async {
       await pumpAccess(tester);
       expect(find.text('1'), findsOneWidget);
       expect(find.text('2'), findsOneWidget);
@@ -92,7 +96,7 @@ void main() {
   });
 
   group('choose folder', () {
-    testWidgets('calls the provider and toasts success', (
+    testScreen('calls the provider and toasts success', (
       WidgetTester tester,
     ) async {
       await pumpAccess(tester);
@@ -107,7 +111,7 @@ void main() {
       expect(rig.services.toasts.value?.code, ToastCode.folderConnected);
     });
 
-    testWidgets('a wrong folder shows the wrong-folder toast', (
+    testScreen('a wrong folder shows the wrong-folder toast', (
       WidgetTester tester,
     ) async {
       rig.status.pickResult = const Err<FolderGrant>(
@@ -125,7 +129,7 @@ void main() {
       );
     });
 
-    testWidgets('a cancelled picker shows an info toast', (
+    testScreen('a cancelled picker shows an info toast', (
       WidgetTester tester,
     ) async {
       rig.status.pickResult = const Err<FolderGrant>(
@@ -139,7 +143,7 @@ void main() {
       expect(rig.services.toasts.value?.kind, ToastKind.info);
     });
 
-    testWidgets('other failures map to a matching toast', (
+    testScreen('other failures map to a matching toast', (
       WidgetTester tester,
     ) async {
       rig.status.pickResult = const Err<FolderGrant>(AppError(AppErrorKind.io));
@@ -150,7 +154,7 @@ void main() {
       expect(rig.services.toasts.value?.code, ToastCode.ioError);
     });
 
-    testWidgets('shows a spinner while the picker is open', (
+    testScreen('shows a spinner while the picker is open', (
       WidgetTester tester,
     ) async {
       rig.status.delay = const Duration(milliseconds: 500);
@@ -164,7 +168,7 @@ void main() {
       await tester.pump(const Duration(seconds: 4));
     });
 
-    testWidgets('reconnect mode closes itself after success', (
+    testScreen('reconnect mode closes itself after success', (
       WidgetTester tester,
     ) async {
       useSurface(tester);
@@ -194,7 +198,7 @@ void main() {
   });
 
   group('switching source', () {
-    testWidgets('offers the other source and retargets the picker', (
+    testScreen('offers the other source and retargets the picker', (
       WidgetTester tester,
     ) async {
       await pumpAccess(tester);
@@ -216,18 +220,18 @@ void main() {
       expect(rig.services.source.value, StatusSource.business);
     });
 
-    testWidgets('when the other source works, selecting it leaves this screen', (
+    testScreen('when the other source works, selecting it leaves this screen', (
       WidgetTester tester,
     ) async {
-      await rig.services.folderAccess.connect(StatusSource.business);
-      await rig.services.source.select(StatusSource.standard);
+      await rig.run(tester, () => rig.services.folderAccess.connect(StatusSource.business));
+      await rig.run(tester, () => rig.services.source.select(StatusSource.standard));
       await pumpAccess(tester, mode: AccessMode.renewal);
       await tester.tap(find.text('Use Business instead'));
       await tester.pump();
       expect(rig.services.source.value, StatusSource.business);
     });
 
-    testWidgets('reconnect mode has no source switch', (
+    testScreen('reconnect mode has no source switch', (
       WidgetTester tester,
     ) async {
       await pumpAccess(
@@ -241,17 +245,20 @@ void main() {
   });
 
   group('layout', () {
-    testWidgets('does not scroll at normal text size', (
+    testScreen('does not scroll at normal text size', (
       WidgetTester tester,
     ) async {
-      await pumpAccess(tester);
+      // The test font is much wider than the real one, so use a tall surface.
+      useSurface(tester, width: 400, height: 2600);
+      await tester.pumpWidget(screenApp(rig, const AccessScreen()));
+      await tester.pump();
       final ScrollableState scrollable = tester.state<ScrollableState>(
         find.byType(Scrollable).first,
       );
       expect(scrollable.position.maxScrollExtent, 0);
     });
 
-    testWidgets('the Choose folder button stays pinned when text is huge', (
+    testScreen('the Choose folder button stays pinned when text is huge', (
       WidgetTester tester,
     ) async {
       useSurface(tester, width: 360, height: 640);
@@ -269,7 +276,7 @@ void main() {
     });
 
     for (final TextDirection direction in TextDirection.values) {
-      testWidgets('renders in ${direction.name} without overflow', (
+      testScreen('renders in ${direction.name} without overflow', (
         WidgetTester tester,
       ) async {
         await pumpAccess(tester, direction: direction);
@@ -279,7 +286,7 @@ void main() {
   });
 
   group('ErrorFallbackScreen', () {
-    testWidgets('renders its English strings with no app around it', (
+    testScreen('renders its English strings with no app around it', (
       WidgetTester tester,
     ) async {
       useSurface(tester);
@@ -300,7 +307,7 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('uses the light colours when there is no theme', (
+    testScreen('uses the light colours when there is no theme', (
       WidgetTester tester,
     ) async {
       useSurface(tester);
@@ -313,7 +320,7 @@ void main() {
       expect(background.color, AppColors.light.bgPrimary);
     });
 
-    testWidgets('is localised when a localisation exists', (
+    testScreen('is localised when a localisation exists', (
       WidgetTester tester,
     ) async {
       useSurface(tester);

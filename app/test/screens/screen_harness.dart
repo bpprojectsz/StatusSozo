@@ -101,7 +101,36 @@ class Rig {
     await services.bootstrap();
   }
 
+  /// Runs [body] in real async time. Widget tests run in fake time, where an
+  /// awaited future that no pump flushes would never complete.
+  Future<void> run(WidgetTester tester, Future<void> Function() body) async {
+    await tester.runAsync(body);
+  }
+
+  Future<void> primeIn(
+    WidgetTester tester, {
+    List<StatusSource> sources = const <StatusSource>[StatusSource.standard],
+    List<StatusItem>? items,
+  }) => run(tester, () => prime(sources: sources, items: items));
+
   void dispose() => services.dispose();
+}
+
+/// A widget test that always tears the tree down and disposes the container, so
+/// toast timers never outlive the test.
+void screenTest(
+  String description,
+  Rig Function() rig,
+  Future<void> Function(WidgetTester tester) body,
+) {
+  testWidgets(description, (WidgetTester tester) async {
+    try {
+      await body(tester);
+    } finally {
+      await tester.pumpWidget(const SizedBox());
+      rig().services.dispose();
+    }
+  });
 }
 
 Widget screenApp(

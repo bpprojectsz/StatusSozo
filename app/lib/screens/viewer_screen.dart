@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/app/app_scope.dart';
@@ -128,7 +126,9 @@ class _ViewerScreenState extends State<ViewerScreen> {
   }
 
   void _retry(String uri) {
-    setState(() => _bytes.remove(uri)); // ui-local
+    setState(() { // ui-local
+      _bytes.remove(uri);
+    });
   }
 
   Future<void> _share() async {

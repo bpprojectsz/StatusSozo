@@ -15,8 +15,8 @@ import 'package:statussozo/widgets/media/status_tile.dart';
 import 'package:statussozo/widgets/primitives/loading_indicator.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
 import 'package:statussozo/widgets/viewer/video_controls.dart';
-import 'package:statussozo/widgets/viewer/viewer_overlay.dart';
 import 'package:statussozo/widgets/viewer/video_surface.dart';
+import 'package:statussozo/widgets/viewer/viewer_overlay.dart';
 import 'package:statussozo/widgets/viewer/zoomable_image.dart';
 
 import '../fakes/fakes.dart';
@@ -43,6 +43,10 @@ Future<void> _doubleTap(WidgetTester tester, Finder finder) async {
 
 void main() {
   late Rig rig;
+  void testScreen(
+    String description,
+    Future<void> Function(WidgetTester tester) body,
+  ) => screenTest(description, () => rig, body);
   late PlatformRecorder platform;
 
   setUp(() {
@@ -100,7 +104,7 @@ void main() {
       .opacity;
 
   group('ViewerScreen (status mode)', () {
-    testWidgets('shows the counter and closes with the close chip', (
+    testScreen('shows the counter and closes with the close chip', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -113,21 +117,21 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('starts at the requested index and clamps a bad one', (
+    testScreen('starts at the requested index and clamps a bad one', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(3), index: 2);
       expect(find.text('3 of 3'), findsOneWidget);
     });
 
-    testWidgets('an out-of-range index is clamped', (
+    testScreen('an out-of-range index is clamped', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(3), index: 99);
       expect(find.text('3 of 3'), findsOneWidget);
     });
 
-    testWidgets('swiping moves between items and updates the counter', (
+    testScreen('swiping moves between items and updates the counter', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(3));
@@ -139,7 +143,7 @@ void main() {
       expect(find.text('1 of 3'), findsOneWidget);
     });
 
-    testWidgets('zooming locks paging until it is zoomed out', (
+    testScreen('zooming locks paging until it is zoomed out', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(3));
@@ -159,7 +163,7 @@ void main() {
       expect(pager().physics, isA<ClampingScrollPhysics>());
     });
 
-    testWidgets('Save becomes a disabled Saved state', (
+    testScreen('Save becomes a disabled Saved state', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(2));
@@ -177,19 +181,19 @@ void main() {
       expect(rig.saved.saveCalls, 1);
     });
 
-    testWidgets('an item that is already saved starts as Saved', (
+    testScreen('an item that is already saved starts as Saved', (
       WidgetTester tester,
     ) async {
       rig.saved.items.add(savedItem('p0.jpg'));
-      await rig.services.savedLibrary.refresh();
+      await rig.run(tester, () => rig.services.savedLibrary.refresh());
       await openViewer(tester, photos(2));
       expect(find.text('Saved'), findsOneWidget);
       expect(find.text('Save'), findsNothing);
     });
 
-    testWidgets('the saved state follows the page', (WidgetTester tester) async {
+    testScreen('the saved state follows the page', (WidgetTester tester) async {
       rig.saved.items.add(savedItem('p1.jpg'));
-      await rig.services.savedLibrary.refresh();
+      await rig.run(tester, () => rig.services.savedLibrary.refresh());
       await openViewer(tester, photos(2));
       expect(find.text('Save'), findsOneWidget);
       await tester.fling(find.byType(PageView), const Offset(-400, 0), 1500);
@@ -197,7 +201,7 @@ void main() {
       expect(find.text('Saved'), findsOneWidget);
     });
 
-    testWidgets('a tap toggles the overlays', (WidgetTester tester) async {
+    testScreen('a tap toggles the overlays', (WidgetTester tester) async {
       await openViewer(tester, photos(2));
       expect(overlayOpacity(tester), 1);
       await tester.tap(find.byType(ZoomableImage).first);
@@ -210,7 +214,7 @@ void main() {
       expect(overlayOpacity(tester), 1);
     });
 
-    testWidgets('Share sends the current item', (WidgetTester tester) async {
+    testScreen('Share sends the current item', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       await openViewer(tester, photos(2));
       await tester.tap(find.bySemanticsLabel('Share'));
@@ -219,7 +223,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('a failed share shows a toast', (WidgetTester tester) async {
+    testScreen('a failed share shows a toast', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       rig.share.error = const AppError(AppErrorKind.io);
       await openViewer(tester, photos(2));
@@ -230,14 +234,14 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('prefetches the neighbouring pages', (
+    testScreen('prefetches the neighbouring pages', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, photos(4), index: 1);
       expect(rig.thumbs.readCalls, greaterThanOrEqualTo(3));
     });
 
-    testWidgets('an image that cannot be read shows a message and retry', (
+    testScreen('an image that cannot be read shows a message and retry', (
       WidgetTester tester,
     ) async {
       rig.thumbs.readError = const AppError(AppErrorKind.io);
@@ -250,7 +254,7 @@ void main() {
       expect(find.byType(ZoomableImage), findsOneWidget);
     });
 
-    testWidgets('hides the system bars and restores them on exit', (
+    testScreen('hides the system bars and restores them on exit', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -263,7 +267,7 @@ void main() {
     });
 
     for (final TextDirection direction in TextDirection.values) {
-      testWidgets('renders in ${direction.name} on a dark theme', (
+      testScreen('renders in ${direction.name} on a dark theme', (
         WidgetTester tester,
       ) async {
         await openViewer(tester, photos(2), direction: direction, dark: true);
@@ -276,7 +280,7 @@ void main() {
   group('ViewerScreen with video', () {
     final StatusItem video = statusItem('clip.mp4', mime: 'video/mp4');
 
-    testWidgets('plays the current video with custom controls', (
+    testScreen('plays the current video with custom controls', (
       WidgetTester tester,
     ) async {
       await openViewer(tester, <ViewableMedia>[video], settle: false);
@@ -294,7 +298,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('closing the viewer disposes the session', (
+    testScreen('closing the viewer disposes the session', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -306,7 +310,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('only the current page holds a session', (
+    testScreen('only the current page holds a session', (
       WidgetTester tester,
     ) async {
       await openViewer(
@@ -336,7 +340,7 @@ void main() {
       int index = 0,
     }) async {
       rig.saved.items.addAll(items);
-      await rig.services.savedLibrary.refresh();
+      await rig.run(tester, () => rig.services.savedLibrary.refresh());
       await openViewer(
         tester,
         rig.services.savedLibrary.value.items,
@@ -345,7 +349,7 @@ void main() {
       );
     }
 
-    testWidgets('has a Delete action and no Save button', (
+    testScreen('has a Delete action and no Save button', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -355,7 +359,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('deleting asks first, then removes the item and moves on', (
+    testScreen('deleting asks first, then removes the item and moves on', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -382,7 +386,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('cancelling keeps the item', (WidgetTester tester) async {
+    testScreen('cancelling keeps the item', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       await openSaved(tester, <SavedItem>[savedItem('a.jpg'), savedItem('b.jpg')]);
       await tester.tap(find.bySemanticsLabel('Delete'));
@@ -394,7 +398,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('deleting the last item closes the viewer', (
+    testScreen('deleting the last item closes the viewer', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -408,7 +412,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('a failed delete shows a toast and keeps the item', (
+    testScreen('a failed delete shows a toast and keeps the item', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -444,7 +448,7 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('refreshes when opened and shows the items and footer', (
+    testScreen('refreshes when opened and shows the items and footer', (
       WidgetTester tester,
     ) async {
       rig.saved.items.addAll(<SavedItem>[
@@ -461,13 +465,13 @@ void main() {
       );
     });
 
-    testWidgets('shows the empty state', (WidgetTester tester) async {
+    testScreen('shows the empty state', (WidgetTester tester) async {
       await pumpSaved(tester);
       expect(find.text('Nothing saved yet'), findsOneWidget);
       expect(find.text('Items you save will appear here.'), findsOneWidget);
     });
 
-    testWidgets('shows a spinner while the first load runs', (
+    testScreen('shows a spinner while the first load runs', (
       WidgetTester tester,
     ) async {
       rig.saved.delay = const Duration(milliseconds: 500);
@@ -483,7 +487,7 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('shows an error with retry when the first load fails', (
+    testScreen('shows an error with retry when the first load fails', (
       WidgetTester tester,
     ) async {
       rig.saved.listError = const AppError(AppErrorKind.io);
@@ -496,7 +500,7 @@ void main() {
       expect(find.byType(StatusTile), findsOneWidget);
     });
 
-    testWidgets('long press selects, and Share sends the selection', (
+    testScreen('long press selects, and Share sends the selection', (
       WidgetTester tester,
     ) async {
       rig.saved.items.addAll(<SavedItem>[
@@ -518,7 +522,7 @@ void main() {
       expect(rig.share.shared.single, hasLength(2));
     });
 
-    testWidgets('Delete asks for confirmation and removes the selection', (
+    testScreen('Delete asks for confirmation and removes the selection', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -546,7 +550,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('cancelling the confirmation keeps everything', (
+    testScreen('cancelling the confirmation keeps everything', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -563,7 +567,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('tapping an item opens the viewer in saved mode', (
+    testScreen('tapping an item opens the viewer in saved mode', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
@@ -576,7 +580,7 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('back leaves selection first, then the screen', (
+    testScreen('back leaves selection first, then the screen', (
       WidgetTester tester,
     ) async {
       rig.saved.items.add(savedItem('a.jpg'));
@@ -593,7 +597,7 @@ void main() {
     });
 
     for (final TextDirection direction in TextDirection.values) {
-      testWidgets('renders in ${direction.name} without overflow', (
+      testScreen('renders in ${direction.name} without overflow', (
         WidgetTester tester,
       ) async {
         rig.saved.items.add(savedItem('a.jpg'));
@@ -602,7 +606,7 @@ void main() {
       });
     }
 
-    testWidgets('lists items newest first', (WidgetTester tester) async {
+    testScreen('lists items newest first', (WidgetTester tester) async {
       rig.saved.items.addAll(<SavedItem>[
         savedItem('old.jpg', savedAtMs: 1),
         savedItem('new.jpg', savedAtMs: 9),
