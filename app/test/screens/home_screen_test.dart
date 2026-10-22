@@ -128,6 +128,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('1 selected'), findsOneWidget);
 
       await tester.tap(find.byType(StatusTile).at(1));
@@ -151,6 +152,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byType(StatusTile).first);
       await tester.pump();
       expect(rig.services.homeSelection.value.active, isFalse);
@@ -163,6 +165,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.bySemanticsLabel('Select all'));
       await tester.pump();
       expect(find.text('3 selected'), findsOneWidget);
@@ -175,6 +178,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byType(StatusTile).at(1));
       await tester.pump();
       expect(rig.haptics.selectionCount, 2);
@@ -186,6 +190,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(rig.services.homeSelection.value.active, isTrue);
       await tester.binding.handlePopRoute();
       await tester.pump();
@@ -199,6 +204,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.text('Videos'));
       await tester.pump();
       expect(rig.services.homeSelection.value.active, isFalse);
@@ -212,6 +218,7 @@ void main() {
       expect(visible(), isFalse);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       expect(visible(), isTrue);
       expect(find.text('Save 1'), findsOneWidget);
     });
@@ -224,6 +231,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byType(StatusTile).at(1));
       await tester.pump();
       await tester.tap(find.text('Save 2'));
@@ -248,6 +256,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.bySemanticsLabel('Share'));
       await tester.pump();
       expect(rig.share.shared, hasLength(1));
@@ -262,6 +271,7 @@ void main() {
       await primeAndPump(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.bySemanticsLabel('Share'));
       await tester.pump();
       await tester.pump();

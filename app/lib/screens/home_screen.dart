@@ -292,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
+                        flex: 2,
                         child: SegmentedTabs<_MediaTab>(
                           semanticLabel: l10n.tabPhotos,
                           value: _tab,
@@ -311,13 +312,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(width: AppSpacing.sm),
-                      Semantics(
-                        label: l10n.semSwitchSource,
-                        container: true,
-                        child: AppChip(
-                          label: sourceName(l10n, source),
-                          icon: AppIcons.folder,
-                          onPressed: _openSourceSheet,
+                      Flexible(
+                        child: Semantics(
+                          label: l10n.semSwitchSource,
+                          container: true,
+                          child: AppChip(
+                            label: sourceName(l10n, source),
+                            icon: AppIcons.folder,
+                            onPressed: _openSourceSheet,
+                          ),
                         ),
                       ),
                     ],

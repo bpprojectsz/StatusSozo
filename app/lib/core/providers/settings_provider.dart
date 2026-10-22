@@ -57,7 +57,7 @@ class SettingsProvider extends ValueNotifier<SettingsState> {
     : super(SettingsState(settings: AppSettings.defaults()));
 
   final SettingsStore _store;
-  Future<void> _pending = Future<void>.value();
+  Future<void>? _pending;
   bool _disposed = false;
 
   AppSettings get settings => value.settings;
@@ -82,7 +82,9 @@ class SettingsProvider extends ValueNotifier<SettingsState> {
   /// value. Writes are serialised and always store the latest settings.
   Future<void> update(AppSettings Function(AppSettings current) change) {
     value = value.copyWith(settings: change(value.settings));
-    final Future<void> write = _pending.then((_) => _persist());
+    final Future<void> write = (_pending ?? Future<void>.value()).then(
+      (_) => _persist(),
+    );
     _pending = write;
     return write;
   }

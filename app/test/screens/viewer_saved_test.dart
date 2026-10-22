@@ -510,6 +510,7 @@ void main() {
       await pumpSaved(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byType(StatusTile).last);
       await tester.pump();
       expect(find.text('2 selected'), findsOneWidget);
@@ -534,6 +535,7 @@ void main() {
       await pumpSaved(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.byType(StatusTile).at(1));
       await tester.pump();
       await tester.tap(find.bySemanticsLabel('Delete'));
@@ -558,6 +560,7 @@ void main() {
       await pumpSaved(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.tap(find.bySemanticsLabel('Delete'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Cancel'));
@@ -587,6 +590,7 @@ void main() {
       await pumpSaved(tester);
       await tester.longPress(find.byType(StatusTile).first);
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
       expect(rig.services.savedSelection.value.active, isFalse);
