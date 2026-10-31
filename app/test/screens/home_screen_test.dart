@@ -13,7 +13,9 @@ import 'package:statussozo/screens/home_screen.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/media/selection_bar.dart';
 import 'package:statussozo/widgets/media/status_tile.dart';
+import 'package:statussozo/widgets/primitives/app_chip.dart';
 import 'package:statussozo/widgets/primitives/loading_indicator.dart';
+import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 
 import '../fakes/fakes.dart';
 import '../widgets/harness.dart';
@@ -380,18 +382,28 @@ void main() {
       expect(find.text('Not connected'), findsOneWidget);
     });
 
-    testScreen('choosing a connected source switches to it', (
+    testScreen('with both connected a selector replaces the chip', (
       WidgetTester tester,
     ) async {
-      await rig.primeIn(tester, 
+      await rig.primeIn(
+        tester,
         sources: <StatusSource>[StatusSource.standard, StatusSource.business],
       );
       await pumpHome(tester);
-      await tester.tap(find.text('Standard'));
-      await tester.pumpAndSettle();
+      expect(find.byType(SegmentedTabs<StatusSource>), findsOneWidget);
+      expect(find.byType(AppChip), findsNothing);
       await tester.tap(find.text('Business'));
       await tester.pumpAndSettle();
       expect(rig.services.source.value, StatusSource.business);
+      expect(find.byType(AppChip), findsNothing);
+    });
+
+    testScreen('with one connected the chip stays and there is no selector', (
+      WidgetTester tester,
+    ) async {
+      await primeAndPump(tester);
+      expect(find.byType(SegmentedTabs<StatusSource>), findsNothing);
+      expect(find.byType(AppChip), findsOneWidget);
     });
 
     testScreen('choosing an unconnected source opens the connect screen', (

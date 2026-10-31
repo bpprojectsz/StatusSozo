@@ -311,6 +311,8 @@ class _HomeScreenState extends State<HomeScreen> {
         final AccessStatus access = services.folderAccess.value.statusOf(
           source,
         );
+        final bool bothConnected =
+            services.folderAccess.connectedSources.length > 1;
 
         final Widget navBar = selection.active
             ? AppNavBar.selection(
@@ -365,6 +367,28 @@ class _HomeScreenState extends State<HomeScreen> {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                if (bothConnected)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      AppSpacing.gutter,
+                      AppSpacing.sm,
+                      AppSpacing.gutter,
+                      0,
+                    ),
+                    child: SegmentedTabs<StatusSource>(
+                      semanticLabel: l10n.semSwitchSource,
+                      value: source,
+                      onChanged: (StatusSource next) =>
+                          unawaited(services.source.select(next)),
+                      segments: <SegmentItem<StatusSource>>[
+                        for (final StatusSource s in StatusSource.values)
+                          SegmentItem<StatusSource>(
+                            value: s,
+                            label: sourceName(l10n, s),
+                          ),
+                      ],
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.gutter,
@@ -392,18 +416,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Flexible(
-                        child: Semantics(
-                          label: l10n.semSwitchSource,
-                          container: true,
-                          child: AppChip(
-                            label: sourceName(l10n, source),
-                            icon: AppIcons.folder,
-                            onPressed: _openSourceSheet,
+                      if (!bothConnected) ...<Widget>[
+                        const SizedBox(width: AppSpacing.sm),
+                        Flexible(
+                          child: Semantics(
+                            label: l10n.semSwitchSource,
+                            container: true,
+                            child: AppChip(
+                              label: sourceName(l10n, source),
+                              icon: AppIcons.folder,
+                              onPressed: _openSourceSheet,
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
