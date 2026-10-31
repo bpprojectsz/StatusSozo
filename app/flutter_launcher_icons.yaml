@@ -1,0 +1,8 @@
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: assets/brand/icon_1024.png
+  min_sdk_android: 29
+  adaptive_icon_background: assets/brand/icon_background.png
+  adaptive_icon_foreground: assets/brand/icon_foreground.png
+  adaptive_icon_monochrome: assets/brand/icon_mono.png

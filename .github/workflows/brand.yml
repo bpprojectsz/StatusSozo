@@ -1,0 +1,92 @@
+name: brand
+
+# One-off: runs the launcher icon and splash generators on the committed PNGs
+# and commits the generated Android files. Manual only. Never add a push:
+# trigger.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: brand
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.2"
+          channel: stable
+          cache: true
+
+      - name: Resolve dependencies
+        working-directory: app
+        run: flutter pub get 2>&1 | tee -a /tmp/brand.log
+
+      - name: Check the rendered inputs exist
+        working-directory: app
+        run: |
+          for f in icon_1024 icon_background icon_foreground icon_mono splash_logo; do
+            test -s "assets/brand/$f.png" || { echo "missing assets/brand/$f.png"; exit 1; }
+          done 2>&1 | tee -a /tmp/brand.log
+
+      - name: Launcher icons
+        working-directory: app
+        run: dart run flutter_launcher_icons -f flutter_launcher_icons.yaml 2>&1 | tee -a /tmp/brand.log
+
+      - name: Native splash
+        working-directory: app
+        run: dart run flutter_native_splash:create --path=flutter_native_splash.yaml 2>&1 | tee -a /tmp/brand.log
+
+      - name: Stage 1 must still have no permissions
+        run: |
+          if grep -rn "uses-permission" app/android/app/src/main/AndroidManifest.xml; then
+            echo "FAIL: a generator added a permission" | tee -a /tmp/brand.log
+            exit 1
+          fi
+          echo "manifest: no uses-permission" | tee -a /tmp/brand.log
+
+      - name: What the generators changed
+        run: |
+          git status --short | tee -a /tmp/brand.log
+          echo "--- manifest diff" | tee -a /tmp/brand.log
+          git diff -- app/android/app/src/main/AndroidManifest.xml | tee -a /tmp/brand.log
+          echo "--- styles diff" | tee -a /tmp/brand.log
+          git diff -- app/android/app/src/main/res/values | tee -a /tmp/brand.log
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/android
+          if git diff --cached --quiet; then
+            echo "nothing generated" | tee -a /tmp/brand.log
+          else
+            git commit -m "b13: launcher icons and splash generated"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Publish log to ci-logs-brand branch
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog && cp /tmp/brand.log /tmp/cilog/brand.log 2>/dev/null || echo "no log" > /tmp/cilog/brand.log
+          echo "commit=${GITHUB_SHA} run=${GITHUB_RUN_ID} at=$(date -u +%FT%TZ)" > /tmp/cilog/meta.txt
+          cd /tmp/cilog
+          git init -q -b ci-logs-brand
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "brand log ${GITHUB_RUN_ID}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-logs-brand
