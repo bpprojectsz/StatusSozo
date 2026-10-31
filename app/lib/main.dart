@@ -1,9 +1,19 @@
-import 'package:flutter/widgets.dart';
-import 'package:statussozo/spike/spike_screen.dart';
+import 'dart:async';
 
-// Temporary entry point for the E1 device check. Replaced by the real
-// entry point in batch 12.
+import 'package:flutter/widgets.dart';
+import 'package:statussozo/app/app_services.dart';
+import 'package:statussozo/app/error_handling.dart';
+import 'package:statussozo/app/statussozo_app.dart';
+
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SpikeApp());
+  runGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final AppServices services = await AppServices.create();
+    await services.settings.load();
+    installGlobalErrorHandling(services);
+    runApp(StatusSozoApp(services: services));
+    WidgetsBinding.instance.addPostFrameCallback((Duration _) {
+      unawaited(services.bootstrap());
+    });
+  });
 }
