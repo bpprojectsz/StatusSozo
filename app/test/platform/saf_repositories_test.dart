@@ -107,7 +107,6 @@ void main() {
       expect(result.valueOrNull?.treeUri, 'content://tree/parent');
       expect(native.methods, <String>['pickFolder', 'listFolder']);
     });
-    });
 
     test('a cancelled picker is pickerCancelled', () async {
       native.responder = (MethodCall call) => null;
