@@ -100,11 +100,17 @@ class StatusListProvider extends ValueNotifier<StatusListState> {
 
     switch (result) {
       case Ok<List<StatusItem>>(value: final List<StatusItem> items):
-        value = StatusListState(
-          phase: ListPhase.ready,
-          source: source,
-          items: StatusOrganizer.newestFirst(items),
-        );
+        final List<StatusItem> sorted = StatusOrganizer.newestFirst(items);
+        if (keep && listEquals(sorted, value.items)) {
+          // Nothing changed: do not rebuild the grid.
+          value = value.copyWith(refreshing: false);
+        } else {
+          value = StatusListState(
+            phase: ListPhase.ready,
+            source: source,
+            items: sorted,
+          );
+        }
       case Err<List<StatusItem>>(:final AppError error):
         if (error.kind == AppErrorKind.accessLost) {
           value = StatusListState(

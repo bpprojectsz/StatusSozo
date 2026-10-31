@@ -45,7 +45,8 @@ class AppRow extends StatelessWidget {
         horizontal: AppSpacing.md,
         vertical: AppSpacing.sm + AppSpacing.xs,
       ),
-      child: Row(
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) => Row(
         children: <Widget>[
           if (leading != null) ...<Widget>[
             AppIcon(
@@ -55,11 +56,10 @@ class AppRow extends StatelessWidget {
             ),
             const SizedBox(width: iconGap),
           ],
-          // The label gets two thirds of the free width and a trailing widget at
-          // most one third, so a wide chip can never push the label out at
-          // large text sizes.
+          // A trailing widget takes the width it needs, capped at half the row,
+          // and the label gets the rest. A wide chip can never push the label
+          // out at large text sizes, and a short chip is never truncated.
           Expanded(
-            flex: 2,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,10 @@ class AppRow extends StatelessWidget {
           ),
           if (end != null) ...<Widget>[
             const SizedBox(width: AppSpacing.sm),
-            Flexible(child: end),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth / 2),
+              child: end,
+            ),
           ] else if (showChevron) ...<Widget>[
             const SizedBox(width: AppSpacing.sm),
             AppIcon(
@@ -82,6 +85,7 @@ class AppRow extends StatelessWidget {
             ),
           ],
         ],
+        ),
       ),
     );
 

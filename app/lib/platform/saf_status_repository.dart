@@ -35,14 +35,19 @@ class SafStatusRepository implements StatusRepository {
           );
         }
         if (value.name != AppConfig.statusFolderName) {
-          // Do not keep a permission the app cannot use.
-          await _channel.releaseFolder(value.uri);
-          return Err<FolderGrant>(
-            AppError(
-              AppErrorKind.wrongFolder,
-              detail: 'Picked "${value.name}"',
-            ),
-          );
+          // A parent folder is fine when the status folder is inside it.
+          final Result<List<Map<String, Object?>>> probe = await _channel
+              .listFolder(value.uri);
+          if (probe.errorOrNull != null) {
+            // Do not keep a permission the app cannot use.
+            await _channel.releaseFolder(value.uri);
+            return Err<FolderGrant>(
+              AppError(
+                AppErrorKind.wrongFolder,
+                detail: 'Picked "${value.name}"',
+              ),
+            );
+          }
         }
         return Ok<FolderGrant>(
           FolderGrant(

@@ -51,7 +51,7 @@ void main() {
       expect(find.text('Connect your status folder'), findsOneWidget);
       expect(
         find.text(
-          "Pick the folder where your statuses are stored so StatusSozo can show the ones you've already viewed.",
+          "Pick your status folder so StatusSozo can show your statuses.",
         ),
         findsOneWidget,
       );
@@ -124,7 +124,7 @@ void main() {
       expect(rig.services.toasts.value?.code, ToastCode.wrongFolder);
       await tester.pump(const Duration(milliseconds: 400));
       expect(
-        find.text('That isn\'t the status folder. Choose the folder named .Statuses.'),
+        find.text('That isn\'t the status folder. Choose .Statuses, or the folder that contains it.'),
         findsOneWidget,
       );
     });

@@ -84,7 +84,7 @@
   "@accessTitleReconnect": {
     "description": "Title shown when the user reconnects a folder from Settings."
   },
-  "accessBody": "Pick the folder where your statuses are stored so {appName} can show the ones you've already viewed.",
+  "accessBody": "Pick your status folder so {appName} can show your statuses.",
   "@accessBody": {
     "description": "Explainer on the folder connection screen.",
     "placeholders": {
@@ -97,7 +97,7 @@
   "@accessStep1": {
     "description": "Step 1 of the folder picking instructions."
   },
-  "accessStep2": "Check that the picker shows the status folder. If it doesn't, open the menu and turn on Show hidden files.",
+  "accessStep2": "If the picker doesn't show it, open the menu and turn on Show hidden files.",
   "@accessStep2": {
     "description": "Step 2 of the folder picking instructions. Show hidden files is a label in the system file picker."
   },
@@ -158,7 +158,7 @@
   "@homeEmptyTitle": {
     "description": "Title of the empty state on Home."
   },
-  "homeEmptyMessage": "Statuses appear here after you've viewed them. Open one, then come back.",
+  "homeEmptyMessage": "Statuses show up here as soon as the messaging app loads them. Open its Status tab, then come back.",
   "@homeEmptyMessage": {
     "description": "Message of the empty state on Home."
   },
@@ -501,7 +501,7 @@
   "@toastFolderDisconnected": {
     "description": "Toast after disconnecting a folder."
   },
-  "toastWrongFolder": "That isn't the status folder. Choose the folder named .Statuses.",
+  "toastWrongFolder": "That isn't the status folder. Choose .Statuses, or the folder that contains it.",
   "@toastWrongFolder": {
     "description": "Toast when the picked folder is not the status folder. .Statuses is a literal folder name."
   },
@@ -553,7 +553,7 @@
   "@errorWrongFolderTitle": {
     "description": "Error state title: WrongFolder."
   },
-  "errorWrongFolderMessage": "Choose the folder named .Statuses.",
+  "errorWrongFolderMessage": "Choose .Statuses, or the folder that contains it.",
   "@errorWrongFolderMessage": {
     "description": "Error state message: WrongFolder."
   },

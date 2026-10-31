@@ -104,7 +104,11 @@ class MediaGridView extends StatelessWidget {
       behavior: const AppScrollBehavior(),
       child: CustomScrollView(
         controller: controller,
-        physics: const ClampingScrollPhysics(),
+        // Always scrollable, so a short list can still be pulled down to
+        // refresh. Clamping: no bounce.
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: ClampingScrollPhysics(),
+        ),
         slivers: <Widget>[
           SliverPadding(
             padding: const EdgeInsets.symmetric(

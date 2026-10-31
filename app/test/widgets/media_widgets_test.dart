@@ -428,10 +428,11 @@ void main() {
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(grid(6));
-      expect(
-        tester.widget<CustomScrollView>(find.byType(CustomScrollView)).physics,
-        isA<ClampingScrollPhysics>(),
-      );
+      final ScrollPhysics? physics = tester
+          .widget<CustomScrollView>(find.byType(CustomScrollView))
+          .physics;
+      expect(physics, isA<AlwaysScrollableScrollPhysics>());
+      expect(physics?.parent, isA<ClampingScrollPhysics>());
       final SliverChildBuilderDelegate delegate =
           tester.widget<SliverGrid>(find.byType(SliverGrid)).delegate
               as SliverChildBuilderDelegate;

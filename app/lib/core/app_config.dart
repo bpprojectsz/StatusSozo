@@ -26,6 +26,15 @@ abstract final class AppConfig {
   static const Duration shareCacheTtl = Duration(hours: 24);
   static const Duration toastDuration = Duration(seconds: 3);
 
+  /// How often Home silently re-reads the status folder while it is showing.
+  static const Duration autoRefreshInterval = Duration(seconds: 4);
+
+  /// Overscroll, in logical pixels, that a pull-down needs to start a refresh.
+  static const double pullToRefreshDistance = 72;
+
+  /// The pull-down indicator stays at least this long, so it is seen.
+  static const Duration pullIndicatorMinimum = Duration(seconds: 1);
+
   // Persistence.
   static const int settingsSchemaVersion = 1;
   static const String settingsPrefsKey = 'sozo.settings';

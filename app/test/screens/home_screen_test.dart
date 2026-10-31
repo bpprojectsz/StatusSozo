@@ -425,4 +425,35 @@ void main() {
       expect(tester.takeException(), isNull);
     });
   });
+  group('refresh', () {
+    testScreen('a status that arrives later appears by itself', (
+      WidgetTester tester,
+    ) async {
+      await primeAndPump(tester);
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byType(StatusTile), findsNWidgets(3));
+
+      rig.status.itemsBySource[StatusSource.standard] = <StatusItem>[
+        statusItem('p9.jpg', modifiedMs: 900),
+        ...Rig.defaultItems(),
+      ];
+      await tester.pump(const Duration(seconds: 5));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.byType(StatusTile), findsNWidgets(4));
+    });
+
+    testScreen('pulling the list down refreshes it', (
+      WidgetTester tester,
+    ) async {
+      await primeAndPump(tester);
+      await tester.pump(const Duration(milliseconds: 500));
+      final int before = rig.status.listCalls;
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, 400));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(rig.status.listCalls, greaterThan(before));
+      expect(find.byType(AppLoadingIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 2));
+      expect(find.byType(AppLoadingIndicator), findsNothing);
+    });
+  });
 }

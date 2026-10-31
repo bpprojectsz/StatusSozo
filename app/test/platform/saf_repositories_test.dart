@@ -61,18 +61,52 @@ void main() {
       expect(native.methods, <String>['pickFolder']);
     });
 
-    test('releases and rejects any other folder', () async {
-      native.responder = (MethodCall call) => call.method == 'pickFolder'
-          ? <String, Object?>{'uri': 'content://tree/bad', 'name': 'Downloads'}
-          : null;
+    test('releases and rejects a folder with no .Statuses inside', () async {
+      native.responder = (MethodCall call) {
+        switch (call.method) {
+          case 'pickFolder':
+            return <String, Object?>{
+              'uri': 'content://tree/bad',
+              'name': 'Downloads',
+            };
+          case 'listFolder':
+            throw PlatformException(code: 'NOT_FOUND');
+        }
+        return null;
+      };
       final Result<FolderGrant> result = await repository.pickFolder(
         StatusSource.standard,
       );
       expect(result.errorOrNull?.kind, AppErrorKind.wrongFolder);
-      expect(native.methods, <String>['pickFolder', 'releaseFolder']);
+      expect(native.methods, <String>[
+        'pickFolder',
+        'listFolder',
+        'releaseFolder',
+      ]);
       expect(native.calls.last.arguments, <String, Object?>{
         'uri': 'content://tree/bad',
       });
+    });
+
+    test('accepts a parent folder that has .Statuses inside', () async {
+      native.responder = (MethodCall call) {
+        switch (call.method) {
+          case 'pickFolder':
+            return <String, Object?>{
+              'uri': 'content://tree/parent',
+              'name': 'WhatsApp',
+            };
+          case 'listFolder':
+            return <Object?>[row('a.jpg', 'image/jpeg')];
+        }
+        return null;
+      };
+      final Result<FolderGrant> result = await repository.pickFolder(
+        StatusSource.standard,
+      );
+      expect(result.valueOrNull?.treeUri, 'content://tree/parent');
+      expect(native.methods, <String>['pickFolder', 'listFolder']);
+    });
     });
 
     test('a cancelled picker is pickerCancelled', () async {

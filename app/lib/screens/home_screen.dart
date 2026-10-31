@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/app/app_scope.dart';
+import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/errors/app_error.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
@@ -42,6 +43,71 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   _MediaTab _tab = _MediaTab.photos;
+  Timer? _poll;
+  double _pull = 0;
+  bool _pulling = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _poll = Timer.periodic(AppConfig.autoRefreshInterval, (Timer _) => _tick());
+  }
+
+  @override
+  void dispose() {
+    _poll?.cancel();
+    super.dispose();
+  }
+
+  /// Silently re-reads the folder while Home is showing, so a status the
+  /// messaging app downloads later appears without any action.
+  void _tick() {
+    if (!mounted) {
+      return;
+    }
+    final AppLifecycleState? lifecycle =
+        WidgetsBinding.instance.lifecycleState;
+    if (lifecycle != null && lifecycle != AppLifecycleState.resumed) {
+      return;
+    }
+    if (!(ModalRoute.of(context)?.isCurrent ?? true)) {
+      return;
+    }
+    final services = AppScope.of(context);
+    final StatusListState list = services.statusList.value;
+    if (list.phase != ListPhase.ready || list.refreshing) {
+      return;
+    }
+    unawaited(services.statusList.refresh(silent: true));
+  }
+
+  bool _onScroll(ScrollNotification n) {
+    if (n is OverscrollNotification &&
+        n.dragDetails != null &&
+        n.overscroll < 0) {
+      _pull -= n.overscroll;
+      if (_pull >= AppConfig.pullToRefreshDistance && !_pulling) {
+        _pull = 0;
+        unawaited(_pullRefresh());
+      }
+    } else if (n is ScrollEndNotification) {
+      _pull = 0;
+    }
+    return false;
+  }
+
+  Future<void> _pullRefresh() async {
+    final services = AppScope.of(context);
+    services.haptics.light();
+    setState(() => _pulling = true); // ui-local
+    await Future.wait<void>(<Future<void>>[
+      services.statusList.refresh(silent: true),
+      Future<void>.delayed(AppConfig.pullIndicatorMinimum),
+    ]);
+    if (mounted) {
+      setState(() => _pulling = false); // ui-local
+    }
+  }
 
   List<StatusItem> _tabItems(StatusListState list) =>
       _tab == _MediaTab.photos ? list.photos : list.videos;
@@ -197,14 +263,29 @@ class _HomeScreenState extends State<HomeScreen> {
             onAction: () => unawaited(services.statusList.refresh()),
           );
         }
-        return MediaGridView(
-          items: tabItems,
-          source: services.thumbnails,
-          selectedIds: selectedIds,
-          selectionMode: selectionMode,
-          savedNames: services.savedLibrary.value.names,
-          onTap: (int i) => _onTap(tabItems, i),
-          onLongPress: (int i) => _onLongPress(tabItems, i),
+        return Stack(
+          children: <Widget>[
+            NotificationListener<ScrollNotification>(
+              onNotification: _onScroll,
+              child: MediaGridView(
+                items: tabItems,
+                source: services.thumbnails,
+                selectedIds: selectedIds,
+                selectionMode: selectionMode,
+                savedNames: services.savedLibrary.value.names,
+                onTap: (int i) => _onTap(tabItems, i),
+                onLongPress: (int i) => _onLongPress(tabItems, i),
+              ),
+            ),
+            if (_pulling)
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(top: AppSpacing.sm),
+                  child: IgnorePointer(child: AppLoadingIndicator()),
+                ),
+              ),
+          ],
         );
     }
   }
