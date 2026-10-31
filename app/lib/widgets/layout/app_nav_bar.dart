@@ -22,7 +22,7 @@ class AppNavBar extends StatelessWidget {
   factory AppNavBar.home({
     required List<Widget> actions,
     Key? key,
-  }) => AppNavBar(key: key, leading: const _Wordmark(), actions: actions);
+  }) => AppNavBar(key: key, title: const _Wordmark(), actions: actions);
 
   /// A pushed screen: back chip, title, optional [actions].
   factory AppNavBar.pushed({
@@ -89,7 +89,11 @@ class _Wordmark extends StatelessWidget {
     final String name = AppLocalizations.of(context).appName;
     return Semantics(
       header: true,
-      child: Text(name, style: styles.wordmark),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: AlignmentDirectional.centerStart,
+        child: Text(name, style: styles.wordmark, maxLines: 1),
+      ),
     );
   }
 }
