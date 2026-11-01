@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
@@ -86,13 +87,25 @@ class _Wordmark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppTextStyles styles = AppTextStyles.of(context);
-    final String name = AppLocalizations.of(context).appName;
+    final AppColors colors = AppColors.of(context);
     return Semantics(
       header: true,
       child: FittedBox(
         fit: BoxFit.scaleDown,
         alignment: AlignmentDirectional.centerStart,
-        child: Text(name, style: styles.wordmark, maxLines: 1),
+        child: Text.rich(
+          TextSpan(
+            style: styles.wordmark,
+            children: <InlineSpan>[
+              const TextSpan(text: AppConfig.wordmarkHead),
+              TextSpan(
+                text: AppConfig.wordmarkTail,
+                style: TextStyle(color: colors.accent),
+              ),
+            ],
+          ),
+          maxLines: 1,
+        ),
       ),
     );
   }

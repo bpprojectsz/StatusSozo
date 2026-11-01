@@ -17,7 +17,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-of
 .wrap{max-width:880px;margin:0 auto;padding:0 16px}
 header.site{padding:16px 0}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{font-weight:800;font-size:20px;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.brand{font-weight:800;font-size:28px;line-height:1.1;letter-spacing:-.02em;color:var(--text);text-decoration:none}
+.brand span{color:var(--accent)}
 nav.site a{margin-inline-start:16px;color:var(--text2);text-decoration:none;font-weight:500;font-size:15px}
 nav.site a:hover{color:var(--accent)}
 .hero{background:var(--accent-soft);border-radius:24px;padding:40px 24px;margin:8px 0 24px}

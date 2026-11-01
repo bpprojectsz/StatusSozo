@@ -2,6 +2,11 @@
 abstract final class AppConfig {
   // Identity.
   static const String appName = 'StatusSozo';
+
+  /// The wordmark is drawn in two colours: [wordmarkHead] in the text colour
+  /// and [wordmarkTail] in the accent. Together they spell [appName].
+  static const String wordmarkHead = 'Status';
+  static const String wordmarkTail = 'Sozo';
   static const String applicationId = 'com.zdmgold.statussozo';
 
   // Contact and web.

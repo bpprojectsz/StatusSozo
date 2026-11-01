@@ -41,7 +41,7 @@ class AppTextStyles extends ThemeExtension<AppTextStyles> {
       ),
       wordmark: _style(
         family: _displayFamily,
-        size: 20,
+        size: 26,
         weight: 800,
         height: 1.1,
         color: colors.textPrimary,
