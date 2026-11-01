@@ -100,7 +100,7 @@ class _Wordmark extends StatelessWidget {
               const TextSpan(text: AppConfig.wordmarkHead),
               TextSpan(
                 text: AppConfig.wordmarkTail,
-                style: TextStyle(color: colors.accent),
+                style: styles.wordmark.copyWith(color: colors.accent),
               ),
             ],
           ),
