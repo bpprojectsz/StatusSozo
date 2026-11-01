@@ -1,0 +1,129 @@
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ The Google Privacy Policy describes how data is handled in this service.   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/to/crash-reporting                                     ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ║                                                                            ║
+  ║ To disable animations in this tool, use                                    ║
+  ║ 'flutter config --no-cli-animations'.                                      ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+Resolving dependencies...
+Downloading packages...
+  archive 4.3.0 (4.5.2 available)
+  async 2.12.0 (2.13.1 available)
+  characters 1.4.0 (1.4.1 available)
+  checked_yaml 2.0.3 (2.0.4 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cross_file 0.3.5 (0.4.0 available)
+  crypto 3.0.7 (3.0.8 available)
+  fake_async 1.3.2 (1.3.3 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  flutter_native_splash 2.4.6 (2.4.8 available)
+  flutter_svg 2.2.2 (2.3.2 available)
+  hugeicons 1.2.0 (4.4.0 available)
+  image 4.10.1 (4.12.0 available)
+  intl 0.19.0 (0.20.3 available)
+  json_annotation 4.9.0 (4.12.0 available)
+  leak_tracker 10.0.8 (11.0.2 available)
+  leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+  leak_tracker_testing 3.0.1 (3.0.2 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_android 2.2.19 (2.3.1 available)
+  path_provider_foundation 2.4.2 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 6.1.0 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  posix 6.5.2 (6.5.4 available)
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences 2.5.3 (2.5.6 available)
+  shared_preferences_android 2.4.13 (2.5.4 available)
+  shared_preferences_foundation 2.5.4 (2.6.1 available)
+  shared_preferences_platform_interface 2.4.1 (2.4.2 available)
+  source_span 1.10.1 (1.10.2 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.4 (0.7.15 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.20 (6.3.33 available)
+  url_launcher_ios 6.3.4 (6.4.2 available)
+  url_launcher_linux 3.2.1 (3.2.3 available)
+  url_launcher_macos 3.2.3 (3.2.6 available)
+  url_launcher_web 2.4.1 (2.4.3 available)
+  url_launcher_windows 3.1.4 (3.1.6 available)
+  vector_graphics 1.1.19 (1.2.5 available)
+  vector_graphics_compiler 1.1.19 (1.3.4 available)
+  vector_math 2.1.4 (2.4.4 available)
+  video_player 2.10.1 (2.14.1 available)
+  video_player_android 2.8.15 (2.12.2 available)
+  video_player_avfoundation 2.8.4 (2.12.3 available)
+  video_player_platform_interface 6.6.0 (6.9.0 available)
+  vm_service 14.3.1 (15.4.0 available)
+  web 1.1.1 (1.1.2 available)
+  win32 5.13.0 (6.4.0 available)
+  xml 6.5.0 (7.1.0 available)
+Got dependencies!
+60 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+  ════════════════════════════════════════════
+     FLUTTER LAUNCHER ICONS (v0.14.4)                               
+  ════════════════════════════════════════════
+  
+• Creating default icons Android
+• Creating adaptive icons Android
+• Creating adaptive monochrome icons Android
+• Overwriting the default Android launcher icon with a new icon
+• Creating mipmap xml file Android
+No platform provided
+
+✓ Successfully generated launcher icons
+[Android] Creating default splash images
+[Android] Creating default android12splash images
+[Android] Creating dark mode android12splash images
+[Android] Updating launch background(s) with splash image path...
+[Android]  - android/app/src/main/res/drawable/launch_background.xml
+[Android]  - android/app/src/main/res/drawable-night/launch_background.xml
+[Android]  - android/app/src/main/res/drawable-v21/launch_background.xml
+[Android]  - android/app/src/main/res/drawable-night-v21/launch_background.xml
+[Android] Updating styles...
+[Android]  - android/app/src/main/res/values-v31/styles.xml
+[Android]  - android/app/src/main/res/values-night-v31/styles.xml
+[Android]  - android/app/src/main/res/values/styles.xml
+[Android]  - android/app/src/main/res/values-night/styles.xml
+
+✅ Native splash complete.
+Now go finish building something awesome! 💪 You rock! 🤘🤩
+Like the package? Please give it a 👍 here: https://pub.dev/packages/flutter_native_splash
+
+manifest: no uses-permission
+ M app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+--- manifest diff
+--- styles diff
