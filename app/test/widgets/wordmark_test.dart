@@ -32,7 +32,8 @@ void main() {
               w is RichText && w.text.toPlainText() == AppConfig.appName,
         ),
       );
-      final TextSpan root = rich.text as TextSpan;
+      // Text.rich wraps the given span in the ambient default style.
+      final TextSpan root = (rich.text as TextSpan).children!.single as TextSpan;
       expect(root.style?.color, colors.textPrimary);
       expect(root.style?.fontSize, 26);
       expect(root.style?.fontWeight, FontWeight.w800);
