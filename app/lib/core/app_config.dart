@@ -14,6 +14,7 @@ abstract final class AppConfig {
   static const String websiteBaseUrl = 'https://statussozo.bpprojectsz.workers.dev';
   static const String privacyUrl = '$websiteBaseUrl/privacy';
   static const String supportUrl = '$websiteBaseUrl/support';
+  static const String termsUrl = '$websiteBaseUrl/terms';
   static const String storeListingUrl =
       'https://play.google.com/store/apps/details?id=$applicationId';
 

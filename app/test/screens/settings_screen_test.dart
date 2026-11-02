@@ -2,11 +2,16 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/app_config.dart';
+import 'package:statussozo/core/errors/app_error.dart';
 import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/design/design.dart';
+import 'package:statussozo/screens/access_screen.dart';
+import 'package:statussozo/screens/debug_logs_screen.dart';
+import 'package:statussozo/screens/licenses_screen.dart';
 import 'package:statussozo/screens/settings_screen.dart';
+import 'package:statussozo/utils/app_log.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
 import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 
@@ -30,7 +35,11 @@ void main() {
     String description,
     Future<void> Function(WidgetTester tester) body,
   ) => screenTest(description, () => rig, body);
-  setUp(() => rig = Rig());
+  setUp(() {
+    rig = Rig();
+    AppLog.clear();
+    LicenseRegistry.reset();
+  });
   tearDown(() => rig.dispose());
 
   Future<void> pumpSettings(
@@ -39,7 +48,7 @@ void main() {
     bool dark = false,
     double scale = 1,
   }) async {
-    useSurface(tester, height: 1200);
+    useSurface(tester, height: 2600);
     await tester.pumpWidget(
       screenApp(
         rig,
@@ -62,6 +71,8 @@ void main() {
         'APPEARANCE',
         'FOLDERS',
         'SUPPORT',
+        'LEGAL',
+        'DIAGNOSTICS',
         'ABOUT',
       ]) {
         expect(find.text(header), findsOneWidget);
@@ -251,6 +262,85 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+  });
+  group('more support, legal and diagnostics rows', () {
+    testScreen('Share this app shares the invitation with the store link', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('Share this app'));
+      await tester.pump();
+      final String text = rig.share.sharedTexts.single;
+      expect(text, contains('StatusSozo'));
+      expect(text, contains(AppConfig.storeListingUrl));
+    });
+
+    testScreen('a share that fails shows a toast', (
+      WidgetTester tester,
+    ) async {
+      rig.share.error = const AppError(AppErrorKind.unexpected);
+      await pumpSettings(tester);
+      await tester.tap(find.text('Share this app'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.services.toasts.value?.code, ToastCode.shareFailed);
+    });
+
+    testScreen('Support opens the support page', (WidgetTester tester) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('Support'));
+      await tester.pump();
+      expect(rig.links.opened.single.toString(), AppConfig.supportUrl);
+    });
+
+    testScreen('Terms of Service opens the terms page', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('Terms of Service'));
+      await tester.pump();
+      expect(rig.links.opened.single.toString(), AppConfig.termsUrl);
+    });
+
+    testScreen('How to connect a folder shows the steps again', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('How to connect a folder'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AccessScreen), findsOneWidget);
+      expect(find.text('How to connect your folder'), findsOneWidget);
+      expect(find.text('Choose folder'), findsOneWidget);
+      expect(find.text('Tap Choose folder.'), findsOneWidget);
+    });
+
+    testScreen('Open-source licenses opens the licenses screen', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('Open-source licenses'));
+      await tester.pumpAndSettle();
+      expect(find.byType(LicensesScreen), findsOneWidget);
+    });
+
+    testScreen('Debug logs shows how many entries exist and opens the log', (
+      WidgetTester tester,
+    ) async {
+      AppLog.info('t', 'one');
+      AppLog.info('t', 'two');
+      await pumpSettings(tester);
+      expect(find.text('2 entries'), findsOneWidget);
+      await tester.tap(find.text('Debug logs'));
+      await tester.pumpAndSettle();
+      expect(find.byType(DebugLogsScreen), findsOneWidget);
+    });
+
+    testScreen('Debug logs says so when nothing was logged', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      expect(find.text('No entries'), findsOneWidget);
     });
   });
 }

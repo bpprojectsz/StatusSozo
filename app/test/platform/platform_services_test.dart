@@ -111,6 +111,27 @@ void main() {
       },
     );
 
+    test('shareText hands the text to the share sheet', () async {
+      final List<String> texts = <String>[];
+      final PlusShareService text = PlusShareService(
+        SafChannel(),
+        textSharer: (String t) async => texts.add(t),
+      );
+      final Result<void> result = await text.shareText('hello');
+      expect(result.isOk, isTrue);
+      expect(texts, <String>['hello']);
+      expect(native.methods, isEmpty);
+    });
+
+    test('shareText reports a failing share sheet as unexpected', () async {
+      final PlusShareService text = PlusShareService(
+        SafChannel(),
+        textSharer: (String t) async => throw StateError('sheet failed'),
+      );
+      final Result<void> result = await text.shareText('hello');
+      expect(result.errorOrNull?.kind, AppErrorKind.unexpected);
+    });
+
     test('copies each item to the cache, then shares the files', () async {
       native.responder = (MethodCall call) =>
           '/cache/share/${(call.arguments as Map<Object?, Object?>)['name']}';

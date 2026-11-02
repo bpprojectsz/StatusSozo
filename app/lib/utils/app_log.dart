@@ -7,6 +7,9 @@ abstract final class AppLog {
 
   static final List<String> _lines = <String>[];
 
+  /// Bumped whenever the buffer changes, so screens can rebuild.
+  static final ValueNotifier<int> revision = ValueNotifier<int>(0);
+
   static void info(String tag, String message, [Object? error]) =>
       _add('I', tag, message, error);
 
@@ -19,8 +22,17 @@ abstract final class AppLog {
   /// The buffered lines as text, oldest first.
   static String report() => _lines.join('\n');
 
+  /// The buffered lines, oldest first.
+  static List<String> get entries => List<String>.unmodifiable(_lines);
+
+  /// How many lines are buffered.
+  static int get count => _lines.length;
+
   /// Empties the buffer.
-  static void clear() => _lines.clear();
+  static void clear() {
+    _lines.clear();
+    revision.value++;
+  }
 
   static void _add(String level, String tag, String message, Object? error) {
     final String stamp = DateTime.now().toUtc().toIso8601String();
@@ -30,6 +42,7 @@ abstract final class AppLog {
     if (_lines.length > capacity) {
       _lines.removeRange(0, _lines.length - capacity);
     }
+    revision.value++;
     if (kDebugMode) {
       debugPrint(line);
     }

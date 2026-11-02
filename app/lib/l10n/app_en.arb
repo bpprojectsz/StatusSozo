@@ -636,5 +636,98 @@
   "semLoading": "Loading",
   "@semLoading": {
     "description": "Accessibility label of the loading indicator."
+  },
+  "settingsShareApp": "Share this app",
+  "@settingsShareApp": {
+    "description": "Settings row that opens the share sheet with an invitation to install the app."
+  },
+  "shareAppMessage": "Browse, save and share status photos and videos with {appName}: {url}",
+  "@shareAppMessage": {
+    "description": "Text shared when the person taps Share this app.",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsSupport": "Support",
+  "@settingsSupport": {
+    "description": "Settings row that opens the support web page."
+  },
+  "settingsHowToConnect": "How to connect a folder",
+  "@settingsHowToConnect": {
+    "description": "Settings row that shows the folder connection steps again."
+  },
+  "accessTitleHelp": "How to connect your folder",
+  "@accessTitleHelp": {
+    "description": "Title of the access screen when opened from Settings as a reminder of the steps."
+  },
+  "settingsSectionLegal": "Legal",
+  "@settingsSectionLegal": {
+    "description": "Settings section header for legal links."
+  },
+  "settingsTerms": "Terms of Service",
+  "@settingsTerms": {
+    "description": "Settings row that opens the terms of service web page."
+  },
+  "settingsLicenses": "Open-source licenses",
+  "@settingsLicenses": {
+    "description": "Settings row that opens the list of open-source licenses."
+  },
+  "settingsSectionDiagnostics": "Diagnostics",
+  "@settingsSectionDiagnostics": {
+    "description": "Settings section header for the debug log."
+  },
+  "settingsDebugLogs": "Debug logs",
+  "@settingsDebugLogs": {
+    "description": "Settings row that opens the on-device debug log."
+  },
+  "settingsDebugLogsCount": "{count, plural, =0{No entries} =1{1 entry} other{{count} entries}}",
+  "@settingsDebugLogsCount": {
+    "description": "Value shown next to Debug logs: how many log entries exist.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "debugLogsTitle": "Debug logs",
+  "@debugLogsTitle": {
+    "description": "Title of the debug log screen."
+  },
+  "debugLogsEmptyTitle": "Nothing logged",
+  "@debugLogsEmptyTitle": {
+    "description": "Empty state title on the debug log screen."
+  },
+  "debugLogsEmptyMessage": "Events and problems are noted here. They stay on your device unless you send a report.",
+  "@debugLogsEmptyMessage": {
+    "description": "Empty state message on the debug log screen."
+  },
+  "debugLogsSend": "Send report",
+  "@debugLogsSend": {
+    "description": "Action that opens an email with the debug log."
+  },
+  "debugLogsClear": "Clear",
+  "@debugLogsClear": {
+    "description": "Action that removes the debug log entries."
+  },
+  "debugLogsClearTitle": "Clear the log?",
+  "@debugLogsClearTitle": {
+    "description": "Title of the confirmation before clearing the debug log."
+  },
+  "debugLogsClearMessage": "The entries are removed from this device.",
+  "@debugLogsClearMessage": {
+    "description": "Message of the confirmation before clearing the debug log."
+  },
+  "licensesTitle": "Open-source licenses",
+  "@licensesTitle": {
+    "description": "Title of the open-source licenses screen."
+  },
+  "licensesEmptyTitle": "No licenses found",
+  "@licensesEmptyTitle": {
+    "description": "Empty state title when no license information is available."
   }
 }

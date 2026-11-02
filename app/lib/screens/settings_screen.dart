@@ -10,7 +10,10 @@ import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
 import 'package:statussozo/screens/access_screen.dart';
+import 'package:statussozo/screens/debug_logs_screen.dart';
+import 'package:statussozo/screens/licenses_screen.dart';
 import 'package:statussozo/screens/screen_text.dart';
+import 'package:statussozo/utils/app_log.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/layout/app_nav_bar.dart';
 import 'package:statussozo/widgets/layout/screen_scaffold.dart';
@@ -31,6 +34,17 @@ class SettingsScreen extends StatelessWidget {
     final bool ok = await action();
     if (!ok) {
       services.toasts.show(ToastCode.linkFailed);
+    }
+  }
+
+  Future<void> _shareApp(BuildContext context) async {
+    final services = AppScope.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    final result = await services.share.shareText(
+      l10n.shareAppMessage(l10n.appName, AppConfig.storeListingUrl),
+    );
+    if (result.errorOrNull != null) {
+      services.toasts.show(ToastCode.shareFailed);
     }
   }
 
@@ -115,6 +129,12 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 AppRow(
+                  icon: AppIcons.share,
+                  label: l10n.settingsShareApp,
+                  showChevron: true,
+                  onPressed: () => unawaited(_shareApp(context)),
+                ),
+                AppRow(
                   icon: AppIcons.mail,
                   label: l10n.settingsFeedback,
                   showChevron: true,
@@ -130,6 +150,37 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 AppRow(
+                  icon: AppIcons.help,
+                  label: l10n.settingsSupport,
+                  showChevron: true,
+                  onPressed: () => unawaited(
+                    _open(
+                      context,
+                      () => services.links.openUrl(
+                        Uri.parse(AppConfig.supportUrl),
+                      ),
+                    ),
+                  ),
+                ),
+                AppRow(
+                  icon: AppIcons.info,
+                  label: l10n.settingsHowToConnect,
+                  showChevron: true,
+                  onPressed: () => unawaited(
+                    Navigator.of(context).push(
+                      AppPageRoute<void>(
+                        builder: (_) =>
+                            const AccessScreen(mode: AccessMode.help),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SectionHeader(l10n.settingsSectionLegal),
+            AppGroup(
+              children: <Widget>[
+                AppRow(
                   icon: AppIcons.privacy,
                   label: l10n.settingsPrivacy,
                   showChevron: true,
@@ -142,7 +193,55 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                AppRow(
+                  icon: AppIcons.terms,
+                  label: l10n.settingsTerms,
+                  showChevron: true,
+                  onPressed: () => unawaited(
+                    _open(
+                      context,
+                      () => services.links.openUrl(
+                        Uri.parse(AppConfig.termsUrl),
+                      ),
+                    ),
+                  ),
+                ),
+                AppRow(
+                  icon: AppIcons.licenses,
+                  label: l10n.settingsLicenses,
+                  showChevron: true,
+                  onPressed: () => unawaited(
+                    Navigator.of(context).push(
+                      AppPageRoute<void>(
+                        builder: (_) => const LicensesScreen(),
+                      ),
+                    ),
+                  ),
+                ),
               ],
+            ),
+            SectionHeader(l10n.settingsSectionDiagnostics),
+            ValueListenableBuilder<int>(
+              valueListenable: AppLog.revision,
+              builder: (BuildContext context, int _, Widget? child) {
+                return AppGroup(
+                  children: <Widget>[
+                    AppRow(
+                      icon: AppIcons.debug,
+                      label: l10n.settingsDebugLogs,
+                      secondary: l10n.settingsDebugLogsCount(AppLog.count),
+                      showChevron: true,
+                      onPressed: () => unawaited(
+                        Navigator.of(context).push(
+                          AppPageRoute<void>(
+                            builder: (_) => const DebugLogsScreen(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             SectionHeader(l10n.settingsSectionAbout),
             AppGroup(

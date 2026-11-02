@@ -35,4 +35,7 @@ abstract final class AppIcons {
   static const AppIconData error = HugeIcons.strokeRoundedAlertCircle;
   static const AppIconData language = HugeIcons.strokeRoundedGlobe;
   static const AppIconData pro = HugeIcons.strokeRoundedCrown;
+  static const AppIconData terms = HugeIcons.strokeRoundedLegalDocument01;
+  static const AppIconData licenses = HugeIcons.strokeRoundedLicenseThirdParty;
+  static const AppIconData debug = HugeIcons.strokeRoundedBug01;
 }

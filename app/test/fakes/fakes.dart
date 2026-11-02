@@ -282,7 +282,18 @@ class FakeShareService implements ShareService {
   AppError? error;
 
   final List<List<ViewableMedia>> shared = <List<ViewableMedia>>[];
+  final List<String> sharedTexts = <String>[];
   int pruneCalls = 0;
+
+  @override
+  Future<Result<void>> shareText(String text) async {
+    final AppError? e = error;
+    if (e != null) {
+      return Err<void>(e);
+    }
+    sharedTexts.add(text);
+    return const Ok<void>(null);
+  }
 
   @override
   Future<Result<void>> share(List<ViewableMedia> items) async {

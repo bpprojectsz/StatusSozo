@@ -10,17 +10,46 @@ import 'package:statussozo/utils/app_log.dart';
 /// Opens the system share sheet with a list of files.
 typedef FileSharer = Future<void> Function(List<XFile> files);
 
+/// Opens the system share sheet with a piece of text.
+typedef TextSharer = Future<void> Function(String text);
+
 /// [ShareService] over `share_plus`. Each item is first copied to the cache
 /// folder, so the share sheet reads a plain file rather than a document URI.
 class PlusShareService implements ShareService {
-  PlusShareService(this._channel, {FileSharer? sharer})
-    : _sharer = sharer ?? _systemSharer;
+  PlusShareService(
+    this._channel, {
+    FileSharer? sharer,
+    TextSharer? textSharer,
+  }) : _sharer = sharer ?? _systemSharer,
+       _textSharer = textSharer ?? _systemTextSharer;
 
   final SafChannel _channel;
   final FileSharer _sharer;
+  final TextSharer _textSharer;
 
   static Future<void> _systemSharer(List<XFile> files) async {
     await Share.shareXFiles(files);
+  }
+
+  static Future<void> _systemTextSharer(String text) async {
+    await Share.share(text);
+  }
+
+  @override
+  Future<Result<void>> shareText(String text) async {
+    try {
+      await _textSharer(text);
+      return const Ok<void>(null);
+    } on Object catch (error) {
+      AppLog.error('share', 'text share sheet failed', error);
+      return Err<void>(
+        AppError(
+          AppErrorKind.unexpected,
+          cause: error,
+          detail: 'Share sheet failed',
+        ),
+      );
+    }
   }
 
   @override

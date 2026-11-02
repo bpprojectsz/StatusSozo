@@ -32,6 +32,8 @@ flutter:
   uses-material-design: false
   assets:
     - assets/brand/
+    - assets/fonts/OFL-Inter.txt
+    - assets/fonts/OFL-Manrope.txt
   fonts:
     - family: Inter
       fonts:

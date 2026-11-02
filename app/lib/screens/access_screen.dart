@@ -28,6 +28,10 @@ enum AccessMode {
 
   /// Pushed from Settings to choose a folder again.
   reconnect,
+
+  /// Opened from Settings as a reminder of the steps. Behaves like
+  /// [reconnect]: pushed, with a back chip.
+  help,
 }
 
 /// Connect a folder. A fixed layout: a compact hero card, three numbered steps,
@@ -63,6 +67,9 @@ class _AccessScreenState extends State<AccessScreen> {
     return initial;
   }
 
+  bool get _pushed =>
+      widget.mode == AccessMode.reconnect || widget.mode == AccessMode.help;
+
   StatusSource _other(StatusSource source) => source == StatusSource.standard
       ? StatusSource.business
       : StatusSource.standard;
@@ -76,7 +83,7 @@ class _AccessScreenState extends State<AccessScreen> {
       return;
     }
     services.toasts.show(ToastCode.folderConnected);
-    if (widget.mode == AccessMode.reconnect && mounted) {
+    if (_pushed && mounted) {
       Navigator.of(context).pop();
     }
   }
@@ -100,20 +107,22 @@ class _AccessScreenState extends State<AccessScreen> {
     final AppTextStyles styles = AppTextStyles.of(context);
     final StatusSource target = _resolveTarget();
     final StatusSource other = _other(target);
+    final bool pushed = _pushed;
 
     final String title = switch (widget.mode) {
       AccessMode.first => l10n.accessTitleFirst,
       AccessMode.renewal => l10n.accessTitleRenewal,
       AccessMode.reconnect => l10n.accessTitleReconnect,
+      AccessMode.help => l10n.accessTitleHelp,
     };
 
     return ListenableBuilder(
       listenable: services.folderAccess,
       builder: (BuildContext context, Widget? _) {
         final bool connecting = services.folderAccess.value.connecting != null;
-        final bool showOther = widget.mode != AccessMode.reconnect;
+        final bool showOther = !pushed;
         return ScreenScaffold(
-          navBar: widget.mode == AccessMode.reconnect
+          navBar: pushed
               ? AppNavBar.pushed(
                   title: l10n.settingsTitle,
                   onBack: () => Navigator.of(context).pop(),

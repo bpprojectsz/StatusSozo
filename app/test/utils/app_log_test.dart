@@ -34,4 +34,21 @@ void main() {
     AppLog.clear();
     expect(AppLog.report(), isEmpty);
   });
+
+  test('entries and count follow the buffer, oldest first', () {
+    AppLog.info('t', 'a');
+    AppLog.info('t', 'b');
+    expect(AppLog.count, 2);
+    expect(AppLog.entries.first, contains('a'));
+    expect(AppLog.entries.last, contains('b'));
+    expect(() => AppLog.entries.add('x'), throwsUnsupportedError);
+  });
+
+  test('revision changes on every add and on clear', () {
+    final int start = AppLog.revision.value;
+    AppLog.info('t', 'x');
+    expect(AppLog.revision.value, start + 1);
+    AppLog.clear();
+    expect(AppLog.revision.value, start + 2);
+  });
 }
