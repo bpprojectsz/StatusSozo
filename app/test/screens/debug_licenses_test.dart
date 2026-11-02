@@ -43,6 +43,7 @@ void main() {
     Widget screen, {
     TextDirection direction = TextDirection.ltr,
     double scale = 1,
+    bool settle = true,
   }) async {
     useSurface(tester, height: 1200);
     await tester.pumpWidget(
@@ -54,7 +55,11 @@ void main() {
       ),
     );
     await tester.tap(find.text('Open'));
-    await tester.pumpAndSettle();
+    if (settle) {
+      await tester.pumpAndSettle();
+    } else {
+      await tester.pump();
+    }
   }
 
   group('DebugLogsScreen', () {
@@ -155,8 +160,14 @@ void main() {
     testScreen('treats a failing license source as empty', (
       WidgetTester tester,
     ) async {
-      LicenseRegistry.addLicense(() => Stream<LicenseEntry>.error(StateError('x')));
-      await open(tester, const LicensesScreen());
+      LicenseRegistry.addLicense(
+        () => Stream<LicenseEntry>.error(StateError('x')),
+      );
+      await open(tester, const LicensesScreen(), settle: false);
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 50)),
+      );
+      await tester.pumpAndSettle();
       expect(find.text('No licenses found'), findsOneWidget);
     });
   });
