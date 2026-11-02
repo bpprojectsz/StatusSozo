@@ -31,9 +31,9 @@ Future<List<PackageLicense>> collectLicenses() async {
   final List<PackageLicense> result = <PackageLicense>[
     for (final MapEntry<String, List<LicenseParagraph>> e in byPackage.entries)
       PackageLicense(name: e.key, paragraphs: e.value),
-  ]..sort(
-    (PackageLicense a, PackageLicense b) =>
-        a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-  );
+  ]..sort((PackageLicense a, PackageLicense b) {
+    final int byLower = a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    return byLower != 0 ? byLower : a.name.compareTo(b.name);
+  });
   return result;
 }

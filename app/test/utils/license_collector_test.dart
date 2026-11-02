@@ -13,15 +13,13 @@ void main() {
     });
     final List<PackageLicense> result = await collectLicenses();
     expect(result.map((PackageLicense l) => l.name), <String>[
-      'alpha',
       'Alpha',
+      'alpha',
       'zeta',
     ]);
-    final PackageLicense alpha = result.first;
-    expect(alpha.paragraphs.map((LicenseParagraph p) => p.text), <String>[
-      'Text two',
-    ]);
-    expect(result[1].paragraphs.single.text, 'Text one');
+    expect(result[0].paragraphs.single.text, 'Text one');
+    expect(result[1].paragraphs.single.text, 'Text two');
+    expect(result[2].paragraphs.single.text, 'Text one');
   });
 
   test('merges two entries for the same package with a blank separator', () async {

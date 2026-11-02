@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
+import 'package:statussozo/utils/app_log.dart';
 import 'package:statussozo/utils/license_collector.dart';
 import 'package:statussozo/widgets/feedback/empty_state.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
@@ -20,7 +21,18 @@ class LicensesScreen extends StatefulWidget {
 }
 
 class _LicensesScreenState extends State<LicensesScreen> {
-  final Future<List<PackageLicense>> _licenses = collectLicenses();
+  late final Future<List<PackageLicense>> _licenses = _load();
+
+  /// A license source that fails is treated as having no licenses, so the
+  /// screen shows its empty state instead of an error.
+  Future<List<PackageLicense>> _load() async {
+    try {
+      return await collectLicenses();
+    } on Object catch (error) {
+      AppLog.warn('licenses', 'Could not read the licenses', error);
+      return const <PackageLicense>[];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +46,10 @@ class _LicensesScreenState extends State<LicensesScreen> {
         future: _licenses,
         builder: (BuildContext context, AsyncSnapshot<List<PackageLicense>> s) {
           final List<PackageLicense>? data = s.data;
-          if (data == null && !s.hasError) {
+          if (data == null) {
             return const Center(child: AppLoadingIndicator());
           }
-          if (data == null || data.isEmpty) {
+          if (data.isEmpty) {
             return EmptyState(
               icon: AppIcons.licenses,
               title: l10n.licensesEmptyTitle,
