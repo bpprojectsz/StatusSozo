@@ -8,6 +8,7 @@ import 'package:statussozo/screens/licenses_screen.dart';
 import 'package:statussozo/utils/app_log.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
 
+import '../widgets/harness.dart';
 import 'screen_harness.dart';
 
 Widget _launcher(Widget screen) {
@@ -131,8 +132,8 @@ void main() {
       WidgetTester tester,
     ) async {
       LicenseRegistry.addLicense(() async* {
-        yield LicenseEntryWithLineBreaks(<String>['pkg_b'], 'Licence text B');
-        yield LicenseEntryWithLineBreaks(<String>['pkg_a'], 'Licence text A');
+        yield const LicenseEntryWithLineBreaks(<String>['pkg_b'], 'Licence text B');
+        yield const LicenseEntryWithLineBreaks(<String>['pkg_a'], 'Licence text A');
       });
       await open(tester, const LicensesScreen());
       final Offset a = tester.getTopLeft(find.text('pkg_a'));

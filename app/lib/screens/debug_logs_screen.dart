@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/app/app_scope.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';

@@ -8,8 +8,8 @@ void main() {
 
   test('groups by package, sorts by name and separates repeated licenses', () async {
     LicenseRegistry.addLicense(() async* {
-      yield LicenseEntryWithLineBreaks(<String>['zeta', 'Alpha'], 'Text one');
-      yield LicenseEntryWithLineBreaks(<String>['alpha'], 'Text two');
+      yield const LicenseEntryWithLineBreaks(<String>['zeta', 'Alpha'], 'Text one');
+      yield const LicenseEntryWithLineBreaks(<String>['alpha'], 'Text two');
     });
     final List<PackageLicense> result = await collectLicenses();
     expect(result.map((PackageLicense l) => l.name), <String>[
@@ -26,8 +26,8 @@ void main() {
 
   test('merges two entries for the same package with a blank separator', () async {
     LicenseRegistry.addLicense(() async* {
-      yield LicenseEntryWithLineBreaks(<String>['pkg'], 'First');
-      yield LicenseEntryWithLineBreaks(<String>['pkg'], 'Second');
+      yield const LicenseEntryWithLineBreaks(<String>['pkg'], 'First');
+      yield const LicenseEntryWithLineBreaks(<String>['pkg'], 'Second');
     });
     final List<PackageLicense> result = await collectLicenses();
     expect(result.single.paragraphs.map((LicenseParagraph p) => p.text), <String>[
