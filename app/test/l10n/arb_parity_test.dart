@@ -7,7 +7,9 @@ import 'package:statussozo/l10n/gen/app_localizations.dart';
 
 Map<String, Object?> _read(String code) {
   final File file = File('lib/l10n/app_$code.arb');
-  expect(file.existsSync(), isTrue, reason: 'missing ${file.path}');
+  if (!file.existsSync()) {
+    throw StateError('missing ${file.path}');
+  }
   return json.decode(file.readAsStringSync()) as Map<String, Object?>;
 }
 
