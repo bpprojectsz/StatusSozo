@@ -19,6 +19,7 @@ import 'package:statussozo/core/providers/selection_provider.dart';
 import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/providers/source_provider.dart';
 import 'package:statussozo/core/providers/status_list_provider.dart';
+import 'package:statussozo/core/providers/locale_provider.dart';
 import 'package:statussozo/core/providers/theme_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/core/services/save_coordinator.dart';
@@ -47,6 +48,7 @@ class AppServices {
     required this.appVersion,
     required this.settings,
     required this.theme,
+    required this.locale,
     required this.source,
     required this.folderAccess,
     required this.statusList,
@@ -110,6 +112,7 @@ class AppServices {
   }) {
     final SettingsProvider settings = SettingsProvider(settingsStore);
     final ThemeProvider theme = ThemeProvider(settings);
+    final LocaleProvider locale = LocaleProvider(settings);
     final SourceProvider source = SourceProvider(settings);
     final FolderAccessProvider folderAccess = FolderAccessProvider(
       repository: statusRepository,
@@ -142,6 +145,7 @@ class AppServices {
       appVersion: appVersion,
       settings: settings,
       theme: theme,
+      locale: locale,
       source: source,
       folderAccess: folderAccess,
       statusList: statusList,
@@ -171,6 +175,7 @@ class AppServices {
   // Providers.
   final SettingsProvider settings;
   final ThemeProvider theme;
+  final LocaleProvider locale;
   final SourceProvider source;
   final FolderAccessProvider folderAccess;
   final StatusListProvider statusList;
@@ -279,6 +284,7 @@ class AppServices {
     savedLibrary.dispose();
     folderAccess.dispose();
     source.dispose();
+    locale.dispose();
     theme.dispose();
     toasts.dispose();
     settings.dispose();

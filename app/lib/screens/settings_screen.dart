@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/app/app_scope.dart';
 import 'package:statussozo/core/app_config.dart';
+import 'package:statussozo/core/models/app_language.dart';
 import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
@@ -24,6 +25,7 @@ import 'package:statussozo/widgets/primitives/app_row.dart';
 import 'package:statussozo/widgets/primitives/section_header.dart';
 import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 import 'package:statussozo/widgets/sheets/app_sheet.dart';
+import 'package:statussozo/widgets/sheets/language_sheet.dart';
 
 /// Settings: inset grouped cards with uppercase section headers.
 class SettingsScreen extends StatelessWidget {
@@ -113,6 +115,33 @@ class SettingsScreen extends StatelessWidget {
                   children: <Widget>[
                     for (final StatusSource source in StatusSource.values)
                       _FolderRow(source: source),
+                  ],
+                );
+              },
+            ),
+            SectionHeader(l10n.settingsSectionLanguage),
+            ValueListenableBuilder<String?>(
+              valueListenable: services.locale,
+              builder: (BuildContext context, String? code, Widget? child) {
+                return AppGroup(
+                  children: <Widget>[
+                    AppRow(
+                      icon: AppIcons.language,
+                      label: l10n.settingsLanguage,
+                      trailing: Text(
+                        AppLanguages.byCode(code)?.nativeName ??
+                            l10n.languageSystemDefault,
+                        style: styles.footnote,
+                      ),
+                      onPressed: () => unawaited(
+                        showLanguageSheet(
+                          context,
+                          current: code,
+                          onSelected: (String? next) =>
+                              unawaited(services.locale.setLanguage(next)),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },

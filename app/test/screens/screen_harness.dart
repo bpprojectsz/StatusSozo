@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/app/app_scope.dart';
 import 'package:statussozo/app/app_services.dart';
+import 'package:statussozo/core/models/app_language.dart';
 import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/folder_grant.dart';
 import 'package:statussozo/core/models/status_item.dart';
@@ -137,15 +138,22 @@ Widget screenApp(
   Rig rig,
   Widget home, {
   bool dark = false,
-  TextDirection direction = TextDirection.ltr,
+  TextDirection? direction,
   double textScale = 1,
   bool disableAnimations = false,
+  Locale? locale,
 }) {
+  final TextDirection effective =
+      direction ??
+      (locale != null && AppLanguages.isRtl(locale.languageCode)
+          ? TextDirection.rtl
+          : TextDirection.ltr);
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: AppTheme.light(),
     darkTheme: AppTheme.dark(),
     themeMode: dark ? ThemeMode.dark : ThemeMode.light,
+    locale: locale,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     builder: (BuildContext context, Widget? app) {
@@ -156,7 +164,7 @@ Widget screenApp(
           disableAnimations: disableAnimations,
         ),
         child: Directionality(
-          textDirection: direction,
+          textDirection: effective,
           child: AppScope(
             services: rig.services,
             child: ToastHost(provider: rig.services.toasts, child: app!),

@@ -67,9 +67,14 @@ class _StatusSozoAppState extends State<StatusSozoApp>
           key: ValueKey<int>(generation),
           child: AppScope(
             services: services,
-            child: ValueListenableBuilder<ThemePreference>(
-              valueListenable: services.theme,
-              builder: (BuildContext context, ThemePreference pref, Widget? _) {
+            child: ListenableBuilder(
+              listenable: Listenable.merge(<Listenable>[
+                services.theme,
+                services.locale,
+              ]),
+              builder: (BuildContext context, Widget? _) {
+                final ThemePreference pref = services.theme.value;
+                final String? language = services.locale.value;
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   showPerformanceOverlay: _perfOverlay,
@@ -78,6 +83,7 @@ class _StatusSozoAppState extends State<StatusSozoApp>
                   theme: AppTheme.light(),
                   darkTheme: AppTheme.dark(),
                   themeMode: _modeFor(pref),
+                  locale: language == null ? null : Locale(language),
                   themeAnimationDuration: reduceMotion
                       ? Duration.zero
                       : AppMotion.theme,
