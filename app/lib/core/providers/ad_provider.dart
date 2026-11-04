@@ -57,7 +57,9 @@ class AdProvider extends ValueNotifier<AdProviderState> {
        _settings = settings,
        _policy = policy,
        _now = now ?? DateTime.now,
-       super(const AdProviderState(phase: AdsPhase.idle));
+       super(const AdProviderState(phase: AdsPhase.idle)) {
+    addListener(_syncEnabled);
+  }
 
   final AdService _ads;
   final ConsentService _consent;
@@ -67,6 +69,21 @@ class AdProvider extends ValueNotifier<AdProviderState> {
 
   bool _starting = false;
   bool _showing = false;
+
+  /// True while banners and interstitials may be requested. Screens bind their
+  /// ad slots to this.
+  final ValueNotifier<bool> isEnabled = ValueNotifier<bool>(false);
+
+  void _syncEnabled() {
+    isEnabled.value = enabled;
+  }
+
+  @override
+  void dispose() {
+    removeListener(_syncEnabled);
+    isEnabled.dispose();
+    super.dispose();
+  }
 
   /// The ad service, for screens that create banners.
   AdService get service => _ads;

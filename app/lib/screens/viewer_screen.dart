@@ -6,11 +6,14 @@ import 'package:statussozo/core/contracts/video_playback.dart';
 import 'package:statussozo/core/models/saved_item.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
+import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/saved_library_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/core/result.dart';
+import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
+import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/media/media_thumbnail.dart';
 import 'package:statussozo/widgets/primitives/loading_indicator.dart';
@@ -64,6 +67,7 @@ class _ViewerScreenState extends State<ViewerScreen> {
   bool _overlay = true;
   bool _zoomed = false;
   bool _prefetched = false;
+  AdProvider? _ads;
 
   @override
   void initState() {
@@ -74,6 +78,7 @@ class _ViewerScreenState extends State<ViewerScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _ads = AppScope.of(context).ads;
     if (!_prefetched) {
       _prefetched = true;
       _prefetch(_current);
@@ -82,6 +87,12 @@ class _ViewerScreenState extends State<ViewerScreen> {
 
   @override
   void dispose() {
+    // Every fifth close may show an interstitial. The viewer is gone by now,
+    // so a video can never be playing.
+    final AdProvider? ads = _ads;
+    if (ads != null) {
+      unawaited(ads.maybeShowInterstitial(InterstitialTrigger.viewerClose));
+    }
     _pager.dispose();
     unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
     super.dispose();
@@ -204,7 +215,10 @@ class _ViewerScreenState extends State<ViewerScreen> {
 
     return ColoredBox(
       color: colors.viewerBg,
-      child: Stack(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
           PageView.builder(
@@ -301,6 +315,15 @@ class _ViewerScreenState extends State<ViewerScreen> {
                       ],
                     ),
             ),
+          ),
+        ],
+      ),
+          ),
+          AdSlot(
+            service: services.ads.service,
+            enabled: services.ads.isEnabled,
+            gapAbove: AppSpacing.lg,
+            safeBottom: true,
           ),
         ],
       ),

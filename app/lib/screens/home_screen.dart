@@ -9,6 +9,7 @@ import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/status_list_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
+import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
 import 'package:statussozo/screens/access_screen.dart';
@@ -16,6 +17,7 @@ import 'package:statussozo/screens/saved_screen.dart';
 import 'package:statussozo/screens/screen_text.dart';
 import 'package:statussozo/screens/settings_screen.dart';
 import 'package:statussozo/screens/viewer_screen.dart';
+import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/feedback/empty_state.dart';
 import 'package:statussozo/widgets/feedback/error_state.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
@@ -165,6 +167,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<StatusItem> items = _selectedItems();
     services.homeSelection.clear();
     await services.save.save(items);
+    final int saved = services.save.value.last?.saved.length ?? 0;
+    if (saved > 0) {
+      unawaited(
+        services.ads.maybeShowInterstitial(
+          InterstitialTrigger.batchSave,
+          items: saved,
+        ),
+      );
+    }
   }
 
   Future<void> _shareSelected() async {
@@ -352,6 +363,10 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: ScreenScaffold(
             navBar: navBar,
+            bottomEmbed: AdSlot(
+              service: services.ads.service,
+              enabled: services.ads.isEnabled,
+            ),
             floating: SelectionBar(
               visible: selection.active,
               primaryLabel: l10n.selectionSave(selection.count),

@@ -27,6 +27,8 @@ class Rig {
     required this.links,
     required this.haptics,
     required this.video,
+    required this.adService,
+    required this.consent,
     required this.services,
   });
 
@@ -39,6 +41,8 @@ class Rig {
     final FakeLinkLauncher links = FakeLinkLauncher();
     final FakeHapticsService haptics = FakeHapticsService();
     final FakeVideoSessionFactory video = FakeVideoSessionFactory();
+    final FakeAdService adService = FakeAdService();
+    final FakeConsentService consent = FakeConsentService();
     return Rig._(
       status: status,
       saved: saved,
@@ -48,6 +52,8 @@ class Rig {
       links: links,
       haptics: haptics,
       video: video,
+      adService: adService,
+      consent: consent,
       services: AppServices.forTesting(
         statusRepository: status,
         savedRepository: saved,
@@ -57,6 +63,8 @@ class Rig {
         links: links,
         haptics: haptics,
         videoFactory: video,
+        adService: adService,
+        consent: consent,
       ),
     );
   }
@@ -68,6 +76,8 @@ class Rig {
   final FakeShareService share;
   final FakeLinkLauncher links;
   final FakeHapticsService haptics;
+  final FakeAdService adService;
+  final FakeConsentService consent;
   final FakeVideoSessionFactory video;
   final AppServices services;
 

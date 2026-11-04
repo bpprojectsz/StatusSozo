@@ -6,6 +6,7 @@ import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/models/app_language.dart';
 import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_source.dart';
+import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/design/design.dart';
@@ -15,6 +16,7 @@ import 'package:statussozo/screens/debug_logs_screen.dart';
 import 'package:statussozo/screens/licenses_screen.dart';
 import 'package:statussozo/screens/screen_text.dart';
 import 'package:statussozo/utils/app_log.dart';
+import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/layout/app_nav_bar.dart';
 import 'package:statussozo/widgets/layout/screen_scaffold.dart';
@@ -61,6 +63,10 @@ class SettingsScreen extends StatelessWidget {
       navBar: AppNavBar.pushed(
         title: l10n.settingsTitle,
         onBack: () => Navigator.of(context).pop(),
+      ),
+      bottomEmbed: AdSlot(
+        service: services.ads.service,
+        enabled: services.ads.isEnabled,
       ),
       body: ScrollConfiguration(
         behavior: const AppScrollBehavior(),
@@ -146,6 +152,17 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
             ),
+            SectionHeader(l10n.settingsSectionPro),
+            AppGroup(
+              children: <Widget>[
+                AppRow(
+                  icon: AppIcons.pro,
+                  label: l10n.settingsRemoveAds,
+                  secondary: l10n.proComingSoonSubtitle,
+                  trailing: AppChip(label: l10n.commonComingSoon),
+                ),
+              ],
+            ),
             SectionHeader(l10n.settingsSectionSupport),
             AppGroup(
               children: <Widget>[
@@ -207,7 +224,10 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
             SectionHeader(l10n.settingsSectionLegal),
-            AppGroup(
+            ValueListenableBuilder<AdProviderState>(
+              valueListenable: services.ads,
+              builder: (BuildContext context, AdProviderState ads, Widget? child) {
+                return AppGroup(
               children: <Widget>[
                 AppRow(
                   icon: AppIcons.privacy,
@@ -222,6 +242,14 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (ads.privacyOptionsRequired)
+                  AppRow(
+                    icon: AppIcons.privacy,
+                    label: l10n.settingsPrivacyChoices,
+                    showChevron: true,
+                    onPressed: () =>
+                        unawaited(services.ads.showPrivacyOptions()),
+                  ),
                 AppRow(
                   icon: AppIcons.terms,
                   label: l10n.settingsTerms,
@@ -248,6 +276,8 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+              },
             ),
             SectionHeader(l10n.settingsSectionDiagnostics),
             ValueListenableBuilder<int>(
