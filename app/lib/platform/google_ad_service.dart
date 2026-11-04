@@ -102,7 +102,7 @@ class GoogleAdService implements AdService {
       await ad.show();
     } on Object catch (error) {
       AppLog.warn('ads', 'Interstitial show threw', error);
-      ad.dispose();
+      unawaited(ad.dispose());
       return false;
     }
     return done.future;

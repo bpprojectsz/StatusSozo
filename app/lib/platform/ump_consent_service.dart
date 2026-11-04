@@ -35,14 +35,16 @@ class UmpConsentService implements ConsentService {
       await updated.future.timeout(AppConfig.adInitTimeout);
 
       final Completer<void> shown = Completer<void>();
-      ConsentForm.loadAndShowConsentFormIfRequired((FormError? error) {
-        if (error != null) {
-          AppLog.warn('consent', 'Consent form failed: ${error.message}');
-        }
-        if (!shown.isCompleted) {
-          shown.complete();
-        }
-      });
+      unawaited(
+        ConsentForm.loadAndShowConsentFormIfRequired((FormError? error) {
+          if (error != null) {
+            AppLog.warn('consent', 'Consent form failed: ${error.message}');
+          }
+          if (!shown.isCompleted) {
+            shown.complete();
+          }
+        }),
+      );
       // No timeout: the person may take as long as they like.
       await shown.future;
     } on Object catch (error) {
@@ -55,14 +57,16 @@ class UmpConsentService implements ConsentService {
   Future<ConsentOutcome> showPrivacyOptions() async {
     try {
       final Completer<void> done = Completer<void>();
-      ConsentForm.showPrivacyOptionsForm((FormError? error) {
-        if (error != null) {
-          AppLog.warn('consent', 'Privacy options failed: ${error.message}');
-        }
-        if (!done.isCompleted) {
-          done.complete();
-        }
-      });
+      unawaited(
+        ConsentForm.showPrivacyOptionsForm((FormError? error) {
+          if (error != null) {
+            AppLog.warn('consent', 'Privacy options failed: ${error.message}');
+          }
+          if (!done.isCompleted) {
+            done.complete();
+          }
+        }),
+      );
       await done.future;
     } on Object catch (error) {
       AppLog.warn('consent', 'Privacy options could not open', error);
