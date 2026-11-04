@@ -291,4 +291,38 @@ void main() {
       expect(s.schemaVersion, 99);
     });
   });
+
+  group('AppSettings interstitial counters', () {
+    test('default to no day and zero', () {
+      final AppSettings d = AppSettings.defaults();
+      expect(d.interstitialDay, isNull);
+      expect(d.interstitialsToday, 0);
+    });
+
+    test('round trip through JSON', () {
+      final AppSettings s = AppSettings.defaults().copyWith(
+        interstitialDay: '2026-11-03',
+        interstitialsToday: 4,
+      );
+      final AppSettings back = AppSettings.fromJson(s.toJson());
+      expect(back, s);
+      expect(back.interstitialDay, '2026-11-03');
+      expect(back.interstitialsToday, 4);
+    });
+
+    test('settings saved before these fields existed still load', () {
+      final AppSettings s = AppSettings.fromJson(<String, Object?>{
+        'schemaVersion': 1,
+        'themePreference': 'dark',
+      });
+      expect(s.interstitialDay, isNull);
+      expect(s.interstitialsToday, 0);
+    });
+
+    test('a different day or count is a different value', () {
+      final AppSettings a = AppSettings.defaults();
+      expect(a == a.copyWith(interstitialsToday: 1), isFalse);
+      expect(a == a.copyWith(interstitialDay: 'x'), isFalse);
+    });
+  });
 }

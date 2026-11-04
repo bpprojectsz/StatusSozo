@@ -1,9 +1,11 @@
 // Shared in-memory test doubles for every contract in lib/core/contracts.
 // Each fake has switches to inject failures and delays, and call counters.
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:statussozo/core/contracts/ad_service.dart';
+import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/contracts/haptics_service.dart';
 import 'package:statussozo/core/contracts/link_launcher.dart';
 import 'package:statussozo/core/contracts/saved_repository.dart';
@@ -495,3 +497,104 @@ class FakeVideoSessionFactory implements VideoSessionFactory {
     return session;
   }
 }
+
+/// A controllable ad service.
+class FakeAdService implements AdService {
+  bool failInitialise = false;
+  bool loadMakesReady = true;
+  bool showResult = true;
+  int initialiseCalls = 0;
+  int loadCalls = 0;
+  int showCalls = 0;
+  final List<int> bannerWidths = <int>[];
+  final List<FakeBanner> banners = <FakeBanner>[];
+  final ValueNotifier<bool> ready = ValueNotifier<bool>(false);
+  bool _initialised = false;
+
+  @override
+  bool get initialised => _initialised;
+
+  @override
+  Future<void> initialise() async {
+    initialiseCalls++;
+    if (!failInitialise) {
+      _initialised = true;
+    }
+  }
+
+  @override
+  BannerHandle createBanner(int widthDp) {
+    bannerWidths.add(widthDp);
+    final FakeBanner banner = FakeBanner();
+    banners.add(banner);
+    return banner;
+  }
+
+  @override
+  ValueListenable<bool> get interstitialReady => ready;
+
+  @override
+  Future<void> loadInterstitial() async {
+    loadCalls++;
+    if (loadMakesReady && _initialised) {
+      ready.value = true;
+    }
+  }
+
+  @override
+  Future<bool> showInterstitial() async {
+    showCalls++;
+    if (!ready.value) {
+      return false;
+    }
+    ready.value = false;
+    return showResult;
+  }
+}
+
+/// A banner that is ready at once and counts its disposal.
+class FakeBanner implements BannerHandle {
+  FakeBanner({AdState initial = AdState.ready}) : _state = ValueNotifier(initial);
+
+  final ValueNotifier<AdState> _state;
+  int disposeCalls = 0;
+
+  void set(AdState next) => _state.value = next;
+
+  @override
+  ValueListenable<AdState> get state => _state;
+
+  @override
+  Widget? get widget => _state.value == AdState.ready
+      ? const SizedBox(key: ValueKey<String>('fake-banner'), width: 320, height: 50)
+      : null;
+
+  @override
+  double get height => _state.value == AdState.ready ? 50 : 0;
+
+  @override
+  void dispose() => disposeCalls++;
+}
+
+/// A controllable consent service.
+class FakeConsentService implements ConsentService {
+  ConsentOutcome outcome = const ConsentOutcome(
+    canRequestAds: true,
+    privacyOptionsRequired: false,
+  );
+  int gatherCalls = 0;
+  int privacyCalls = 0;
+
+  @override
+  Future<ConsentOutcome> gather() async {
+    gatherCalls++;
+    return outcome;
+  }
+
+  @override
+  Future<ConsentOutcome> showPrivacyOptions() async {
+    privacyCalls++;
+    return outcome;
+  }
+}
+

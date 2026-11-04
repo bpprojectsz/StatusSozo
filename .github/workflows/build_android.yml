@@ -16,6 +16,10 @@ on:
         description: "Show Flutter's performance overlay"
         type: boolean
         default: false
+      live_ads:
+        description: "release only: compile in the live AdMob IDs from the ADMOB_APP_ID, ADMOB_BANNER_ID and ADMOB_INTERSTITIAL_ID secrets. Off by default. Test and debug builds always use Google's test IDs."
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -45,6 +49,26 @@ jobs:
           flutter-version: "3.29.2"
           channel: stable
           cache: true
+
+      - name: Ad IDs
+        env:
+          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+          ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
+          ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+        run: |
+          if [ "${{ inputs.live_ads }}" = "true" ]; then
+            if [ "${{ inputs.build_type }}" != "release" ]; then
+              echo "live_ads is only allowed for release builds"; exit 1
+            fi
+            for v in ADMOB_APP_ID ADMOB_BANNER_ID ADMOB_INTERSTITIAL_ID; do
+              if [ -z "${!v}" ]; then echo "missing secret $v"; exit 1; fi
+            done
+            echo "ORG_GRADLE_PROJECT_admobAppId=$ADMOB_APP_ID" >> "$GITHUB_ENV"
+            echo "ADS_DEFINE=--dart-define=ADMOB_BANNER_ID=$ADMOB_BANNER_ID --dart-define=ADMOB_INTERSTITIAL_ID=$ADMOB_INTERSTITIAL_ID" >> "$GITHUB_ENV"
+            echo "Live ad IDs are compiled into this build"
+          else
+            echo "Google test ad IDs"
+          fi
 
       - name: Toolchain
         run: |
@@ -98,7 +122,7 @@ jobs:
           set -o pipefail
           DEFINE=""
           if [ "${{ inputs.perf_overlay }}" = "true" ]; then DEFINE="--dart-define=PERF_OVERLAY=true"; fi
-          flutter build apk --release --target-platform android-arm64 $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+          flutter build apk --release --target-platform android-arm64 $DEFINE $ADS_DEFINE 2>&1 | tee -a /tmp/cilog/build.log
 
       - name: Publish test APK as a release asset
         if: ${{ inputs.build_type == 'test' }}
@@ -133,7 +157,7 @@ jobs:
           set -o pipefail
           DEFINE=""
           if [ "${{ inputs.perf_overlay }}" = "true" ]; then DEFINE="--dart-define=PERF_OVERLAY=true"; fi
-          flutter build apk --debug --target-platform android-arm64 $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+          flutter build apk --debug --target-platform android-arm64 $DEFINE $ADS_DEFINE 2>&1 | tee -a /tmp/cilog/build.log
 
       - name: Build release AAB and APK
         if: ${{ inputs.build_type == 'release' }}
@@ -142,8 +166,8 @@ jobs:
           set -o pipefail
           DEFINE=""
           if [ "${{ inputs.perf_overlay }}" = "true" ]; then DEFINE="--dart-define=PERF_OVERLAY=true"; fi
-          flutter build appbundle --release --obfuscate --split-debug-info=symbols $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
-          flutter build apk --release --obfuscate --split-debug-info=symbols $DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+          flutter build appbundle --release --obfuscate --split-debug-info=symbols $DEFINE $ADS_DEFINE 2>&1 | tee -a /tmp/cilog/build.log
+          flutter build apk --release --obfuscate --split-debug-info=symbols $DEFINE $ADS_DEFINE 2>&1 | tee -a /tmp/cilog/build.log
 
       - name: Upload debug APK
         if: ${{ inputs.build_type == 'debug' }}

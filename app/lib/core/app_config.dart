@@ -32,6 +32,32 @@ abstract final class AppConfig {
   static const Duration shareCacheTtl = Duration(hours: 24);
   static const Duration toastDuration = Duration(seconds: 3);
 
+  // Ads. The defaults are Google's published test IDs. Live IDs are compiled in
+  // only by an explicit release build (the live_ads workflow input).
+  static const String bannerUnitId = String.fromEnvironment(
+    'ADMOB_BANNER_ID',
+    defaultValue: 'ca-app-pub-3940256099942544/9214589741',
+  );
+  static const String interstitialUnitId = String.fromEnvironment(
+    'ADMOB_INTERSTITIAL_ID',
+    defaultValue: 'ca-app-pub-3940256099942544/1033173712',
+  );
+
+  /// Forces Google's consent form to behave as in the EEA, for testing.
+  static const bool consentDebugEea = bool.fromEnvironment('CONSENT_DEBUG_EEA');
+
+  /// How long to wait for the ad SDK and the consent update before moving on.
+  static const Duration adInitTimeout = Duration(seconds: 5);
+
+  /// A failed banner is retried once after this long.
+  static const Duration adRetryDelay = Duration(seconds: 60);
+
+  // Interstitial rules.
+  static const Duration interstitialMinGap = Duration(minutes: 3);
+  static const int interstitialDailyMax = 6;
+  static const int viewerClosesPerInterstitial = 5;
+  static const int batchSaveMinItems = 2;
+
   /// How often Home silently re-reads the status folder while it is showing.
   static const Duration autoRefreshInterval = Duration(seconds: 4);
 

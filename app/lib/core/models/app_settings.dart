@@ -16,6 +16,8 @@ class AppSettings {
     required this.languageCode,
     required this.lastSource,
     required Map<StatusSource, FolderGrant> grants,
+    this.interstitialDay,
+    this.interstitialsToday = 0,
   }) : grants = Map<StatusSource, FolderGrant>.unmodifiable(grants);
 
   /// Tolerant decoding: unknown enum values fall back to defaults and bad
@@ -67,6 +69,8 @@ class AppSettings {
           StatusSource.fromId(tryReadString(json, 'lastSource')) ??
           defaults.lastSource,
       grants: grants,
+      interstitialDay: tryReadString(json, 'interstitialDay'),
+      interstitialsToday: tryReadInt(json, 'interstitialsToday') ?? 0,
     );
   }
 
@@ -91,6 +95,12 @@ class AppSettings {
   /// Folder grants by source. Unmodifiable.
   final Map<StatusSource, FolderGrant> grants;
 
+  /// The local day (yyyy-MM-dd) the daily interstitial count belongs to.
+  final String? interstitialDay;
+
+  /// Interstitials shown on [interstitialDay].
+  final int interstitialsToday;
+
   /// Copies with changes. Pass [clearLanguage] to reset [languageCode] to null.
   AppSettings copyWith({
     int? schemaVersion,
@@ -99,6 +109,8 @@ class AppSettings {
     bool clearLanguage = false,
     StatusSource? lastSource,
     Map<StatusSource, FolderGrant>? grants,
+    String? interstitialDay,
+    int? interstitialsToday,
   }) {
     return AppSettings(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -106,6 +118,8 @@ class AppSettings {
       languageCode: clearLanguage ? null : (languageCode ?? this.languageCode),
       lastSource: lastSource ?? this.lastSource,
       grants: grants ?? this.grants,
+      interstitialDay: interstitialDay ?? this.interstitialDay,
+      interstitialsToday: interstitialsToday ?? this.interstitialsToday,
     );
   }
 
@@ -118,6 +132,8 @@ class AppSettings {
       for (final MapEntry<StatusSource, FolderGrant> entry in grants.entries)
         entry.key.id: entry.value.toJson(),
     },
+    'interstitialDay': interstitialDay,
+    'interstitialsToday': interstitialsToday,
   };
 
   @override
@@ -127,6 +143,8 @@ class AppSettings {
       other.themePreference == themePreference &&
       other.languageCode == languageCode &&
       other.lastSource == lastSource &&
+      other.interstitialDay == interstitialDay &&
+      other.interstitialsToday == interstitialsToday &&
       mapEquals(other.grants, grants);
 
   @override
@@ -135,6 +153,8 @@ class AppSettings {
     themePreference,
     languageCode,
     lastSource,
+    interstitialDay,
+    interstitialsToday,
     Object.hashAllUnordered(
       grants.entries.map(
         (MapEntry<StatusSource, FolderGrant> e) => Object.hash(e.key, e.value),

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:statussozo/core/contracts/ad_service.dart';
+import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/contracts/haptics_service.dart';
 import 'package:statussozo/core/contracts/link_launcher.dart';
 import 'package:statussozo/core/contracts/saved_repository.dart';
@@ -12,6 +14,7 @@ import 'package:statussozo/core/contracts/video_playback.dart';
 import 'package:statussozo/core/models/saved_item.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
+import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/locale_provider.dart';
 import 'package:statussozo/core/providers/save_provider.dart';
@@ -22,7 +25,10 @@ import 'package:statussozo/core/providers/source_provider.dart';
 import 'package:statussozo/core/providers/status_list_provider.dart';
 import 'package:statussozo/core/providers/theme_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
+import 'package:statussozo/core/services/disabled_ads.dart';
+import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/core/services/save_coordinator.dart';
+import 'package:statussozo/platform/google_ad_service.dart';
 import 'package:statussozo/platform/media_store_saved_repository.dart';
 import 'package:statussozo/platform/native_thumbnail_source.dart';
 import 'package:statussozo/platform/plus_share_service.dart';
@@ -30,6 +36,7 @@ import 'package:statussozo/platform/prefs_settings_store.dart';
 import 'package:statussozo/platform/saf_channel.dart';
 import 'package:statussozo/platform/saf_status_repository.dart';
 import 'package:statussozo/platform/system_haptics.dart';
+import 'package:statussozo/platform/ump_consent_service.dart';
 import 'package:statussozo/platform/url_link_launcher.dart';
 import 'package:statussozo/platform/video_player_session.dart';
 
@@ -57,6 +64,7 @@ class AppServices {
     required this.savedSelection,
     required this.save,
     required this.toasts,
+    required this.ads,
   });
 
   /// Builds the real platform implementations.
@@ -73,6 +81,8 @@ class AppServices {
       haptics: const SystemHaptics(),
       videoFactory: const VideoPlayerSessionFactory(),
       appVersion: '${info.version} (${info.buildNumber})',
+      adService: GoogleAdService(),
+      consent: UmpConsentService(),
     );
   }
 
@@ -87,6 +97,9 @@ class AppServices {
     required HapticsService haptics,
     required VideoSessionFactory videoFactory,
     String appVersion = '1.0.0 (1)',
+    AdService? adService,
+    ConsentService? consent,
+    DateTime Function()? now,
   }) => _assemble(
     statusRepository: statusRepository,
     savedRepository: savedRepository,
@@ -97,6 +110,9 @@ class AppServices {
     haptics: haptics,
     videoFactory: videoFactory,
     appVersion: appVersion,
+    adService: adService ?? DisabledAdService(),
+    consent: consent ?? DisabledConsentService(),
+    now: now,
   );
 
   static AppServices _assemble({
@@ -109,6 +125,9 @@ class AppServices {
     required HapticsService haptics,
     required VideoSessionFactory videoFactory,
     required String appVersion,
+    required AdService adService,
+    required ConsentService consent,
+    DateTime Function()? now,
   }) {
     final SettingsProvider settings = SettingsProvider(settingsStore);
     final ThemeProvider theme = ThemeProvider(settings);
@@ -134,6 +153,15 @@ class AppServices {
       haptics: haptics,
       toasts: toasts,
     );
+    final AdProvider ads = AdProvider(
+      ads: adService,
+      consent: consent,
+      settings: settings,
+      policy: InterstitialPolicy(
+        nowMs: () => (now ?? DateTime.now)().millisecondsSinceEpoch,
+      ),
+      now: now,
+    );
     final AppServices services = AppServices._(
       statusRepository: statusRepository,
       savedRepository: savedRepository,
@@ -154,6 +182,7 @@ class AppServices {
       savedSelection: SelectionProvider(),
       save: save,
       toasts: toasts,
+      ads: ads,
     );
     services._wire();
     return services;
@@ -184,6 +213,7 @@ class AppServices {
   final SelectionProvider savedSelection;
   final SaveProvider save;
   final ToastProvider toasts;
+  final AdProvider ads;
 
   bool _warningShown = false;
   AccessStatus _lastSourceStatus = AccessStatus.unknown;
@@ -252,6 +282,9 @@ class AppServices {
   /// Runs after the first frame: verify grants, load the list, load the saved
   /// library, prune the share cache.
   Future<void> bootstrap() async {
+    // Consent first, and only after the first frame. Ads are never requested
+    // before it completes.
+    unawaited(ads.start());
     await folderAccess.verifyAll();
     await statusList.refresh();
     await savedLibrary.refresh();
@@ -264,6 +297,7 @@ class AppServices {
     await folderAccess.verifyAll();
     await statusList.refresh(silent: true);
     await savedLibrary.refresh();
+    unawaited(ads.onResumed());
   }
 
   /// Releases every notifier. Call once.
@@ -277,6 +311,7 @@ class AppServices {
     savedLibrary.removeListener(_onSavedChanged);
     source.removeListener(_onSourceChanged);
     folderAccess.removeListener(_onAccessChanged);
+    ads.dispose();
     save.dispose();
     homeSelection.dispose();
     savedSelection.dispose();
