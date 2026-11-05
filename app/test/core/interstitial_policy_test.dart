@@ -71,7 +71,7 @@ void main() {
           isFalse,
         );
       }
-      now += const Duration(minutes: 4).inMilliseconds;
+      now += const Duration(minutes: 6).inMilliseconds;
       expect(
         policy.allows(InterstitialTrigger.viewerClose, shownToday: 1),
         isTrue,
@@ -80,9 +80,9 @@ void main() {
   });
 
   group('spacing and daily limit', () {
-    test('waits at least three minutes between interstitials', () {
+    test('waits at least five minutes between interstitials', () {
       policy.markShown();
-      now += const Duration(minutes: 2, seconds: 59).inMilliseconds;
+      now += const Duration(minutes: 4, seconds: 59).inMilliseconds;
       expect(
         policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 1),
         isFalse,
@@ -96,11 +96,11 @@ void main() {
 
     test('stops at the daily maximum', () {
       expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 5),
+        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 20),
         isTrue,
       );
       expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 6),
+        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 21),
         isFalse,
       );
     });

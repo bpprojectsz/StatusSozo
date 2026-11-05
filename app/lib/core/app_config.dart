@@ -53,8 +53,8 @@ abstract final class AppConfig {
   static const Duration adRetryDelay = Duration(seconds: 60);
 
   // Interstitial rules.
-  static const Duration interstitialMinGap = Duration(minutes: 3);
-  static const int interstitialDailyMax = 6;
+  static const Duration interstitialMinGap = Duration(minutes: 5);
+  static const int interstitialDailyMax = 21;
   static const int viewerClosesPerInterstitial = 5;
   static const int batchSaveMinItems = 2;
 

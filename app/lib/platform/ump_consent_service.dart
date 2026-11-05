@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
+import 'package:statussozo/core/services/consent_rules.dart';
 import 'package:statussozo/utils/app_log.dart';
 
 /// Consent through Google's User Messaging Platform. A request that fails never
@@ -10,6 +11,7 @@ import 'package:statussozo/utils/app_log.dart';
 class UmpConsentService implements ConsentService {
   @override
   Future<ConsentOutcome> gather() async {
+    bool errored = false;
     try {
       final Completer<void> updated = Completer<void>();
       ConsentInformation.instance.requestConsentInfoUpdate(
@@ -26,6 +28,7 @@ class UmpConsentService implements ConsentService {
           }
         },
         (FormError error) {
+          errored = true;
           AppLog.warn('consent', 'Consent update failed: ${error.message}');
           if (!updated.isCompleted) {
             updated.complete();
@@ -38,6 +41,7 @@ class UmpConsentService implements ConsentService {
       unawaited(
         ConsentForm.loadAndShowConsentFormIfRequired((FormError? error) {
           if (error != null) {
+            errored = true;
             AppLog.warn('consent', 'Consent form failed: ${error.message}');
           }
           if (!shown.isCompleted) {
@@ -48,9 +52,10 @@ class UmpConsentService implements ConsentService {
       // No timeout: the person may take as long as they like.
       await shown.future;
     } on Object catch (error) {
-      AppLog.warn('consent', 'Consent step failed, using the last state', error);
+      errored = true;
+      AppLog.warn('consent', 'Consent step failed, asking for ads anyway', error);
     }
-    return _current();
+    return _current(errored: errored);
   }
 
   @override
@@ -74,7 +79,7 @@ class UmpConsentService implements ConsentService {
     return _current();
   }
 
-  Future<ConsentOutcome> _current() async {
+  Future<ConsentOutcome> _current({bool errored = false}) async {
     bool canRequest = false;
     bool optionsRequired = false;
     try {
@@ -86,7 +91,8 @@ class UmpConsentService implements ConsentService {
     } on Object catch (error) {
       AppLog.warn('consent', 'Could not read the consent state', error);
     }
-    return ConsentOutcome(
+    return consentOutcome(
+      errored: errored,
       canRequestAds: canRequest,
       privacyOptionsRequired: optionsRequired,
     );

@@ -180,25 +180,25 @@ void main() {
       );
     });
 
-    test('keeps three minutes between interstitials', () async {
+    test('keeps five minutes between interstitials', () async {
       await provider.start();
       expect(await batch(), isTrue);
-      clock = clock.add(const Duration(minutes: 2));
+      clock = clock.add(const Duration(minutes: 3));
       expect(await batch(), isFalse);
-      clock = clock.add(const Duration(minutes: 2));
+      clock = clock.add(const Duration(minutes: 3));
       expect(await batch(), isTrue);
       expect(settings.settings.interstitialsToday, 2);
     });
 
     test('stops at the daily maximum and starts over the next day', () async {
       await provider.start();
-      for (int i = 0; i < 6; i++) {
-        clock = clock.add(const Duration(minutes: 5));
+      for (int i = 0; i < 21; i++) {
+        clock = clock.add(const Duration(minutes: 6));
         expect(await batch(), isTrue, reason: 'ad ${i + 1}');
       }
-      clock = clock.add(const Duration(minutes: 5));
+      clock = clock.add(const Duration(minutes: 6));
       expect(await batch(), isFalse);
-      expect(settings.settings.interstitialsToday, 6);
+      expect(settings.settings.interstitialsToday, 21);
 
       clock = DateTime(2026, 11, 4, 9);
       expect(await batch(), isTrue);
