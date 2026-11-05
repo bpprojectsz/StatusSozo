@@ -156,6 +156,8 @@ class _AdSlotState extends State<AdSlot> with WidgetsBindingObserver {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
+                  // The border is painted, not laid out, so reserve its space.
+                  top: AppSizes.hairline,
                   bottom: widget.safeBottom
                       ? MediaQuery.paddingOf(context).bottom
                       : 0,
