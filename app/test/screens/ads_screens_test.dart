@@ -71,6 +71,10 @@ void main() {
     testScreen('Home has no ad slot while ads are off', (
       WidgetTester tester,
     ) async {
+      rig.consent.outcome = const ConsentOutcome(
+        canRequestAds: false,
+        privacyOptionsRequired: false,
+      );
       await rig.primeIn(tester);
       await pumpScreen(tester, const HomeScreen());
       expect(banner, findsNothing);
@@ -162,6 +166,10 @@ void main() {
     testScreen('a batch save with ads off shows none', (
       WidgetTester tester,
     ) async {
+      rig.consent.outcome = const ConsentOutcome(
+        canRequestAds: false,
+        privacyOptionsRequired: false,
+      );
       await rig.primeIn(tester);
       await pumpScreen(tester, const HomeScreen());
       await tester.longPress(find.byType(StatusTile).first);

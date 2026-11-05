@@ -160,7 +160,7 @@ class _AdSlotState extends State<AdSlot> with WidgetsBindingObserver {
                       ? MediaQuery.paddingOf(context).bottom
                       : 0,
                 ),
-                child: Center(child: ad),
+                child: Center(heightFactor: 1, child: ad),
               ),
             ),
           ),
