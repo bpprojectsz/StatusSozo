@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/contracts/ad_service.dart';
@@ -165,8 +167,10 @@ void main() {
     final FakeBanner first = service.banners.single;
     expect(first.disposeCalls, 0);
 
-    navigator.currentState!.push(
-      MaterialPageRoute<void>(builder: (_) => const SizedBox()),
+    unawaited(
+      navigator.currentState!.push(
+        MaterialPageRoute<void>(builder: (_) => const SizedBox()),
+      ),
     );
     await tester.pumpAndSettle();
     expect(first.disposeCalls, 1);

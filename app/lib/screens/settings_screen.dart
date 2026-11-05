@@ -276,7 +276,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+                );
               },
             ),
             SectionHeader(l10n.settingsSectionDiagnostics),
