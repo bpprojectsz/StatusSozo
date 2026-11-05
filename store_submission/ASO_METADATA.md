@@ -1,6 +1,6 @@
 # Store listing: copy and answers
 
-Everything here matches the app as built in Stage 1 (no ads, no network access). Stage 2 changes are listed at the end.
+Everything here matches the app as built: free, with banner and occasional full-screen ads from Google AdMob, and a consent form where the law requires one.
 
 ## Identity
 
@@ -21,7 +21,7 @@ Everything here matches the app as built in Stage 1 (no ads, no network access).
 Browse, save and share status photos and videos from the folders you choose.
 ```
 
-## Full description (4,000 max, 2178 characters)
+## Full description (4,000 max, 2317 characters)
 
 ```
 StatusSozo is a simple, private way to browse, save and share the status photos and videos stored on your phone.
@@ -42,9 +42,9 @@ WHAT YOU CAN DO
 PRIVATE BY DESIGN
 
 • No account and no sign-in.
-• No analytics and no tracking.
-• No internet access. The app works entirely on your device.
+• Your photos and videos never leave your phone. StatusSozo does not upload them anywhere.
 • No access to your chats, contacts or messages. You grant access to one folder through the system folder picker, and you can remove it any time in Settings.
+• Free, supported by ads from Google AdMob. In some regions you are asked for your choice first, and you can change it any time in Settings.
 
 HOW IT WORKS
 
@@ -77,7 +77,7 @@ First release.
 | No messaging-service name, colour or logo anywhere | Play's impersonation and trademark policies. The cost is some search ranking, which is accepted to avoid a takedown. |
 | No "without being seen" or "secretly" claims | Play's metadata policy rejects misleading or unverifiable claims. |
 | "A status appears once the messaging app has loaded it" | This is what the app actually depends on, and it sets the right expectation for an empty list. |
-| "No internet access" | True for Stage 1: the manifest has no permissions at all. **Remove this line when Stage 2 adds ads.** |
+| "Your photos and videos never leave your phone" | True: the app uploads nothing. The ad SDK uses the internet only for ads and consent. |
 | Disclaimer in the description | The app is independent, and the text says so plainly. |
 
 ## Questionnaire answers (the developer must answer these in the Console; these are the answers that match the app)
@@ -85,17 +85,16 @@ First release.
 | Question | Answer |
 |---|---|
 | Target audience | Not directed at children. Select 13 to 15, 16 to 17 and 18 and over. Do not select any age group below 13. |
-| Ads | No, the app contains no ads (Stage 1) |
+| Ads | **Yes, the app contains ads** (banners and occasional full-screen ads from Google AdMob) |
 | App access | All functionality is available without login or special access. Add the reviewer instructions in `PLAY_CONSOLE_CHECKLIST.md`. |
 | Content rating | The app contains no violence, sexual content, gambling, drugs or profanity of its own. It displays files from a folder the user chooses, and it does not host or distribute user content. Answer the questionnaire literally for the app itself. Re-read each question on the day, because the wording changes. |
 | Government, news, health, financial features | No to all |
 | Data safety | See `DATA_BACKING.md` |
 
-## Stage 2 changes
+## Before ads go live
 
-| Item | Change |
+| Item | What to do |
 |---|---|
-| Ads declaration | Yes |
-| Description | Remove "No internet access" and the ad-free implication, and add the ad and consent disclosure |
-| Data safety | Update first, then ship (`DATA_BACKING.md`) |
-| Listing languages | 10 more, in `LISTING_TRANSLATIONS.md` (Stage 2, S3) |
+| Test IDs | Every build uses Google's test ad IDs unless a release is built with the `live_ads` workflow input. Test builds never use live IDs. |
+| Live IDs | Created in AdMob after the listing exists. See `ADMOB_SETUP.md`. |
+| Listing languages | 10 more, in `LISTING_TRANSLATIONS.md` (not written yet) |

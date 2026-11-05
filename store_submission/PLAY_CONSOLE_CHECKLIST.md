@@ -28,12 +28,12 @@ Play changes its Console and policy wording often. Treat every "verify" below as
 |---|---|
 | Privacy policy | https://statussozo.bpprojectsz.workers.dev/privacy |
 | App access | All functionality is available without login. Paste the reviewer instructions below. |
-| Ads | No ads (Stage 1) |
+| Ads | **Yes**: the app contains ads (Google AdMob banners and occasional full-screen ads) |
 | Content rating | Answer the questionnaire literally (`ASO_METADATA.md`) |
 | Target audience | 13 and over, not directed at children |
 | Data safety | `DATA_BACKING.md`, including the Share decision |
 | Government, news, health, financial features | No |
-| Advertising ID | Not used in Stage 1. Declare "No". Stage 2 changes this. |
+| Advertising ID | **Yes**, used for advertising. The manifest declares `com.google.android.gms.permission.AD_ID`. |
 
 ### Reviewer instructions (paste into App access)
 

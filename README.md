@@ -42,9 +42,13 @@ All workflows are `workflow_dispatch` only. **Never add a `push:` trigger.**
 | Workflow | Purpose |
 |---|---|
 | `verify` | Analyze, gate and tests. No build, no signing. |
-| `build_android` | `build_type` test: a small signed arm64 APK published on the Releases page. `release`: signed AAB and APK, which needs the four signing secrets. Optional performance overlay. |
+| `build_android` | `build_type` test: a small signed arm64 APK published on the Releases page. `release`: signed AAB and APK, which needs the four signing secrets. Optional performance overlay and `live_ads`. |
 | `brand` | One-off: runs the launcher icon and splash generators and commits the generated Android files |
 | `bootstrap` | One-off, already run: generated the Android scaffold |
+
+## Ads
+
+Banners (Home, Viewer, Saved, Settings) and rule-limited interstitials through the Google Mobile Ads SDK, after Google's consent form. Every build uses Google's test ad IDs. A release build compiles live IDs in only when the `live_ads` input is ticked and the `ADMOB_APP_ID`, `ADMOB_BANNER_ID` and `ADMOB_INTERSTITIAL_ID` secrets exist. See `store_submission/ADMOB_SETUP.md`.
 
 ## Brand assets
 
