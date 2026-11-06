@@ -8,6 +8,7 @@ import 'package:statussozo/core/contracts/ad_service.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/contracts/haptics_service.dart';
 import 'package:statussozo/core/contracts/link_launcher.dart';
+import 'package:statussozo/core/contracts/review_service.dart';
 import 'package:statussozo/core/contracts/saved_repository.dart';
 import 'package:statussozo/core/contracts/settings_store.dart';
 import 'package:statussozo/core/contracts/share_service.dart';
@@ -598,3 +599,24 @@ class FakeConsentService implements ConsentService {
   }
 }
 
+/// A controllable review prompt.
+class FakeReviewService implements ReviewService {
+  bool available = true;
+  bool throwOnRequest = false;
+  int availableChecks = 0;
+  int requestCalls = 0;
+
+  @override
+  Future<bool> isAvailable() async {
+    availableChecks++;
+    return available;
+  }
+
+  @override
+  Future<void> requestReview() async {
+    requestCalls++;
+    if (throwOnRequest) {
+      throw StateError('the review prompt failed');
+    }
+  }
+}

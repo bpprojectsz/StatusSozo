@@ -155,5 +155,9 @@
   "debugLogsClearTitle": "هل تريد مسح السجل؟",
   "debugLogsClearMessage": "تتم إزالة المدخلات من هذا الجهاز.",
   "licensesTitle": "تراخيص المصدر المفتوح",
-  "licensesEmptyTitle": "لم يتم العثور على تراخيص"
+  "licensesEmptyTitle": "لم يتم العثور على تراخيص",
+  "settingsReviewPrompts": "طلبات التقييم",
+  "settingsReviewPromptsSubtitle": "يطلب منك أحيانًا تقييم التطبيق",
+  "commonOn": "مفعّل",
+  "commonOff": "متوقف"
 }

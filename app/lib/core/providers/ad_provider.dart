@@ -69,6 +69,13 @@ class AdProvider extends ValueNotifier<AdProviderState> {
 
   bool _starting = false;
   bool _showing = false;
+  DateTime? _lastInterstitialAt;
+
+  /// An interstitial is on screen right now.
+  bool get showingInterstitial => _showing;
+
+  /// When the last interstitial was shown, or null.
+  DateTime? get lastInterstitialAt => _lastInterstitialAt;
 
   /// True while banners and interstitials may be requested. Screens bind their
   /// ad slots to this.
@@ -169,6 +176,7 @@ class AdProvider extends ValueNotifier<AdProviderState> {
     try {
       final bool shown = await _ads.showInterstitial();
       if (shown) {
+        _lastInterstitialAt = _now();
         _policy.markShown();
         await _settings.update(
           (AppSettings current) => current.copyWith(

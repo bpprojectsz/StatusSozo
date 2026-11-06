@@ -155,5 +155,9 @@
   "debugLogsClearTitle": "ログを消去しますか？",
   "debugLogsClearMessage": "エントリはこの端末から削除されます。",
   "licensesTitle": "オープンソースライセンス",
-  "licensesEmptyTitle": "ライセンスが見つかりません"
+  "licensesEmptyTitle": "ライセンスが見つかりません",
+  "settingsReviewPrompts": "レビューのお願い",
+  "settingsReviewPromptsSubtitle": "ときどきアプリの評価をお願いします",
+  "commonOn": "オン",
+  "commonOff": "オフ"
 }

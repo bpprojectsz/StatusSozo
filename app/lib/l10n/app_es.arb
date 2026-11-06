@@ -155,5 +155,9 @@
   "debugLogsClearTitle": "¿Borrar el registro?",
   "debugLogsClearMessage": "Las entradas se eliminan de este dispositivo.",
   "licensesTitle": "Licencias de código abierto",
-  "licensesEmptyTitle": "No se encontraron licencias"
+  "licensesEmptyTitle": "No se encontraron licencias",
+  "settingsReviewPrompts": "Solicitudes de valoración",
+  "settingsReviewPromptsSubtitle": "De vez en cuando te pide valorar la app",
+  "commonOn": "Activado",
+  "commonOff": "Desactivado"
 }

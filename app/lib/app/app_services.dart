@@ -1,22 +1,26 @@
 import 'dart:async';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/contracts/ad_service.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/contracts/haptics_service.dart';
 import 'package:statussozo/core/contracts/link_launcher.dart';
+import 'package:statussozo/core/contracts/review_service.dart';
 import 'package:statussozo/core/contracts/saved_repository.dart';
 import 'package:statussozo/core/contracts/settings_store.dart';
 import 'package:statussozo/core/contracts/share_service.dart';
 import 'package:statussozo/core/contracts/status_repository.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
 import 'package:statussozo/core/contracts/video_playback.dart';
+import 'package:statussozo/core/models/save_summary.dart';
 import 'package:statussozo/core/models/saved_item.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/locale_provider.dart';
+import 'package:statussozo/core/providers/review_provider.dart';
 import 'package:statussozo/core/providers/save_provider.dart';
 import 'package:statussozo/core/providers/saved_library_provider.dart';
 import 'package:statussozo/core/providers/selection_provider.dart';
@@ -26,9 +30,11 @@ import 'package:statussozo/core/providers/status_list_provider.dart';
 import 'package:statussozo/core/providers/theme_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/core/services/disabled_ads.dart';
+import 'package:statussozo/core/services/disabled_review.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/core/services/save_coordinator.dart';
 import 'package:statussozo/platform/google_ad_service.dart';
+import 'package:statussozo/platform/in_app_review_service.dart';
 import 'package:statussozo/platform/media_store_saved_repository.dart';
 import 'package:statussozo/platform/native_thumbnail_source.dart';
 import 'package:statussozo/platform/plus_share_service.dart';
@@ -65,6 +71,7 @@ class AppServices {
     required this.save,
     required this.toasts,
     required this.ads,
+    required this.review,
   });
 
   /// Builds the real platform implementations.
@@ -83,6 +90,7 @@ class AppServices {
       appVersion: '${info.version} (${info.buildNumber})',
       adService: GoogleAdService(),
       consent: UmpConsentService(),
+      reviewService: InAppReviewService(),
     );
   }
 
@@ -99,6 +107,7 @@ class AppServices {
     String appVersion = '1.0.0 (1)',
     AdService? adService,
     ConsentService? consent,
+    ReviewService? reviewService,
     DateTime Function()? now,
   }) => _assemble(
     statusRepository: statusRepository,
@@ -112,6 +121,7 @@ class AppServices {
     appVersion: appVersion,
     adService: adService ?? DisabledAdService(),
     consent: consent ?? DisabledConsentService(),
+    reviewService: reviewService ?? DisabledReviewService(),
     now: now,
   );
 
@@ -127,6 +137,7 @@ class AppServices {
     required String appVersion,
     required AdService adService,
     required ConsentService consent,
+    required ReviewService reviewService,
     DateTime Function()? now,
   }) {
     final SettingsProvider settings = SettingsProvider(settingsStore);
@@ -162,6 +173,20 @@ class AppServices {
       ),
       now: now,
     );
+    final DateTime Function() clock = now ?? DateTime.now;
+    final ReviewProvider review = ReviewProvider(
+      settings: settings,
+      service: reviewService,
+      now: now,
+      adBusy: () {
+        if (ads.showingInterstitial) {
+          return true;
+        }
+        final DateTime? last = ads.lastInterstitialAt;
+        return last != null &&
+            clock().difference(last) < AppConfig.reviewQuietAfterInterstitial;
+      },
+    );
     final AppServices services = AppServices._(
       statusRepository: statusRepository,
       savedRepository: savedRepository,
@@ -183,6 +208,7 @@ class AppServices {
       save: save,
       toasts: toasts,
       ads: ads,
+      review: review,
     );
     services._wire();
     return services;
@@ -214,6 +240,8 @@ class AppServices {
   final SaveProvider save;
   final ToastProvider toasts;
   final AdProvider ads;
+  final ReviewProvider review;
+  SaveSummary? _lastSummary;
 
   bool _warningShown = false;
   AccessStatus _lastSourceStatus = AccessStatus.unknown;
@@ -228,8 +256,22 @@ class AppServices {
     settings.addListener(_onSettingsChanged);
     statusList.addListener(_onListChanged);
     savedLibrary.addListener(_onSavedChanged);
+    save.addListener(_onSaveChanged);
     source.addListener(_onSourceChanged);
     folderAccess.addListener(_onAccessChanged);
+  }
+
+  // Every finished save, from Home or the viewer, counts toward the review
+  // prompt. A summary is counted once.
+  void _onSaveChanged() {
+    final SaveSummary? summary = save.value.last;
+    if (summary == null || save.value.saving || identical(summary, _lastSummary)) {
+      return;
+    }
+    _lastSummary = summary;
+    if (summary.saved.isNotEmpty) {
+      unawaited(review.onSaved(summary.saved.length));
+    }
   }
 
   void _onSettingsChanged() {
@@ -309,6 +351,7 @@ class AppServices {
     settings.removeListener(_onSettingsChanged);
     statusList.removeListener(_onListChanged);
     savedLibrary.removeListener(_onSavedChanged);
+    save.removeListener(_onSaveChanged);
     source.removeListener(_onSourceChanged);
     folderAccess.removeListener(_onAccessChanged);
     ads.dispose();

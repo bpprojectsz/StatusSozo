@@ -344,4 +344,31 @@ void main() {
       expect(find.text('No entries'), findsOneWidget);
     });
   });
+
+  group('review prompts row', () {
+    testScreen('is on by default and says what it does', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      expect(find.text('Review prompts'), findsOneWidget);
+      expect(find.text('Occasionally ask you to rate the app'), findsOneWidget);
+      expect(find.text('On'), findsOneWidget);
+    });
+
+    testScreen('tapping turns it off and back on', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      await tester.tap(find.text('Review prompts'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.services.review.enabled, isFalse);
+      expect(find.text('Off'), findsOneWidget);
+      await tester.tap(find.text('Review prompts'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.services.review.enabled, isTrue);
+      expect(find.text('On'), findsOneWidget);
+    });
+  });
 }

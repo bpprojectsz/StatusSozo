@@ -58,6 +58,12 @@ abstract final class AppConfig {
   static const int viewerClosesPerInterstitial = 5;
   static const int batchSaveMinItems = 2;
 
+  // Review prompt: once, after this many saved items on this many different
+  // days, and never within this long of an interstitial.
+  static const int reviewMinSaves = 10;
+  static const int reviewMinDays = 3;
+  static const Duration reviewQuietAfterInterstitial = Duration(minutes: 2);
+
   /// How often Home silently re-reads the status folder while it is showing.
   static const Duration autoRefreshInterval = Duration(seconds: 4);
 

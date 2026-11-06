@@ -8,6 +8,7 @@ import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
+import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
@@ -173,6 +174,23 @@ class SettingsScreen extends StatelessWidget {
                   onPressed: () => unawaited(
                     _open(context, services.links.openStoreListing),
                   ),
+                ),
+                ValueListenableBuilder<SettingsState>(
+                  valueListenable: services.settings,
+                  builder: (BuildContext context, SettingsState state, Widget? child) {
+                    final bool on = state.settings.reviewPromptsEnabled;
+                    return AppRow(
+                      icon: AppIcons.rate,
+                      label: l10n.settingsReviewPrompts,
+                      secondary: l10n.settingsReviewPromptsSubtitle,
+                      trailing: AppChip(
+                        label: on ? l10n.commonOn : l10n.commonOff,
+                        tone: on ? AppChipTone.success : AppChipTone.neutral,
+                      ),
+                      onPressed: () =>
+                          unawaited(services.review.setEnabled(!on)),
+                    );
+                  },
                 ),
                 AppRow(
                   icon: AppIcons.share,

@@ -155,5 +155,9 @@
   "debugLogsClearTitle": "Effacer le journal ?",
   "debugLogsClearMessage": "Les entrées sont supprimées de cet appareil.",
   "licensesTitle": "Licences open source",
-  "licensesEmptyTitle": "Aucune licence trouvée"
+  "licensesEmptyTitle": "Aucune licence trouvée",
+  "settingsReviewPrompts": "Invitations à noter l'application",
+  "settingsReviewPromptsSubtitle": "Vous invite de temps en temps à noter l'application",
+  "commonOn": "Activé",
+  "commonOff": "Désactivé"
 }

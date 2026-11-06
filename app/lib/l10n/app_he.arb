@@ -155,5 +155,9 @@
   "debugLogsClearTitle": "לנקות את היומן?",
   "debugLogsClearMessage": "הרשומות יוסרו מהמכשיר הזה.",
   "licensesTitle": "רישיונות קוד פתוח",
-  "licensesEmptyTitle": "לא נמצאו רישיונות"
+  "licensesEmptyTitle": "לא נמצאו רישיונות",
+  "settingsReviewPrompts": "בקשות לדירוג",
+  "settingsReviewPromptsSubtitle": "מבקש ממך מדי פעם לדרג את האפליקציה",
+  "commonOn": "פועל",
+  "commonOff": "כבוי"
 }

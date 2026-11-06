@@ -18,6 +18,11 @@ class AppSettings {
     required Map<StatusSource, FolderGrant> grants,
     this.interstitialDay,
     this.interstitialsToday = 0,
+    this.reviewPromptsEnabled = true,
+    this.reviewSaves = 0,
+    this.reviewDays = 0,
+    this.reviewLastDay,
+    this.reviewAsked = false,
   }) : grants = Map<StatusSource, FolderGrant>.unmodifiable(grants);
 
   /// Tolerant decoding: unknown enum values fall back to defaults and bad
@@ -71,6 +76,15 @@ class AppSettings {
       grants: grants,
       interstitialDay: tryReadString(json, 'interstitialDay'),
       interstitialsToday: tryReadInt(json, 'interstitialsToday') ?? 0,
+      reviewPromptsEnabled: json['reviewPromptsEnabled'] is bool
+          ? json['reviewPromptsEnabled']! as bool
+          : true,
+      reviewSaves: tryReadInt(json, 'reviewSaves') ?? 0,
+      reviewDays: tryReadInt(json, 'reviewDays') ?? 0,
+      reviewLastDay: tryReadString(json, 'reviewLastDay'),
+      reviewAsked: json['reviewAsked'] is bool
+          ? json['reviewAsked']! as bool
+          : false,
     );
   }
 
@@ -101,6 +115,21 @@ class AppSettings {
   /// Interstitials shown on [interstitialDay].
   final int interstitialsToday;
 
+  /// Whether the app may ask for a store review. The person can turn it off.
+  final bool reviewPromptsEnabled;
+
+  /// Items saved so far, counted toward the review prompt.
+  final int reviewSaves;
+
+  /// Different days on which something was saved.
+  final int reviewDays;
+
+  /// The last day (yyyy-MM-dd) a save was counted.
+  final String? reviewLastDay;
+
+  /// The review prompt was already requested once.
+  final bool reviewAsked;
+
   /// Copies with changes. Pass [clearLanguage] to reset [languageCode] to null.
   AppSettings copyWith({
     int? schemaVersion,
@@ -111,6 +140,11 @@ class AppSettings {
     Map<StatusSource, FolderGrant>? grants,
     String? interstitialDay,
     int? interstitialsToday,
+    bool? reviewPromptsEnabled,
+    int? reviewSaves,
+    int? reviewDays,
+    String? reviewLastDay,
+    bool? reviewAsked,
   }) {
     return AppSettings(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -120,6 +154,11 @@ class AppSettings {
       grants: grants ?? this.grants,
       interstitialDay: interstitialDay ?? this.interstitialDay,
       interstitialsToday: interstitialsToday ?? this.interstitialsToday,
+      reviewPromptsEnabled: reviewPromptsEnabled ?? this.reviewPromptsEnabled,
+      reviewSaves: reviewSaves ?? this.reviewSaves,
+      reviewDays: reviewDays ?? this.reviewDays,
+      reviewLastDay: reviewLastDay ?? this.reviewLastDay,
+      reviewAsked: reviewAsked ?? this.reviewAsked,
     );
   }
 
@@ -134,6 +173,11 @@ class AppSettings {
     },
     'interstitialDay': interstitialDay,
     'interstitialsToday': interstitialsToday,
+    'reviewPromptsEnabled': reviewPromptsEnabled,
+    'reviewSaves': reviewSaves,
+    'reviewDays': reviewDays,
+    'reviewLastDay': reviewLastDay,
+    'reviewAsked': reviewAsked,
   };
 
   @override
@@ -145,6 +189,11 @@ class AppSettings {
       other.lastSource == lastSource &&
       other.interstitialDay == interstitialDay &&
       other.interstitialsToday == interstitialsToday &&
+      other.reviewPromptsEnabled == reviewPromptsEnabled &&
+      other.reviewSaves == reviewSaves &&
+      other.reviewDays == reviewDays &&
+      other.reviewLastDay == reviewLastDay &&
+      other.reviewAsked == reviewAsked &&
       mapEquals(other.grants, grants);
 
   @override
@@ -155,6 +204,11 @@ class AppSettings {
     lastSource,
     interstitialDay,
     interstitialsToday,
+    reviewPromptsEnabled,
+    reviewSaves,
+    reviewDays,
+    reviewLastDay,
+    reviewAsked,
     Object.hashAllUnordered(
       grants.entries.map(
         (MapEntry<StatusSource, FolderGrant> e) => Object.hash(e.key, e.value),

@@ -729,5 +729,21 @@
   "licensesEmptyTitle": "No licenses found",
   "@licensesEmptyTitle": {
     "description": "Empty state title when no license information is available."
+  },
+  "settingsReviewPrompts": "Review prompts",
+  "@settingsReviewPrompts": {
+    "description": "Settings row that turns the occasional request to rate the app on or off."
+  },
+  "settingsReviewPromptsSubtitle": "Occasionally ask you to rate the app",
+  "@settingsReviewPromptsSubtitle": {
+    "description": "Second line under Review prompts."
+  },
+  "commonOn": "On",
+  "@commonOn": {
+    "description": "Shown for a setting that is switched on."
+  },
+  "commonOff": "Off",
+  "@commonOff": {
+    "description": "Shown for a setting that is switched off."
   }
 }
