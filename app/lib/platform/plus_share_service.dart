@@ -28,11 +28,11 @@ class PlusShareService implements ShareService {
   final TextSharer _textSharer;
 
   static Future<void> _systemSharer(List<XFile> files) async {
-    await Share.shareXFiles(files);
+    await SharePlus.instance.share(ShareParams(files: files));
   }
 
   static Future<void> _systemTextSharer(String text) async {
-    await Share.share(text);
+    await SharePlus.instance.share(ShareParams(text: text));
   }
 
   @override
