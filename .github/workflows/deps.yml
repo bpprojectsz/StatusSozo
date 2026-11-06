@@ -1,0 +1,47 @@
+name: deps
+
+# One-off: reports which dependency versions resolve under the pinned Flutter.
+# Manual only. Never add a push: trigger.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.2"
+          channel: stable
+          cache: true
+      - name: Report
+        working-directory: app
+        run: |
+          flutter pub get > /dev/null
+          {
+            echo "== flutter --version"; flutter --version 2>&1 | head -3
+            echo; echo "== pub outdated (direct dependencies)"
+            flutter pub outdated --no-transitive 2>&1
+            echo; echo "== pub upgrade --major-versions --dry-run"
+            flutter pub upgrade --major-versions --dry-run 2>&1 | head -80
+          } > /tmp/deps.log 2>&1 || true
+      - name: Publish log
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog && cp /tmp/deps.log /tmp/cilog/deps.log 2>/dev/null || echo none > /tmp/cilog/deps.log
+          cd /tmp/cilog
+          git init -q -b ci-logs-deps
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "deps log ${GITHUB_RUN_ID}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-logs-deps
