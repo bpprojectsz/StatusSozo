@@ -20,20 +20,23 @@ if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
 android {
     namespace = "com.zdmgold.statussozo"
     // compileSdk 36 needs Android Gradle Plugin 8.9.1 or newer and Gradle 8.11.1
     // or newer; both are pinned in settings.gradle.kts and the wrapper.
     compileSdk = 36
-    ndkVersion = flutter.ndkVersion
+    // Several plugins now require NDK 27. Flutter 3.29.2's default is older.
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
