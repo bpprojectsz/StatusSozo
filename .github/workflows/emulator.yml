@@ -1,0 +1,89 @@
+name: emulator
+
+# Boots Android 13 and 14 emulators, installs a debug build with sample
+# statuses, drives the folder picker, and publishes screenshots, frame timing
+# and the crash log to the ci-emulator-<api> branches. Manual only. Never add a
+# push: trigger. Emulator speed is not the speed of a low-end phone.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [33, 34]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.2"
+          channel: stable
+          cache: true
+
+      - name: Build the debug app for the emulator
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter gen-l10n
+          flutter build apk --debug --target-platform android-x64
+
+      - name: Sample statuses
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q imagemagick ffmpeg
+          mkdir -p /tmp/media
+          i=0
+          for c in "#4F46E5" "#0E9F8A" "#C42B1F" "#B54708" "#067647" "#7C3AED" "#2563EB" "#DB2777" "#0891B2" "#65A30D" "#9333EA" "#EA580C"; do
+            i=$((i+1))
+            convert -size 720x960 "gradient:$c-#101018" -gravity center -fill white -pointsize 120 -annotate 0 "$i" "/tmp/media/IMG-20261107-WA00$(printf %02d $i).jpg"
+          done
+          ffmpeg -loglevel error -f lavfi -i testsrc=duration=3:size=320x240:rate=15 -pix_fmt yuv420p /tmp/media/VID-20261107-WA0101.mp4
+          ffmpeg -loglevel error -f lavfi -i testsrc2=duration=3:size=320x240:rate=15 -pix_fmt yuv420p /tmp/media/VID-20261107-WA0102.mp4
+          ls /tmp/media | wc -l
+
+      - name: Run on the emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          arch: x86_64
+          target: google_apis
+          profile: pixel_5
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash app/tool/emulator_smoke.sh
+
+      - name: Publish results
+        if: always()
+        run: |
+          mkdir -p /tmp/emu
+          cd /tmp/emu
+          rm -f ui.xml
+          echo "run=${GITHUB_RUN_ID} api=${{ matrix.api }} commit=${GITHUB_SHA}" > meta.txt
+          git init -q -b ci-emulator-${{ matrix.api }}
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "emulator ${{ matrix.api }} run ${GITHUB_RUN_ID}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-emulator-${{ matrix.api }}
