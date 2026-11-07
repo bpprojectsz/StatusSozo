@@ -45,9 +45,11 @@ jobs:
       - name: Build the debug app for the emulator
         working-directory: app
         run: |
+          set -o pipefail
+          mkdir -p /tmp/emu
           flutter pub get
           flutter gen-l10n
-          flutter build apk --debug --target-platform android-x64
+          flutter build apk --debug --target-platform android-x64 2>&1 | tee /tmp/emu/build.log
 
       - name: Sample statuses
         run: |
