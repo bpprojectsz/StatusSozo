@@ -22,13 +22,12 @@ defaults:
 
 jobs:
   smoke:
-    if: ${{ inputs.api == 'all' || inputs.api == matrix.api }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     strategy:
       fail-fast: false
       matrix:
-        api: [33, 34]
+        api: ${{ fromJSON(inputs.api == 'all' && '[33, 34]' || format('[{0}]', inputs.api)) }}
     steps:
       - uses: actions/checkout@v4
 
