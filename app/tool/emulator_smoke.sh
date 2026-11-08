@@ -59,6 +59,16 @@ has_text() {
   grep -qiE "$1" "$OUT/ui.xml"
 }
 
+# A slow software emulator can show "isn't responding" dialogs for system apps,
+# which stop uiautomator. Hide them and let the system settle first.
+adb wait-for-device
+adb shell settings put global hide_error_dialogs 1
+until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+sleep 45
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS > /dev/null 2>&1
+adb shell input keyevent KEYCODE_HOME
+sleep 3
+
 note "device: $(adb shell getprop ro.build.version.release) (API $(adb shell getprop ro.build.version.sdk)), $(adb shell wm size | tr -d '\r')"
 
 # Sample statuses in the folder the app expects.
