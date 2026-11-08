@@ -62,9 +62,12 @@ has_text() {
 note "device: $(adb shell getprop ro.build.version.release) (API $(adb shell getprop ro.build.version.sdk)), $(adb shell wm size | tr -d '\r')"
 
 # Sample statuses in the folder the app expects.
-adb shell mkdir -p "$STAT"
-for f in /tmp/media/*; do adb push "$f" "$STAT/" > /dev/null; done
-note "pushed $(adb shell ls "$STAT" | wc -l) files to the status folder"
+note "media on the runner: $(ls /tmp/media | wc -l) files"
+adb shell mkdir -p "$STAT" 2>&1 | tee -a "$OUT/summary.txt"
+for f in /tmp/media/*; do adb push "$f" "$STAT/" 2>&1 | tail -1 >> "$OUT/push.txt"; done
+head -3 "$OUT/push.txt" | tee -a "$OUT/summary.txt"
+adb shell ls -la "$STAT" 2>&1 | head -6 | tee -a "$OUT/summary.txt"
+note "files in the status folder: $(adb shell ls "$STAT" 2>/dev/null | wc -l)"
 
 adb install -r "$APK" 2>&1 | tail -1 | tee -a "$OUT/summary.txt"
 adb logcat -c
@@ -93,13 +96,15 @@ adb shell dumpsys gfxinfo "$PKG" | grep -E "Total frames rendered|Janky frames|5
 note "frame timing:"; cat "$OUT/perf.txt" | tee -a "$OUT/summary.txt"
 shot 06_after_scroll
 
-tap_text '^Photo(,|$)'
+# Home is covered by an animated ad, which stops uiautomator from reading it,
+# so Home is driven by coordinates (1080 x 2340 screen).
+adb shell input tap 200 640
 sleep 3
 shot 07_viewer
 adb shell input keyevent KEYCODE_BACK
 sleep 2
 
-tap_text '^Settings$'
+adb shell input tap 966 207
 sleep 3
 shot 08_settings
 for i in 1 2 3; do adb shell input swipe 540 1800 540 700 300; sleep 0.5; done

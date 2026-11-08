@@ -6,6 +6,12 @@ name: emulator
 # push: trigger. Emulator speed is not the speed of a low-end phone.
 on:
   workflow_dispatch:
+    inputs:
+      api:
+        description: "Android API level to run, or all"
+        type: choice
+        options: [all, "33", "34"]
+        default: all
 
 permissions:
   contents: write
@@ -16,6 +22,7 @@ defaults:
 
 jobs:
   smoke:
+    if: ${{ inputs.api == 'all' || inputs.api == matrix.api }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     strategy:
