@@ -109,23 +109,42 @@ shot 06_after_scroll
 # Home is covered by an animated ad, which stops uiautomator from reading it,
 # so Home is driven by coordinates (1080 x 2340 screen).
 adb shell input tap 200 640
-sleep 3
+sleep 4
 shot 07_viewer
+# Android shows a one-time "Viewing full screen" tip. Back dismisses it.
+adb shell input keyevent KEYCODE_BACK
+sleep 15
+shot 07b_viewer_with_ad
+adb shell input tap 540 1986
+sleep 4
+shot 07c_after_save
+note "saved pictures: $(adb shell ls /sdcard/Pictures/StatusSozo 2>/dev/null | tr '\n' ' ')"
+adb shell input keyevent KEYCODE_BACK
+sleep 2
+shot 07d_after_back
 adb shell input keyevent KEYCODE_BACK
 sleep 2
 
-adb shell input tap 966 207
-sleep 3
-shot 08_settings
+adb shell input tap 817 206
+sleep 4
+shot 08_saved
+adb shell input keyevent KEYCODE_BACK
+sleep 2
+
+adb shell input tap 970 206
+sleep 4
+shot 09_settings
 for i in 1 2 3; do adb shell input swipe 540 1800 540 700 300; sleep 0.5; done
-shot 09_settings_scrolled
+shot 10_settings_scrolled
+for i in 1 2 3; do adb shell input swipe 540 1800 540 700 300; sleep 0.5; done
+shot 11_settings_bottom
 adb shell input keyevent KEYCODE_BACK
 sleep 2
 
 adb shell am force-stop "$PKG"
 adb shell am start -W -n "$PKG/.MainActivity" > /dev/null
 sleep 6
-shot 10_relaunch
+shot 12_relaunch
 if has_text 'Photos|Videos'; then note "RELAUNCH GOES STRAIGHT TO HOME"; else note "RELAUNCH DID NOT REACH HOME"; fi
 
 adb logcat -d -v time > "$OUT/logcat.txt"

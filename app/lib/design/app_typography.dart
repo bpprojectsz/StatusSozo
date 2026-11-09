@@ -133,6 +133,9 @@ class AppTextStyles extends ThemeExtension<AppTextStyles> {
       fontVariations: <FontVariation>[FontVariation.weight(weight.toDouble())],
       height: height,
       color: color,
+      // Explicit, so a screen with no text-style ancestor never shows the
+      // debug build's yellow underline.
+      decoration: TextDecoration.none,
       letterSpacing: letterSpacing,
       fontFeatures: features,
     );
