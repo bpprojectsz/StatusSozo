@@ -1,0 +1,28 @@
+device: 13 (API 33), Physical size: 1080x2340
+media on the runner: 14 files
+/tmp/media/IMG-20261107-WA0001.jpg: 1 file pushed, 0 skipped. 70.3 MB/s (19995 bytes in 0.000s)
+/tmp/media/IMG-20261107-WA0002.jpg: 1 file pushed, 0 skipped. 82.5 MB/s (24455 bytes in 0.000s)
+/tmp/media/IMG-20261107-WA0003.jpg: 1 file pushed, 0 skipped. 67.6 MB/s (20270 bytes in 0.000s)
+total 448
+-rw-rw---- 1 u0_a168 media_rw 19995 2026-11-09 11:53 IMG-20261107-WA0001.jpg
+-rw-rw---- 1 u0_a168 media_rw 24455 2026-11-09 11:53 IMG-20261107-WA0002.jpg
+-rw-rw---- 1 u0_a168 media_rw 20270 2026-11-09 11:53 IMG-20261107-WA0003.jpg
+-rw-rw---- 1 u0_a168 media_rw 21450 2026-11-09 11:53 IMG-20261107-WA0004.jpg
+-rw-rw---- 1 u0_a168 media_rw 19866 2026-11-09 11:53 IMG-20261107-WA0005.jpg
+files in the status folder: 14
+Success
+tapped '^Choose folder$' at 540 1850
+tapped 'use this folder' at 540 2208
+tapped '^allow$' at 870 1369
+HOME REACHED
+frame timing:
+Total frames rendered: 32
+Janky frames: 15 (46.88%)
+Janky frames (legacy): 16 (50.00%)
+50th percentile: 85ms
+90th percentile: 150ms
+95th percentile: 200ms
+99th percentile: 250ms
+saved pictures: IMG-20261107-WA0012.jpg 
+RELAUNCH GOES STRAIGHT TO HOME
+no crash
