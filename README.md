@@ -43,6 +43,7 @@ All workflows are `workflow_dispatch` only. **Never add a `push:` trigger.**
 |---|---|
 | `verify` | Analyze, gate and tests. No build, no signing. |
 | `build_android` | `build_type` test: a small signed arm64 APK published on the Releases page. `release`: signed AAB and APK, which needs the four signing secrets. Optional performance overlay and `live_ads`. |
+| `emulator` | Boots Android 13 and 14 emulators, installs a debug build with sample statuses, drives the folder picker, saves an item, switches language, and publishes screenshots, frame timing and the crash log to the `ci-emulator-<api>` branches. Not a speed test: the emulator renders in software. |
 | `brand` | One-off: runs the launcher icon and splash generators and commits the generated Android files |
 | `bootstrap` | One-off, already run: generated the Android scaffold |
 
