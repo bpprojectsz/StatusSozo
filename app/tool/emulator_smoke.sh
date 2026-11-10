@@ -62,6 +62,7 @@ has_text() {
 # A slow software emulator can show "isn't responding" dialogs for system apps,
 # which stop uiautomator. Hide them and let the system settle first.
 adb wait-for-device
+adb shell settings put secure immersive_mode_confirmations confirmed
 adb shell settings put global hide_error_dialogs 1
 until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
 sleep 45
@@ -146,6 +147,29 @@ adb shell am start -W -n "$PKG/.MainActivity" > /dev/null
 sleep 6
 shot 12_relaunch
 if has_text 'Photos|Videos'; then note "RELAUNCH GOES STRAIGHT TO HOME"; else note "RELAUNCH DID NOT REACH HOME"; fi
+
+# Other languages on a real engine: Home in each, and Settings in Arabic (right
+# to left, so the chips move to the left edge) and Japanese.
+for L in ar he hi ja ko zh de; do
+  adb shell cmd locale set-app-locales "$PKG" --locales "$L" > /dev/null 2>&1
+  adb shell am force-stop "$PKG"
+  adb shell am start -W -n "$PKG/.MainActivity" > /dev/null
+  sleep 9
+  shot "lang_${L}_home"
+  if [ "$L" = "ar" ]; then
+    adb shell input tap 110 206; sleep 4
+    shot "lang_ar_settings"
+    for i in 1 2 3; do adb shell input swipe 540 1800 540 700 300; sleep 0.5; done
+    shot "lang_ar_settings_scrolled"
+  fi
+  if [ "$L" = "ja" ]; then
+    adb shell input tap 970 206; sleep 4
+    shot "lang_ja_settings"
+    for i in 1 2 3; do adb shell input swipe 540 1800 540 700 300; sleep 0.5; done
+    shot "lang_ja_settings_scrolled"
+  fi
+done
+adb shell cmd locale set-app-locales "$PKG" --locales "" > /dev/null 2>&1
 
 adb logcat -d -v time > "$OUT/logcat.txt"
 if grep -q "FATAL EXCEPTION" "$OUT/logcat.txt"; then
