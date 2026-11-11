@@ -156,8 +156,6 @@
   "debugLogsClearMessage": "这些条目将从此设备中删除。",
   "licensesTitle": "开源许可",
   "licensesEmptyTitle": "未找到许可",
-  "settingsReviewPrompts": "评分提示",
-  "settingsReviewPromptsSubtitle": "偶尔请您为应用评分",
-  "commonOn": "开",
-  "commonOff": "关"
+  "settingsReviewNow": "立即为应用评分",
+  "settingsReviewTap": "点按即可在商店中评分"
 }

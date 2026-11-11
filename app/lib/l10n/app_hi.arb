@@ -156,8 +156,6 @@
   "debugLogsClearMessage": "प्रविष्टियां इस डिवाइस से हटा दी जाती हैं।",
   "licensesTitle": "ओपन-सोर्स लाइसेंस",
   "licensesEmptyTitle": "कोई लाइसेंस नहीं मिला",
-  "settingsReviewPrompts": "रेटिंग के अनुरोध",
-  "settingsReviewPromptsSubtitle": "कभी-कभी ऐप को रेटिंग देने के लिए कहता है",
-  "commonOn": "चालू",
-  "commonOff": "बंद"
+  "settingsReviewNow": "अभी ऐप को रेटिंग दें",
+  "settingsReviewTap": "स्टोर पर रेटिंग देने के लिए टैप करें"
 }

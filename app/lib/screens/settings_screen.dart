@@ -8,7 +8,6 @@ import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
-import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
@@ -40,6 +39,17 @@ class SettingsScreen extends StatelessWidget {
     if (!ok) {
       services.toasts.show(ToastCode.linkFailed);
     }
+  }
+
+  /// Opens the store's review page. A person who went there has reviewed, so
+  /// the automatic prompt is never requested afterwards.
+  Future<void> _reviewNow(BuildContext context) async {
+    final services = AppScope.of(context);
+    await services.review.markAsked();
+    if (!context.mounted) {
+      return;
+    }
+    await _open(context, services.links.openStoreListing);
   }
 
   Future<void> _shareApp(BuildContext context) async {
@@ -170,27 +180,9 @@ class SettingsScreen extends StatelessWidget {
                 AppRow(
                   icon: AppIcons.rate,
                   label: l10n.settingsRate,
-                  showChevron: true,
-                  onPressed: () => unawaited(
-                    _open(context, services.links.openStoreListing),
-                  ),
-                ),
-                ValueListenableBuilder<SettingsState>(
-                  valueListenable: services.settings,
-                  builder: (BuildContext context, SettingsState state, Widget? child) {
-                    final bool on = state.settings.reviewPromptsEnabled;
-                    return AppRow(
-                      icon: AppIcons.rate,
-                      label: l10n.settingsReviewPrompts,
-                      secondary: l10n.settingsReviewPromptsSubtitle,
-                      trailing: AppChip(
-                        label: on ? l10n.commonOn : l10n.commonOff,
-                        tone: on ? AppChipTone.success : AppChipTone.neutral,
-                      ),
-                      onPressed: () =>
-                          unawaited(services.review.setEnabled(!on)),
-                    );
-                  },
+                  secondary: l10n.settingsReviewTap,
+                  trailing: AppChip(label: l10n.settingsReviewNow),
+                  onPressed: () => unawaited(_reviewNow(context)),
                 ),
                 AppRow(
                   icon: AppIcons.share,

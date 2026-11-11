@@ -10,9 +10,10 @@ import 'package:statussozo/utils/app_log.dart';
 /// Decides when to ask for a store review, and counts toward it.
 ///
 /// The prompt is requested once, after [AppConfig.reviewMinSaves] saved items
-/// on at least [AppConfig.reviewMinDays] different days, only when the person
-/// has not turned it off, and never while an interstitial is showing or just
-/// after one. The system itself decides whether the prompt appears.
+/// on at least [AppConfig.reviewMinDays] different days, and never while an
+/// interstitial is showing or just after one. The system itself decides whether
+/// the prompt appears. A person who taps the Rate row has reviewed, so the
+/// prompt is never requested after that.
 class ReviewProvider {
   ReviewProvider({
     required SettingsProvider settings,
@@ -33,12 +34,9 @@ class ReviewProvider {
 
   bool _requesting = false;
 
-  /// Whether review prompts are switched on.
-  bool get enabled => _settings.settings.reviewPromptsEnabled;
-
-  /// Turns review prompts on or off.
-  Future<void> setEnabled(bool value) => _settings.update(
-    (AppSettings s) => s.copyWith(reviewPromptsEnabled: value),
+  /// The person went to the store to review on their own, so never ask again.
+  Future<void> markAsked() => _settings.update(
+    (AppSettings s) => s.copyWith(reviewAsked: true),
   );
 
   /// [items] items were just saved successfully.
@@ -61,7 +59,6 @@ class ReviewProvider {
   Future<void> _maybeAsk() async {
     final AppSettings s = _settings.settings;
     if (_requesting ||
-        !s.reviewPromptsEnabled ||
         s.reviewAsked ||
         s.reviewSaves < AppConfig.reviewMinSaves ||
         s.reviewDays < AppConfig.reviewMinDays ||

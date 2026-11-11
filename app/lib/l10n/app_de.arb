@@ -156,8 +156,6 @@
   "debugLogsClearMessage": "Die Einträge werden von diesem Gerät entfernt.",
   "licensesTitle": "Open-Source-Lizenzen",
   "licensesEmptyTitle": "Keine Lizenzen gefunden",
-  "settingsReviewPrompts": "Bewertungsanfragen",
-  "settingsReviewPromptsSubtitle": "Bittet dich gelegentlich, die App zu bewerten",
-  "commonOn": "An",
-  "commonOff": "Aus"
+  "settingsReviewNow": "App jetzt bewerten",
+  "settingsReviewTap": "Tippen, um im Store zu bewerten"
 }

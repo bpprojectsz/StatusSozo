@@ -327,9 +327,8 @@ void main() {
   });
 
   group('AppSettings review counters', () {
-    test('default to on, nothing counted, not asked', () {
+    test('default to nothing counted and not asked', () {
       final AppSettings d = AppSettings.defaults();
-      expect(d.reviewPromptsEnabled, isTrue);
       expect(d.reviewSaves, 0);
       expect(d.reviewDays, 0);
       expect(d.reviewLastDay, isNull);
@@ -338,7 +337,6 @@ void main() {
 
     test('round trip through JSON', () {
       final AppSettings s = AppSettings.defaults().copyWith(
-        reviewPromptsEnabled: false,
         reviewSaves: 12,
         reviewDays: 3,
         reviewLastDay: '2026-11-03',
@@ -346,7 +344,6 @@ void main() {
       );
       final AppSettings back = AppSettings.fromJson(s.toJson());
       expect(back, s);
-      expect(back.reviewPromptsEnabled, isFalse);
       expect(back.reviewSaves, 12);
       expect(back.reviewAsked, isTrue);
     });
@@ -355,18 +352,15 @@ void main() {
       final AppSettings s = AppSettings.fromJson(<String, Object?>{
         'schemaVersion': 1,
       });
-      expect(s.reviewPromptsEnabled, isTrue);
       expect(s.reviewAsked, isFalse);
     });
 
     test('garbage values fall back to the defaults', () {
       final AppSettings s = AppSettings.fromJson(<String, Object?>{
         'schemaVersion': 1,
-        'reviewPromptsEnabled': 'yes',
         'reviewAsked': 5,
         'reviewSaves': 'many',
       });
-      expect(s.reviewPromptsEnabled, isTrue);
       expect(s.reviewAsked, isFalse);
       expect(s.reviewSaves, 0);
     });

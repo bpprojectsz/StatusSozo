@@ -730,20 +730,12 @@
   "@licensesEmptyTitle": {
     "description": "Empty state title when no license information is available."
   },
-  "settingsReviewPrompts": "Review prompts",
-  "@settingsReviewPrompts": {
-    "description": "Settings row that turns the occasional request to rate the app on or off."
+  "settingsReviewNow": "Review this app now",
+  "@settingsReviewNow": {
+    "description": "Chip on the Rate the app row that opens the store's review page."
   },
-  "settingsReviewPromptsSubtitle": "Occasionally ask you to rate the app",
-  "@settingsReviewPromptsSubtitle": {
-    "description": "Second line under Review prompts."
-  },
-  "commonOn": "On",
-  "@commonOn": {
-    "description": "Shown for a setting that is switched on."
-  },
-  "commonOff": "Off",
-  "@commonOff": {
-    "description": "Shown for a setting that is switched off."
+  "settingsReviewTap": "Tap to review on store",
+  "@settingsReviewTap": {
+    "description": "Second line under Rate the app."
   }
 }

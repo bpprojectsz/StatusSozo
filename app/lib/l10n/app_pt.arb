@@ -156,8 +156,6 @@
   "debugLogsClearMessage": "As entradas são removidas deste dispositivo.",
   "licensesTitle": "Licenças de código aberto",
   "licensesEmptyTitle": "Nenhuma licença encontrada",
-  "settingsReviewPrompts": "Pedidos de avaliação",
-  "settingsReviewPromptsSubtitle": "Pede ocasionalmente que você avalie o app",
-  "commonOn": "Ativado",
-  "commonOff": "Desativado"
+  "settingsReviewNow": "Avaliar o app agora",
+  "settingsReviewTap": "Toque para avaliar na loja"
 }

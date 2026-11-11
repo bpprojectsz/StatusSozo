@@ -156,8 +156,6 @@
   "debugLogsClearMessage": "エントリはこの端末から削除されます。",
   "licensesTitle": "オープンソースライセンス",
   "licensesEmptyTitle": "ライセンスが見つかりません",
-  "settingsReviewPrompts": "レビューのお願い",
-  "settingsReviewPromptsSubtitle": "ときどきアプリの評価をお願いします",
-  "commonOn": "オン",
-  "commonOff": "オフ"
+  "settingsReviewNow": "今すぐアプリを評価",
+  "settingsReviewTap": "タップしてストアで評価"
 }

@@ -130,15 +130,10 @@ void main() {
     });
   });
 
-  group('the switch', () {
-    test('is on by default', () {
-      expect(review.enabled, isTrue);
-    });
-
-    test('off means never asked, but saves are still counted', () async {
-      await review.setEnabled(false);
-      expect(review.enabled, isFalse);
-      expect(store.saves.last.reviewPromptsEnabled, isFalse);
+  group('a person who reviewed on their own', () {
+    test('marking it stops the automatic prompt for good', () async {
+      await review.markAsked();
+      expect(settings.settings.reviewAsked, isTrue);
       await review.onSaved(4);
       nextDay();
       await review.onSaved(3);
@@ -148,16 +143,9 @@ void main() {
       expect(settings.settings.reviewSaves, 10);
     });
 
-    test('turning it on lets the next save ask', () async {
-      await review.setEnabled(false);
-      await review.onSaved(4);
-      nextDay();
-      await review.onSaved(3);
-      nextDay();
-      await review.onSaved(3);
-      await review.setEnabled(true);
-      await review.onSaved(1);
-      expect(service.requestCalls, 1);
+    test('is saved to the store', () async {
+      await review.markAsked();
+      expect(store.saves.last.reviewAsked, isTrue);
     });
   });
 }

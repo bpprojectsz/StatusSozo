@@ -345,30 +345,35 @@ void main() {
     });
   });
 
-  group('review prompts row', () {
-    testScreen('is on by default and says what it does', (
+  group('the Rate the app row', () {
+    testScreen('says it opens the store review and offers it as a chip', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
-      expect(find.text('Review prompts'), findsOneWidget);
-      expect(find.text('Occasionally ask you to rate the app'), findsOneWidget);
-      expect(find.text('On'), findsOneWidget);
+      expect(find.text('Rate the app'), findsOneWidget);
+      expect(find.text('Tap to review on store'), findsOneWidget);
+      expect(find.text('Review this app now'), findsOneWidget);
     });
 
-    testScreen('tapping turns it off and back on', (
+    testScreen('has no switch to turn reviews off', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
-      await tester.tap(find.text('Review prompts'));
+      expect(find.text('Review prompts'), findsNothing);
+      expect(find.text('On'), findsNothing);
+      expect(find.text('Off'), findsNothing);
+    });
+
+    testScreen('tapping opens the store listing and counts as reviewed', (
+      WidgetTester tester,
+    ) async {
+      await pumpSettings(tester);
+      expect(rig.services.settings.settings.reviewAsked, isFalse);
+      await tester.tap(find.text('Review this app now'));
       await tester.pump();
       await tester.pump();
-      expect(rig.services.review.enabled, isFalse);
-      expect(find.text('Off'), findsOneWidget);
-      await tester.tap(find.text('Review prompts'));
-      await tester.pump();
-      await tester.pump();
-      expect(rig.services.review.enabled, isTrue);
-      expect(find.text('On'), findsOneWidget);
+      expect(rig.links.storeListingOpened, 1);
+      expect(rig.services.settings.settings.reviewAsked, isTrue);
     });
   });
 }
