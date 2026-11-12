@@ -1,0 +1,1212 @@
+Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision c236373904 (1 year, 8 months ago) • 2025-03-13 16:17:06 -0400
+Engine • revision 18b71d647a
+Tools • Dart 3.7.2 • DevTools 2.42.3
+
+  ╔════════════════════════════════════════════════════════════════════════════╗
+  ║                 Welcome to Flutter! - https://flutter.dev                  ║
+  ║                                                                            ║
+  ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+  ║ statistics and basic crash reports. This data is used to help improve      ║
+  ║ Flutter tools over time.                                                   ║
+  ║                                                                            ║
+  ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+  ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+  ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+  ║ event will be sent, and then no further information will be sent by the    ║
+  ║ Flutter tool.                                                              ║
+  ║                                                                            ║
+  ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+  ║ The Google Privacy Policy describes how data is handled in this service.   ║
+  ║                                                                            ║
+  ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+  ║ crash reports to Google.                                                   ║
+  ║                                                                            ║
+  ║ Read about data we send with crash reports:                                ║
+  ║ https://flutter.dev/to/crash-reporting                                     ║
+  ║                                                                            ║
+  ║ See Google's privacy policy:                                               ║
+  ║ https://policies.google.com/privacy                                        ║
+  ║                                                                            ║
+  ║ To disable animations in this tool, use                                    ║
+  ║ 'flutter config --no-cli-animations'.                                      ║
+  ╚════════════════════════════════════════════════════════════════════════════╝
+
+Resolving dependencies...
+Downloading packages...
+  archive 4.3.0 (4.6.0 available)
+  async 2.12.0 (2.13.1 available)
+  characters 1.4.0 (1.4.1 available)
+  checked_yaml 2.0.3 (2.0.4 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cross_file 0.3.5 (0.4.0 available)
+  crypto 3.0.7 (3.0.8 available)
+  fake_async 1.3.2 (1.3.3 available)
+  flutter_lints 5.0.0 (6.0.0 available)
+  flutter_native_splash 2.4.6 (2.4.8 available)
+  flutter_svg 2.2.2 (2.3.4 available)
+  google_mobile_ads 6.0.0 (9.2.0 available)
+  image 4.10.1 (4.12.0 available)
+  intl 0.19.0 (0.20.3 available)
+  json_annotation 4.9.0 (4.12.0 available)
+  leak_tracker 10.0.8 (11.0.2 available)
+  leak_tracker_flutter_testing 3.0.9 (3.0.10 available)
+  leak_tracker_testing 3.0.1 (3.0.2 available)
+  lints 5.1.1 (6.1.0 available)
+  matcher 0.12.17 (0.12.20 available)
+  material_color_utilities 0.11.1 (0.13.1 available)
+  meta 1.16.0 (1.19.0 available)
+  package_info_plus 9.0.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  path_provider 2.1.5 (2.1.6 available)
+  path_provider_android 2.2.19 (2.3.1 available)
+  path_provider_foundation 2.4.2 (2.6.0 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 6.1.0 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  posix 6.5.2 (6.5.4 available)
+  share_plus 12.0.2 (13.3.1 available)
+  share_plus_platform_interface 6.1.0 (7.2.0 available)
+  shared_preferences 2.5.3 (2.5.6 available)
+  shared_preferences_android 2.4.13 (2.5.5 available)
+  shared_preferences_foundation 2.5.4 (2.6.2 available)
+  shared_preferences_platform_interface 2.4.1 (2.4.2 available)
+  source_span 1.10.1 (1.10.2 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.4 (0.7.15 available)
+  url_launcher 6.3.2 (6.3.3 available)
+  url_launcher_android 6.3.20 (6.3.33 available)
+  url_launcher_ios 6.3.4 (6.4.2 available)
+  url_launcher_linux 3.2.1 (3.2.3 available)
+  url_launcher_macos 3.2.3 (3.2.6 available)
+  url_launcher_web 2.4.1 (2.4.3 available)
+  url_launcher_windows 3.1.4 (3.1.6 available)
+  vector_graphics 1.1.19 (1.3.1 available)
+  vector_graphics_codec 1.1.13 (1.2.0 available)
+  vector_graphics_compiler 1.1.19 (1.3.6 available)
+  vector_math 2.1.4 (2.4.4 available)
+  video_player 2.10.1 (2.14.1 available)
+  video_player_android 2.8.15 (2.12.2 available)
+  video_player_avfoundation 2.8.4 (2.12.3 available)
+  video_player_platform_interface 6.6.0 (6.9.0 available)
+  vm_service 14.3.1 (15.4.0 available)
+  web 1.1.1 (1.1.2 available)
+  webview_flutter 4.13.0 (4.14.1 available)
+  webview_flutter_android 4.10.1 (4.14.1 available)
+  webview_flutter_platform_interface 2.14.0 (2.15.1 available)
+  webview_flutter_wkwebview 3.23.0 (3.27.2 available)
+  win32 5.13.0 (6.4.0 available)
+  xml 6.5.0 (7.1.0 available)
+Got dependencies!
+65 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+Analyzing app...                                                
+No issues found! (ran in 18.8s)
+check_forbidden: clean (117 dart file(s) scanned)
+00:00 +0: loading /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart
+00:00 +0: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: banners Home shows a banner once ads are on
+00:00 +1: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:00 +2: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:00 +3: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:01 +4: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:01 +5: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:01 +6: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:01 +7: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) shows the counter and closes with the close chip
+00:01 +8: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials saving a single item shows none
+00:01 +9: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials saving a single item shows none
+00:01 +10: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials saving a single item shows none
+00:01 +11: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) swiping moves between items and updates the counter
+00:01 +12: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) swiping moves between items and updates the counter
+00:01 +13: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials deleting from Saved shows one
+00:01 +14: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) zooming locks paging until it is zoomed out
+00:01 +15: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) zooming locks paging until it is zoomed out
+00:01 +16: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials saving a video in the viewer shows none
+00:01 +17: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) Save becomes a disabled Saved state
+00:01 +18: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials deleting a photo in the Saved viewer shows one when a photo follows
+00:01 +19: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials deleting a photo in the Saved viewer shows one when a photo follows
+00:02 +20: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) the saved state follows the page
+00:02 +21: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials deleting in the Saved viewer shows none when a video follows
+00:02 +22: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) a tap toggles the overlays
+00:02 +23: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials only every fifth viewer close shows one
+00:02 +24: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials only every fifth viewer close shows one
+00:02 +25: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: interstitials only every fifth viewer close shows one
+00:02 +26: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) prefetches the neighbouring pages
+00:02 +27: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: Settings rows for ads Remove ads is shown as Coming soon and is not tappable
+00:02 +28: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) an image that cannot be read shows a message and retry
+00:02 +29: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: Settings rows for ads Privacy choices is hidden when not required
+00:02 +30: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: Settings rows for ads Privacy choices is hidden when not required
+00:02 +31: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) renders in rtl on a dark theme
+00:02 +32: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/ads_screens_test.dart: Settings rows for ads Privacy choices appears when required and reopens the form
+00:02 +33: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (status mode) renders in ltr on a dark theme
+00:02 +34: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen with video plays the current video with custom controls
+00:02 +35: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen with video closing the viewer disposes the session
+00:02 +36: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen with video only the current page holds a session
+00:02 +37: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) has a Delete action and no Save button
+00:02 +38: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting asks first, then removes the item and moves on
+00:02 +39: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) cancelling keeps the item
+00:03 +40: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) deleting the last item closes the viewer
+00:03 +41: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: ViewerScreen (saved mode) a failed delete shows a toast and keeps the item
+00:03 +42: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen refreshes when opened and shows the items and footer
+00:03 +43: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen shows the empty state
+00:03 +44: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen shows a spinner while the first load runs
+00:03 +45: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen shows an error with retry when the first load fails
+00:03 +46: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen long press selects, and Share sends the selection
+00:03 +47: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/viewer_saved_test.dart: SavedScreen Delete asks for confirmation and removes the selection
+00:03 +48: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +49: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +50: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +51: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +52: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +53: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:03 +54: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen says so when nothing was logged
+00:04 +55: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen lists entries newest first
+2026-11-12T08:10:04.186001Z I/t: first entry
+2026-11-12T08:10:04.187293Z I/t: second entry
+00:04 +56: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen Send report opens an email with the log
+2026-11-12T08:10:04.277291Z I/t: something happened
+00:04 +57: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen Clear asks first and then empties the log
+2026-11-12T08:10:04.338677Z I/t: to be removed
+00:04 +58: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen cancelling the confirmation keeps the log
+2026-11-12T08:10:04.465146Z I/t: keep me
+00:04 +59: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: DebugLogsScreen renders in RTL at 2x text without overflow
+2026-11-12T08:10:04.545255Z I/t: a fairly long line that has to wrap at large text sizes
+00:04 +60: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: LicensesScreen lists the packages and opens one license
+00:04 +61: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: LicensesScreen says so when no licenses are available
+00:04 +62: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/debug_licenses_test.dart: LicensesScreen treats a failing license source as empty
+2026-11-12T08:10:04.731901Z W/licenses: Could not read the licenses | Bad state: x
+00:04 +63: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy first run
+00:05 +64: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy renewal
+00:05 +65: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy reconnect has a back chip and its own title
+00:05 +66: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy never shows the wordmark
+00:05 +67: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: copy shows the numbered steps
+00:05 +68: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder calls the provider and toasts success
+00:05 +69: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a wrong folder shows the wrong-folder toast
+00:05 +70: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder a cancelled picker shows an info toast
+00:05 +71: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/access_screen_test.dart: choose folder other failures map to a matching toast
+00:06 +72: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +73: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +74: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+2026-11-12T08:10:06.068125Z I/t: a log line to display
+00:06 +75: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +76: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +77: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +78: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +79: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +80: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +81: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +82: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +83: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:06 +84: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 1.0x text
+00:07 +85: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in en at 2.0x text
+2026-11-12T08:10:06.964663Z I/t: a log line to display
+00:07 +86: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in es at 1.0x text
+2026-11-12T08:10:07.214397Z I/t: a log line to display
+00:07 +87: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in es at 2.0x text
+2026-11-12T08:10:07.404640Z I/t: a log line to display
+00:07 +88: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:07 +88: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in fr at 1.0x text
+2026-11-12T08:10:07.565442Z I/t: a log line to display
+00:07 +89: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:07 +89: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in fr at 2.0x text
+2026-11-12T08:10:07.733689Z I/t: a log line to display
+00:08 +90: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:08 +90: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in de at 1.0x text
+2026-11-12T08:10:07.902107Z I/t: a log line to display
+00:08 +91: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:08 +91: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in de at 2.0x text
+2026-11-12T08:10:08.054693Z I/t: a log line to display
+00:08 +92: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:08 +92: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in pt at 1.0x text
+2026-11-12T08:10:08.191587Z I/t: a log line to display
+00:08 +93: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout shows every section header in uppercase
+00:08 +93: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in pt at 2.0x text
+2026-11-12T08:10:08.338766Z I/t: a log line to display
+00:08 +94: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in pt at 2.0x text
+00:08 +95: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout light rtl at 2x text
+00:08 +95: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ar at 1.0x text
+2026-11-12T08:10:08.485310Z I/t: a log line to display
+00:08 +96: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ar at 1.0x text
+00:08 +97: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ar at 1.0x text
+00:08 +98: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout dark rtl at 2x text
+00:08 +98: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ar at 2.0x text
+2026-11-12T08:10:08.673976Z I/t: a log line to display
+00:08 +99: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ar at 2.0x text
+00:08 +100: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: layout dark ltr at 2x text
+00:08 +100: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in hi at 1.0x text
+2026-11-12T08:10:08.848691Z I/t: a log line to display
+00:09 +101: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in hi at 1.0x text
+00:09 +102: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in hi at 1.0x text
+00:09 +103: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance changing the theme applies it and persists it
+00:09 +103: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in hi at 2.0x text
+2026-11-12T08:10:09.057914Z I/t: a log line to display
+00:09 +104: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in hi at 2.0x text
+00:09 +105: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: appearance the selected segment follows the current theme
+00:09 +105: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ja at 1.0x text
+2026-11-12T08:10:09.227781Z I/t: a log line to display
+00:09 +106: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ja at 1.0x text
+00:09 +107: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: folders shows each source with its connection state
+00:09 +107: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ja at 2.0x text
+2026-11-12T08:10:09.380243Z I/t: a log line to display
+00:09 +108: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ja at 2.0x text
+00:09 +109: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ja at 2.0x text
+00:09 +110: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: folders a connected folder offers Choose again and Disconnect
+00:09 +110: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ko at 1.0x text
+2026-11-12T08:10:09.553321Z I/t: a log line to display
+00:09 +111: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ko at 1.0x text
+00:09 +112: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: folders an unconnected folder offers only Choose again
+00:09 +112: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ko at 2.0x text
+2026-11-12T08:10:09.730011Z I/t: a log line to display
+00:09 +113: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in ko at 2.0x text
+00:09 +114: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: folders Disconnect releases the grant and says so
+00:09 +114: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in zh at 1.0x text
+2026-11-12T08:10:09.861192Z I/t: a log line to display
+00:10 +115: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in zh at 1.0x text
+00:10 +116: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: folders Choose folder again opens the connect screen
+00:10 +116: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in zh at 2.0x text
+2026-11-12T08:10:10.000607Z I/t: a log line to display
+00:10 +117: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in zh at 2.0x text
+00:10 +118: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: support and about Rate the app opens the store listing
+00:10 +118: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in he at 1.0x text
+2026-11-12T08:10:10.159079Z I/t: a log line to display
+00:10 +119: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in he at 1.0x text
+00:10 +120: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: support and about Send feedback prefills the version and the local log
+00:10 +121: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in he at 2.0x text
+2026-11-12T08:10:10.308937Z I/t: a log line to display
+00:10 +122: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: every screen renders in he at 2.0x text
+00:10 +123: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: support and about a link that cannot be opened shows a toast
+00:10 +124: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet shows System default until a language is chosen
+00:10 +125: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: support and about shows the version and the unaffiliated disclaimer
+00:10 +126: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet the sheet lists System default and all 11 languages
+00:10 +127: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet the sheet lists System default and all 11 languages
+00:10 +128: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows a share that fails shows a toast
+00:10 +129: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet choosing a language applies it and updates the row
+00:10 +130: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows Support opens the support page
+00:10 +131: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet choosing System default clears the language
+00:10 +132: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the language row and sheet choosing System default clears the language
+00:10 +133: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows How to connect a folder shows the steps again
+00:11 +134: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/languages_test.dart: the app follows the chosen language the whole app switches language and direction
+00:11 +135: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows Open-source licenses opens the licenses screen
+00:11 +136: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows Debug logs shows how many entries exist and opens the log
+2026-11-12T08:10:11.024890Z I/t: one
+2026-11-12T08:10:11.026805Z I/t: two
+00:11 +137: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: more support, legal and diagnostics rows Debug logs says so when nothing was logged
+00:11 +138: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: the Rate the app row says it opens the store review and offers it as a chip
+00:11 +139: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: the Rate the app row has no switch to turn reviews off
+00:11 +140: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/settings_screen_test.dart: the Rate the app row tapping opens the store listing and counts as reviewed
+00:12 +141: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list renders the photos from the fakes
+00:12 +142: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/ad_slot_test.dart: is zero height while ads are off
+00:12 +143: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/ad_slot_test.dart: is zero height while ads are off
+00:13 +144: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +145: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +146: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +147: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +148: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +149: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +150: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +151: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the nav bar has Saved and Settings chips that open screens
+00:13 +152: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/ad_slot_test.dart: releases the banner when ads are switched off
+00:13 +153: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tapping a tile opens the viewer on that item
+00:13 +154: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list tapping a tile opens the viewer on that item
+00:13 +155: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/ad_slot_test.dart: a covered screen keeps no banner, and gets one back
+00:13 +156: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the source chip shows the current source
+00:13 +157: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: loaded list the source chip shows the current source
+00:13 +158: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection long press enters, tap toggles, close exits
+00:13 +159: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection deselecting the last item leaves selection mode
+00:13 +160: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection select all selects everything on the tab
+00:13 +161: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection each toggle gives a light haptic tick
+00:13 +162: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection the back button leaves selection before leaving the screen
+00:13 +163: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection switching tab clears the selection
+00:13 +164: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: selection the selection bar shows only in selection mode
+00:14 +165: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: save and share Save calls the provider, updates badges and toasts
+00:14 +166: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: save and share Share sends the selected items
+00:14 +167: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: save and share a failed share shows a toast
+00:14 +168: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states loading shows a spinner
+00:14 +169: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states empty shows the message and Refresh reloads
+00:14 +170: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states an empty videos tab shows the empty state too
+00:14 +171: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states an error shows the message and Try again reloads
+00:14 +172: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states a source without a grant asks to connect
+00:14 +173: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the two wordmark halves spell the app name
+00:14 +174: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: states lost access shows Reconnect
+00:14 +175: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +176: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +177: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +178: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +179: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +180: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +181: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +182: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +183: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in light
+00:14 +184: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: layout has no bottom embed in stage 1
+00:14 +185: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/wordmark_test.dart: the wordmark is split text colour and accent in dark
+00:14 +186: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: refresh a status that arrives later appears by itself
+00:14 +187: /home/runner/work/StatusSozo/StatusSozo/app/test/screens/home_screen_test.dart: refresh pulling the list down refreshes it
+00:15 +188: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: ZoomableImage limits zoom to 1x through 4x
+00:16 +189: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: ZoomableImage a double tap zooms to 2.5x and a second one back to 1x
+00:16 +190: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +191: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +192: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +193: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +194: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +195: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +196: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +197: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +198: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +199: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +200: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +201: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:16 +202: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail shows a flat fill while waiting, then the image
+00:17 +203: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoControls dragging seeks once, on release, and thickens the track
+00:17 +204: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoControls dragging seeks once, on release, and thickens the track
+00:17 +205: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail asks the source for the media at the thumbnail size, once
+00:17 +206: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail asks the source for the media at the thumbnail size, once
+00:17 +207: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail asks the source for the media at the thumbnail size, once
+00:17 +208: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoControls keeps a left-to-right time axis in right-to-left layouts
+00:17 +209: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail a different item asks again
+00:17 +210: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoControls does not overflow at large text
+00:17 +211: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail an undecodable image shows an icon on the same fill
+00:17 +212: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoControls an unknown duration shows zero progress without error
+00:17 +213: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail an undecodable video shows the video icon
+00:17 +214: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: ViewerOverlay shows its top and bottom content
+00:17 +215: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: MediaThumbnail a source that throws falls back to the icon
+00:17 +216: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: ViewerOverlay fades over 200 ms and ignores touches when hidden
+00:17 +217: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile is square
+00:17 +218: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile is square
+00:17 +219: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: ViewerOverlay the gradients run from the scrim to transparent
+00:17 +220: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile semantics label combines kind, saved and selected
+00:17 +221: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile semantics label combines kind, saved and selected
+00:17 +222: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile semantics label combines kind, saved and selected
+00:17 +223: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile semantics label combines kind, saved and selected
+00:17 +224: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface an active surface creates one session, shows a spinner, then plays
+00:17 +225: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile a plain photo has no badges and no marks
+00:17 +226: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface becoming inactive disposes the session at once
+00:17 +227: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile a video shows a play badge
+00:17 +228: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface becoming active again creates a fresh session
+00:17 +229: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile a saved item shows a check badge on a success chip
+00:17 +230: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface disposing the widget disposes the session
+00:17 +231: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile selection mode shows an empty ring until selected
+00:17 +232: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface a new uri replaces the session
+00:17 +233: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile a selected tile gets a check, an accent ring and a wash
+00:17 +234: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface never more than one session is alive when moving forward
+00:17 +235: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface never more than one session is alive when moving forward
+00:17 +236: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile badges sit on the correct edges and mirror in RTL
+00:17 +237: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile badges sit on the correct edges and mirror in RTL
+00:17 +238: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface a failure shows a message and Retry starts a new session
+00:17 +239: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile tap and long press reach their callbacks
+00:17 +240: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile tap and long press reach their callbacks
+00:17 +241: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: StatusTile tap and long press reach their callbacks
+00:17 +242: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface a tap reaches onTap
+00:17 +243: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/viewer_widgets_test.dart: VideoSurface a tap reaches onTap
+00:17 +244: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid three columns on a phone
+00:17 +245: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid more columns on a tablet
+00:17 +246: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid tiles stay square and within the gutters
+00:17 +247: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid uses clamping physics and cheap scrolling settings
+00:17 +248: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid selection and saved state reach the tiles
+00:17 +249: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid taps report the tile index
+00:17 +250: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid shows a footer under the grid
+00:17 +251: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid extra bottom padding clears the selection bar
+00:18 +252: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: grid an empty grid renders nothing and does not fail
+00:18 +253: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar hidden: slides away, fades out and ignores touches
+00:18 +254: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar visible: shown, calls back, and holds its actions
+00:18 +255: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar rises over 400 ms, instantly under reduce motion
+00:18 +256: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar light mode uses the single shadow and no border
+00:18 +257: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar dark mode uses a hairline border and no shadow
+00:18 +258: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/media_widgets_test.dart: SelectionBar hidden content is removed from screen readers
+00:18 +259: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: renders everywhere without overflow light rtl x1.0
+00:19 +260: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +261: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +262: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +263: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +264: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +265: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +266: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +267: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +268: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +269: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +270: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +271: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold stacks nav bar, body and bottom embed
+00:19 +272: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow card tile rtl
+00:19 +273: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold removes the whole bottom embed while the keyboard is open
+00:19 +274: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold removes the whole bottom embed while the keyboard is open
+00:19 +275: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold removes the whole bottom embed while the keyboard is open
+00:19 +276: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow plain card ltr
+00:19 +277: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold protects the safe area on both edges
+00:19 +278: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold protects the safe area on both edges
+00:19 +279: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow primary button ltr
+00:19 +280: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold floating content sits over the body, above the embed
+00:19 +281: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow secondary button rtl
+00:19 +282: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ScreenScaffold uses the primary background
+00:19 +283: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow secondary button ltr
+00:19 +284: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:19 +285: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:19 +286: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:19 +287: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:19 +288: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +289: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +290: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +291: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +292: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +293: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home shows the wordmark and puts actions on the end edge
+00:20 +294: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: each primitive on its own at 2x text without overflow segmented tabs ltr
+00:20 +295: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar home mirrors in right-to-left
+00:20 +296: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow variants at 2x text without overflow label only
+00:20 +297: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar pushed shows a back chip and the title, and calls onBack
+00:20 +298: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar pushed shows a back chip and the title, and calls onBack
+00:20 +299: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar pushed shows a back chip and the title, and calls onBack
+00:20 +300: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar pushed shows a back chip and the title, and calls onBack
+00:20 +301: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow variants at 2x text without overflow with chip
+00:20 +302: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar pushed in right-to-left puts the back chip on the right
+00:20 +303: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow variants at 2x text without overflow with success chip
+00:20 +304: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar the back chip has an accessible label
+00:20 +305: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar the back chip has an accessible label
+00:20 +306: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable has a hit area of at least 48 x 48 around a tiny child
+00:20 +307: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar selection shows the count, a close chip and actions
+00:20 +308: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable taps reach the callback, even outside a tiny child
+00:20 +309: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable taps reach the callback, even outside a tiny child
+00:20 +310: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: AppNavBar is at least 56 tall and a header for screen readers
+00:20 +311: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable long press fires its own callback
+00:20 +312: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState empty state shows its text and fires the action
+00:20 +313: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState empty state shows its text and fires the action
+00:20 +314: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState empty state shows its text and fires the action
+00:20 +315: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable without a callback it does nothing
+00:20 +316: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState empty state without an action shows no button
+00:20 +317: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable press feedback changes opacity, then restores it
+00:20 +318: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState empty state scrolls instead of overflowing at huge text
+00:20 +319: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable scale feedback goes to 0.97 when enabled
+00:20 +320: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders accessLost without overflow
+00:20 +321: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: Pressable a tint replaces the opacity change when pressedColor is set
+00:20 +322: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders wrongFolder without overflow
+00:20 +323: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders wrongFolder without overflow
+00:20 +324: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppIcon passes a stroke width of 2.0 to the icon widget
+00:20 +325: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders pickerCancelled without overflow
+00:20 +326: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppIcon defaults to the primary text colour
+00:20 +327: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders notFound without overflow
+00:20 +328: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders notFound without overflow
+00:20 +329: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppIcon announces its label when given one
+00:20 +330: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders io without overflow
+00:20 +331: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppIcon mirrors only in right-to-left when asked
+00:20 +332: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders permissionLost without overflow
+00:20 +333: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons PrimaryButton fires and shows its label
+00:20 +334: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders unsupported without overflow
+00:20 +335: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons PrimaryButton is at least 52 tall and fills the width
+00:20 +336: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders persistence without overflow
+00:20 +337: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons a non-expanding button shrinks to its content
+00:20 +338: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders unexpected without overflow
+00:20 +339: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState error state renders unexpected without overflow
+00:20 +340: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons loading shows the spinner, hides the label and blocks taps
+00:20 +341: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState a retriable error shows its action and calls onRetry
+00:20 +342: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons press scales a button to 0.97
+00:20 +343: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState access lost offers Reconnect
+00:20 +344: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: buttons PrimaryButton uses accent, SecondaryButton accentSoft
+00:20 +345: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState a non-actionable error hides every action
+00:20 +346: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState a non-actionable error hides every action
+00:20 +347: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow shows label, second line and fires onPressed
+00:20 +348: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState no retry callback means no retry button
+00:20 +349: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow destructive rows use the error colour on label and icon
+00:20 +350: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState unexpected offers Try again and Report a problem
+00:20 +351: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow a row without onPressed is not a button
+00:20 +352: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState unsupported offers only Report a problem
+00:20 +353: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: EmptyState and ErrorState unsupported offers only Report a problem
+00:20 +354: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow keeps a minimum height of 48
+00:20 +355: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppRow keeps a minimum height of 48
+00:20 +356: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost shows a toast with its text and auto-dismisses at 3 seconds
+00:20 +357: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost shows a toast with its text and auto-dismisses at 3 seconds
+00:20 +358: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost shows a toast with its text and auto-dismisses at 3 seconds
+00:20 +359: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppGroup and AppCard dividers are hairlines inset on the start edge
+00:20 +360: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost plurals are correct
+00:20 +361: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost plurals are correct
+00:20 +362: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppGroup and AppCard the card tile shows label, value and chevron
+00:20 +363: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost a sticky toast stays
+00:20 +364: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppGroup and AppCard the card uses a hairline border and the card radius
+00:20 +365: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost tapping dismisses
+00:20 +366: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost tapping dismisses
+00:20 +367: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: AppChip a neutral chip has no icon unless given one
+00:20 +368: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +369: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +370: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +371: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +372: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +373: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +374: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +375: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost every toast carries an icon next to its text
+00:21 +376: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs fires onChanged with the tapped segment
+00:21 +377: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost is announced as a live region
+00:21 +378: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs reflects the value with the indicator position
+00:21 +379: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs reflects the value with the indicator position
+00:21 +380: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost reduce motion removes the transition time
+00:21 +381: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs the indicator slides over 200 ms, instantly with reduce motion
+00:21 +382: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: ToastHost sits below the top safe area
+00:21 +383: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs shows counts in tabular figures, formatted per locale
+00:21 +384: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet opens with its title and actions
+00:21 +385: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet opens with its title and actions
+00:21 +386: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet opens with its title and actions
+00:21 +387: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet opens with its title and actions
+00:21 +388: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/primitives_test.dart: SegmentedTabs an unknown value falls back to the first segment
+00:21 +389: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet selecting an action closes the sheet, then calls back
+00:21 +390: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet a tap on the scrim dismisses without calling back
+00:21 +391: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet the system back button dismisses it
+00:21 +392: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet slides up over 400 ms
+00:21 +393: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet reduce motion shows it with no slide
+00:21 +394: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet has a 20 px top radius and respects the bottom safe area
+00:21 +395: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet destructive actions use the error colour
+00:21 +396: /home/runner/work/StatusSozo/StatusSozo/app/test/widgets/layout_feedback_test.dart: showAppSheet showConfirmSheet returns true only when confirmed
+00:22 +397: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing every value is a multiple of 2
+00:22 +398: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing main steps sit on the 4 px grid
+00:22 +399: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: spacing semantic aliases
+00:22 +400: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: radii match the design specification
+00:22 +401: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: radii sheet radius rounds the top corners only
+00:22 +402: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes touch target is 48
+00:22 +403: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes icon stroke is 2.0
+00:22 +404: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: sizes chrome sizes
+00:22 +405: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: shadows light has exactly one floating-bar shadow
+00:22 +406: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: shadows dark has no shadow
+00:22 +407: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: motion durations match the specification
+00:22 +408: /home/runner/work/StatusSozo/StatusSozo/app/test/design/tokens_test.dart: motion no spring or bounce curve is exposed
+00:22 +409: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textPrimary on bgPrimary is at least 4.5:1
+00:22 +410: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textPrimary on bgSecondary is at least 4.5:1
+00:22 +411: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgPrimary is at least 4.5:1
+00:22 +412: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgSecondary is at least 4.5:1
+00:22 +413: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textTertiary on bgPrimary is at least 4.5:1
+00:22 +414: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textTertiary on bgSecondary is at least 4.5:1
+00:22 +415: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accent on bgPrimary is at least 4.5:1
+00:22 +416: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accent on bgSecondary is at least 4.5:1
+00:22 +417: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: error on bgPrimary is at least 4.5:1
+00:22 +418: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: error on bgSecondary is at least 4.5:1
+00:22 +419: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: success on bgPrimary is at least 4.5:1
+00:22 +420: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: success on bgSecondary is at least 4.5:1
+00:22 +421: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: warning on bgPrimary is at least 4.5:1
+00:22 +422: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: warning on bgSecondary is at least 4.5:1
+00:22 +423: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: accentOn on accent is at least 4.5:1
+00:22 +424: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast light: textSecondary on bgTertiary is at least 4.5:1
+00:22 +425: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textPrimary on bgPrimary is at least 4.5:1
+00:22 +426: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textPrimary on bgSecondary is at least 4.5:1
+00:22 +427: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgPrimary is at least 4.5:1
+00:22 +428: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgSecondary is at least 4.5:1
+00:22 +429: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textTertiary on bgPrimary is at least 4.5:1
+00:22 +430: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textTertiary on bgSecondary is at least 4.5:1
+00:22 +431: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accent on bgPrimary is at least 4.5:1
+00:22 +432: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accent on bgSecondary is at least 4.5:1
+00:22 +433: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: error on bgPrimary is at least 4.5:1
+00:22 +434: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: error on bgSecondary is at least 4.5:1
+00:22 +435: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: success on bgPrimary is at least 4.5:1
+00:22 +436: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: success on bgSecondary is at least 4.5:1
+00:22 +437: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: warning on bgPrimary is at least 4.5:1
+00:22 +438: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: warning on bgSecondary is at least 4.5:1
+00:22 +439: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: accentOn on accent is at least 4.5:1
+00:22 +440: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast dark: textSecondary on bgTertiary is at least 4.5:1
+00:22 +441: /home/runner/work/StatusSozo/StatusSozo/app/test/design/contrast_test.dart: WCAG contrast helper sanity: black on white is 21:1
+00:23 +442: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme light and dark build with both extensions
+00:23 +443: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme brightness and scaffold colours come from tokens
+00:23 +444: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTheme splash is disabled
+00:23 +445: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp at 0 and 1 returns the endpoints
+00:23 +446: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp at 0.5 gives intermediate values
+00:23 +447: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors lerp with a foreign extension returns this
+00:23 +448: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors copyWith replaces only the named field
+00:23 +449: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppColors scrim is black at 55 percent
+00:23 +450: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles display roles use Manrope
+00:23 +451: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles chrome and body roles use Inter
+00:23 +452: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles sizes, weights and line heights match the specification
+00:23 +453: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles section header has positive letter spacing
+00:23 +454: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles tabular style enables tabular figures
+00:23 +455: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles variable weight axis matches the weight
+00:23 +456: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles secondary body uses the secondary text colour
+00:23 +457: /home/runner/work/StatusSozo/StatusSozo/app/test/design/theme_test.dart: AppTextStyles lerp interpolates colours between modes
+00:23 +458: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder starts the picker at the source folder
+00:24 +459: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder accepts a folder named .Statuses
+00:24 +460: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder releases and rejects a folder with no .Statuses inside
+2026-11-12T08:10:23.885584Z W/saf: listFolder failed with NOT_FOUND
+00:24 +461: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder accepts a parent folder that has .Statuses inside
+00:24 +462: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder a cancelled picker is pickerCancelled
+00:24 +463: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository.pickFolder a native failure is passed through
+2026-11-12T08:10:23.897968Z W/saf: pickFolder failed with IO
+00:24 +464: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing hasAccess and release use the tree uri
+00:24 +465: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list maps rows to items
+00:24 +466: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list drops unsupported mime types and malformed rows
+2026-11-12T08:10:23.906759Z W/status: dropped a malformed row | FormatException: Expected a string for "uri"
+2026-11-12T08:10:23.907447Z W/status: dropped a malformed row | FormatException: Expected an integer for "size"
+huge
+00:24 +467: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: SafStatusRepository access and listing list passes errors through
+2026-11-12T08:10:23.910416Z W/saf: listFolder failed with ACCESS_LOST
+00:24 +468: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save sends the item and the configured subfolder
+00:24 +469: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save passes native errors through
+2026-11-12T08:10:23.916700Z W/saf: saveToGallery failed with IO
+00:24 +470: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository save with a malformed reply is unexpected
+00:24 +471: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository list maps rows and drops bad ones
+00:24 +472: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository list passes errors through
+2026-11-12T08:10:23.931680Z W/saf: listSaved failed with IO
+00:24 +473: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete succeeds when the native side deleted the row
+00:24 +474: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete reports notFound when nothing was deleted
+00:24 +475: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_repositories_test.dart: MediaStoreSavedRepository delete maps PERMISSION_LOST to permissionLost
+2026-11-12T08:10:23.938653Z W/saf: deleteSaved failed with PERMISSION_LOST
+00:24 +476: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: asks the native side once per (uri, px)
+00:24 +477: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: a different px is a different entry
+00:24 +478: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: sends uri, mime and px
+00:24 +479: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: evicts the least recently used entry beyond capacity
+00:24 +480: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: a failed decode is not cached, so it can be retried
+00:24 +481: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: the default capacity comes from AppConfig
+00:24 +482: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage requests the file with the configured byte limit
+00:24 +483: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage refuses oversized files without calling native
+00:24 +484: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/native_thumbnail_source_test.dart: readImage passes native errors through
+2026-11-12T08:10:24.367474Z W/saf: readBytes failed with NOT_FOUND
+00:24 +485: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl opens the uri
+00:25 +486: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl returns false when the opener throws
+2026-11-12T08:10:24.879592Z W/links: could not open https://x.y | Bad state: no handler
+00:25 +487: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openUrl returns false when nothing handles the uri
+00:25 +488: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher buildMailto encodes the subject and body
+00:25 +489: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher composeEmail opens a mailto uri
+00:25 +490: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing tries the market uri first
+00:25 +491: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing falls back to the https listing
+00:25 +492: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: UrlLinkLauncher openStoreListing is false when both fail
+00:25 +493: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService shareText hands the text to the share sheet
+00:25 +494: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService shareText reports a failing share sheet as unexpected
+2026-11-12T08:10:24.901691Z E/share: text share sheet failed | Bad state: sheet failed
+00:25 +495: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService copies each item to the cache, then shares the files
+00:25 +496: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService stops and returns the error when a copy fails
+2026-11-12T08:10:24.912922Z W/saf: copyToCache failed with NOT_FOUND
+00:25 +497: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService returns an error when the share sheet throws
+2026-11-12T08:10:24.915923Z E/share: share sheet failed | Bad state: sheet failed
+00:25 +498: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService sharing nothing succeeds without touching native
+00:25 +499: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: PlusShareService pruneCache sends the configured time to live
+00:25 +500: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/platform_services_test.dart: SystemHaptics maps each call to the matching feedback type
+00:25 +501: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format uses the agreed channel name
+00:25 +502: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pickFolder sends initialUri and parses the reply
+00:25 +503: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pickFolder returns Ok(null) when cancelled
+00:25 +504: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format hasAccess sends uri and returns the bool
+00:25 +505: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format hasAccess is false when the native call fails
+2026-11-12T08:10:25.549968Z W/saf: hasAccess failed with IO
+00:25 +506: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format releaseFolder sends uri and swallows errors
+2026-11-12T08:10:25.555185Z W/saf: releaseFolder failed with IO
+00:25 +507: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format listFolder sends uri and parses rows
+00:25 +508: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format thumbnail sends uri, mime and px
+00:25 +509: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format thumbnail returns null when undecodable or on error
+2026-11-12T08:10:25.564326Z W/saf: thumbnail failed with IO
+00:25 +510: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format readBytes sends uri and maxBytes
+00:25 +511: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format saveToGallery sends all four arguments
+00:25 +512: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format listSaved sends subfolder
+00:25 +513: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format deleteSaved sends uri and returns the bool
+00:25 +514: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format copyToCache sends uri and name and returns the path
+00:25 +515: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: wire format pruneShareCache sends olderThanMs and returns the count
+00:25 +516: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes ACCESS_LOST becomes accessLost
+2026-11-12T08:10:25.579145Z W/saf: listFolder failed with ACCESS_LOST | native said so
+00:25 +517: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes NOT_FOUND becomes notFound
+2026-11-12T08:10:25.588334Z W/saf: listFolder failed with NOT_FOUND | native said so
+00:25 +518: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes IO becomes io
+2026-11-12T08:10:25.590547Z W/saf: listFolder failed with IO | native said so
+00:25 +519: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes PERMISSION_LOST becomes permissionLost
+2026-11-12T08:10:25.592591Z W/saf: listFolder failed with PERMISSION_LOST | native said so
+00:25 +520: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes TOO_LARGE becomes io
+2026-11-12T08:10:25.594397Z W/saf: listFolder failed with TOO_LARGE | native said so
+00:25 +521: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes UNSUPPORTED becomes unsupported
+2026-11-12T08:10:25.596167Z W/saf: listFolder failed with UNSUPPORTED | native said so
+00:25 +522: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: native error codes SOMETHING_ELSE becomes unexpected
+2026-11-12T08:10:25.597933Z W/saf: listFolder failed with SOMETHING_ELSE | native said so
+00:25 +523: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a missing native handler becomes unsupported
+2026-11-12T08:10:25.600085Z E/saf: listFolder has no native handler | MissingPluginException(No implementation found for method listFolder on channel statussozo/saf)
+00:25 +524: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a malformed payload becomes unexpected
+2026-11-12T08:10:25.602478Z E/saf: listFolder returned an unexpected payload | FormatException: Expected a list of rows
+not a list
+00:25 +525: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a row that is not a map becomes unexpected
+2026-11-12T08:10:25.605321Z E/saf: listFolder returned an unexpected payload | FormatException: Expected a map row
+oops
+00:25 +526: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment a pick reply with missing fields becomes unexpected
+2026-11-12T08:10:25.607286Z E/saf: pickFolder returned an unexpected payload | FormatException: Expected a string for "name"
+00:25 +527: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/saf_channel_test.dart: failure containment readBytes with a non-bytes reply becomes unexpected
+2026-11-12T08:10:25.609455Z E/saf: readBytes returned an unexpected payload | FormatException: Expected bytes
+text
+00:26 +528: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue an uninitialised controller is idle
+00:26 +529: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue a playing video maps position and duration
+00:26 +530: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue reaching the end marks it ended and not playing
+00:26 +531: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/video_player_session_test.dart: VideoPlayerSession.stateFromValue an erroneous controller reports an error
+00:26 +532: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: first run returns defaults without a recovery
+00:26 +533: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a saved value round-trips
+00:26 +534: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: writes a single JSON string under the configured key
+00:26 +535: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a corrupt string is recovered to defaults
+00:26 +536: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a value of the wrong type is recovered to defaults
+2026-11-12T08:10:26.535555Z W/settings: stored value has the wrong type
+00:26 +537: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: a throwing backend reports persistence as unavailable
+2026-11-12T08:10:26.544266Z E/settings: could not read settings | Bad state: no disk
+00:26 +538: /home/runner/work/StatusSozo/StatusSozo/app/test/platform/prefs_settings_store_test.dart: save returns false instead of throwing when the backend fails
+2026-11-12T08:10:26.546911Z E/settings: could not save settings | Bad state: no disk
+00:27 +539: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: the app is translated into exactly the declared languages
+00:27 +540: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb declares its own locale
+00:27 +541: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb has exactly the English keys
+00:27 +542: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb has no empty or padded values
+00:27 +543: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb uses the same placeholders as English
+00:27 +544: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb plural blocks match English and use valid branches
+00:27 +545: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_es.arb keeps the .Statuses folder name
+00:27 +546: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb declares its own locale
+00:27 +547: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb has exactly the English keys
+00:27 +548: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb has no empty or padded values
+00:27 +549: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb uses the same placeholders as English
+00:27 +550: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb plural blocks match English and use valid branches
+00:27 +551: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_fr.arb keeps the .Statuses folder name
+00:27 +552: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb declares its own locale
+00:27 +553: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb has exactly the English keys
+00:27 +554: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb has no empty or padded values
+00:27 +555: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb uses the same placeholders as English
+00:27 +556: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb plural blocks match English and use valid branches
+00:27 +557: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_de.arb keeps the .Statuses folder name
+00:27 +558: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb declares its own locale
+00:27 +559: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb has exactly the English keys
+00:27 +560: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb has no empty or padded values
+00:27 +561: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb uses the same placeholders as English
+00:27 +562: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb plural blocks match English and use valid branches
+00:27 +563: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_pt.arb keeps the .Statuses folder name
+00:27 +564: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb declares its own locale
+00:27 +565: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb has exactly the English keys
+00:27 +566: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb has no empty or padded values
+00:27 +567: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb uses the same placeholders as English
+00:27 +568: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb plural blocks match English and use valid branches
+00:27 +569: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ar.arb keeps the .Statuses folder name
+00:27 +570: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb declares its own locale
+00:27 +571: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb has exactly the English keys
+00:27 +572: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb has no empty or padded values
+00:27 +573: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb uses the same placeholders as English
+00:27 +574: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb plural blocks match English and use valid branches
+00:27 +575: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_hi.arb keeps the .Statuses folder name
+00:27 +576: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb declares its own locale
+00:27 +577: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb has exactly the English keys
+00:27 +578: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb has no empty or padded values
+00:27 +579: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb uses the same placeholders as English
+00:27 +580: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb plural blocks match English and use valid branches
+00:27 +581: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ja.arb keeps the .Statuses folder name
+00:27 +582: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb declares its own locale
+00:27 +583: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb has exactly the English keys
+00:27 +584: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb has no empty or padded values
+00:27 +585: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb uses the same placeholders as English
+00:27 +586: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb plural blocks match English and use valid branches
+00:27 +587: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_ko.arb keeps the .Statuses folder name
+00:27 +588: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb declares its own locale
+00:27 +589: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb has exactly the English keys
+00:27 +590: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb has no empty or padded values
+00:27 +591: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb uses the same placeholders as English
+00:27 +592: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb plural blocks match English and use valid branches
+00:27 +593: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_zh.arb keeps the .Statuses folder name
+00:27 +594: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb declares its own locale
+00:27 +595: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb has exactly the English keys
+00:27 +596: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb has no empty or padded values
+00:27 +597: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb uses the same placeholders as English
+00:27 +598: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb plural blocks match English and use valid branches
+00:27 +599: /home/runner/work/StatusSozo/StatusSozo/app/test/l10n/arb_parity_test.dart: app_he.arb keeps the .Statuses folder name
+00:27 +600: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: starts empty
+00:27 +601: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: records level, tag and message
+2026-11-12T08:10:27.466370Z I/saf: listed 3
+2026-11-12T08:10:27.469070Z W/saf: slow
+2026-11-12T08:10:27.469700Z E/saf: failed | Bad state: boom
+00:27 +602: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: keeps only the last 50 lines
+2026-11-12T08:10:27.472928Z I/t: line 0
+2026-11-12T08:10:27.473121Z I/t: line 1
+2026-11-12T08:10:27.473340Z I/t: line 2
+2026-11-12T08:10:27.473542Z I/t: line 3
+2026-11-12T08:10:27.473724Z I/t: line 4
+2026-11-12T08:10:27.473913Z I/t: line 5
+2026-11-12T08:10:27.474081Z I/t: line 6
+2026-11-12T08:10:27.474270Z I/t: line 7
+2026-11-12T08:10:27.474442Z I/t: line 8
+2026-11-12T08:10:27.474630Z I/t: line 9
+2026-11-12T08:10:27.474809Z I/t: line 10
+2026-11-12T08:10:27.474981Z I/t: line 11
+2026-11-12T08:10:27.475150Z I/t: line 12
+2026-11-12T08:10:27.475341Z I/t: line 13
+2026-11-12T08:10:27.475523Z I/t: line 14
+2026-11-12T08:10:27.475694Z I/t: line 15
+2026-11-12T08:10:27.475870Z I/t: line 16
+2026-11-12T08:10:27.476046Z I/t: line 17
+2026-11-12T08:10:27.476332Z I/t: line 18
+2026-11-12T08:10:27.476580Z I/t: line 19
+2026-11-12T08:10:27.476751Z I/t: line 20
+2026-11-12T08:10:27.476925Z I/t: line 21
+2026-11-12T08:10:27.477056Z I/t: line 22
+2026-11-12T08:10:27.477169Z I/t: line 23
+2026-11-12T08:10:27.477387Z I/t: line 24
+2026-11-12T08:10:27.477566Z I/t: line 25
+2026-11-12T08:10:27.477736Z I/t: line 26
+2026-11-12T08:10:27.477903Z I/t: line 27
+2026-11-12T08:10:27.478080Z I/t: line 28
+2026-11-12T08:10:27.478267Z I/t: line 29
+2026-11-12T08:10:27.478433Z I/t: line 30
+2026-11-12T08:10:27.478572Z I/t: line 31
+2026-11-12T08:10:27.478700Z I/t: line 32
+2026-11-12T08:10:27.478972Z I/t: line 33
+2026-11-12T08:10:27.479246Z I/t: line 34
+2026-11-12T08:10:27.479418Z I/t: line 35
+2026-11-12T08:10:27.479577Z I/t: line 36
+2026-11-12T08:10:27.479739Z I/t: line 37
+2026-11-12T08:10:27.479900Z I/t: line 38
+2026-11-12T08:10:27.480067Z I/t: line 39
+2026-11-12T08:10:27.480247Z I/t: line 40
+2026-11-12T08:10:27.480422Z I/t: line 41
+2026-11-12T08:10:27.480589Z I/t: line 42
+2026-11-12T08:10:27.480778Z I/t: line 43
+2026-11-12T08:10:27.480967Z I/t: line 44
+2026-11-12T08:10:27.481146Z I/t: line 45
+2026-11-12T08:10:27.481339Z I/t: line 46
+2026-11-12T08:10:27.481529Z I/t: line 47
+2026-11-12T08:10:27.481715Z I/t: line 48
+2026-11-12T08:10:27.481905Z I/t: line 49
+2026-11-12T08:10:27.482105Z I/t: line 50
+2026-11-12T08:10:27.482439Z I/t: line 51
+2026-11-12T08:10:27.482633Z I/t: line 52
+2026-11-12T08:10:27.482818Z I/t: line 53
+2026-11-12T08:10:27.483002Z I/t: line 54
+2026-11-12T08:10:27.483186Z I/t: line 55
+2026-11-12T08:10:27.483596Z I/t: line 56
+2026-11-12T08:10:27.483836Z I/t: line 57
+2026-11-12T08:10:27.484030Z I/t: line 58
+2026-11-12T08:10:27.484305Z I/t: line 59
+2026-11-12T08:10:27.484481Z I/t: line 60
+2026-11-12T08:10:27.484658Z I/t: line 61
+2026-11-12T08:10:27.484837Z I/t: line 62
+2026-11-12T08:10:27.484970Z I/t: line 63
+2026-11-12T08:10:27.485076Z I/t: line 64
+2026-11-12T08:10:27.485180Z I/t: line 65
+2026-11-12T08:10:27.485330Z I/t: line 66
+2026-11-12T08:10:27.485558Z I/t: line 67
+2026-11-12T08:10:27.485717Z I/t: line 68
+2026-11-12T08:10:27.485891Z I/t: line 69
+2026-11-12T08:10:27.486080Z I/t: line 70
+2026-11-12T08:10:27.486279Z I/t: line 71
+2026-11-12T08:10:27.486464Z I/t: line 72
+2026-11-12T08:10:27.486651Z I/t: line 73
+2026-11-12T08:10:27.486820Z I/t: line 74
+2026-11-12T08:10:27.486997Z I/t: line 75
+2026-11-12T08:10:27.487168Z I/t: line 76
+2026-11-12T08:10:27.487365Z I/t: line 77
+2026-11-12T08:10:27.487599Z I/t: line 78
+2026-11-12T08:10:27.487795Z I/t: line 79
+00:27 +603: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: clear empties the buffer
+2026-11-12T08:10:27.490267Z I/t: x
+00:27 +604: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: entries and count follow the buffer, oldest first
+2026-11-12T08:10:27.492108Z I/t: a
+2026-11-12T08:10:27.492326Z I/t: b
+00:27 +605: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/app_log_test.dart: revision changes on every add and on clear
+2026-11-12T08:10:27.495017Z I/t: x
+00:28 +606: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize bytes
+00:28 +607: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize kilobytes
+00:28 +608: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize megabytes and gigabytes
+00:28 +609: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize rolls over instead of showing 1,024 KB
+00:28 +610: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize negative values show as zero
+00:28 +611: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatFileSize uses the locale decimal separator
+00:28 +612: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration under a minute
+00:28 +613: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration minutes
+00:28 +614: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration over an hour
+00:28 +615: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration negative durations show as zero
+00:28 +616: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatDuration fractions of a second are dropped
+00:28 +617: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/formatters_test.dart: formatCount groups digits per locale
+00:28 +618: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/license_collector_test.dart: groups by package, sorts by name and separates repeated licenses
+00:28 +619: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/license_collector_test.dart: merges two entries for the same package with a blank separator
+00:28 +620: /home/runner/work/StatusSozo/StatusSozo/app/test/utils/license_collector_test.dart: is empty when nothing is registered
+00:29 +621: /home/runner/work/StatusSozo/StatusSozo/app/test/app/review_wiring_test.dart: every finished save counts toward the review prompt
+00:29 +622: /home/runner/work/StatusSozo/StatusSozo/app/test/app/review_wiring_test.dart: the prompt is requested after ten saves on three days
+00:29 +623: /home/runner/work/StatusSozo/StatusSozo/app/test/app/review_wiring_test.dart: a save that saved nothing new is not counted
+00:29 +624: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: exposes the contracts and the version it was given
+00:29 +625: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: home and saved selection are separate instances
+00:29 +626: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: wiring an access-lost list error triggers grant verification
+00:29 +627: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: wiring a failing save of settings produces exactly one sticky toast
+00:29 +628: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: wiring after a successful save the warning can fire again later
+00:30 +629: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +630: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +631: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +632: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +633: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +634: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +635: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: no grants shows the access screen
+00:30 +636: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_services_test.dart: wiring connecting a folder loads its list without a manual refresh
+00:30 +637: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +638: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +639: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +640: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +641: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +642: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +643: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +644: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +645: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:30 +646: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a grant shows Home and its tiles
+00:31 +647: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: every grant lost shows the renewal screen
+00:31 +648: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: the theme switch cross-fades without error
+00:31 +649: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a resume refreshes the list
+00:31 +650: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: a thrown error shows the fallback, not a grey box
+2026-11-12T08:10:31.152172Z E/flutter: Bad state: boom | Bad state: boom
+00:31 +651: /home/runner/work/StatusSozo/StatusSozo/app/test/app/app_smoke_test.dart: the gate pumps in RTL without overflow
+00:31 +652: /home/runner/work/StatusSozo/StatusSozo/app/test/app/font_licenses_test.dart: registers both fonts with their licence text
+00:31 +653: /home/runner/work/StatusSozo/StatusSozo/app/test/app/font_licenses_test.dart: the real bundled licence files are declared and readable
+00:32 +654: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: all succeed
+00:32 +655: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: names that are already saved are skipped
+00:32 +656: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: duplicates inside the batch are saved once
+00:32 +657: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: the caller's name set is not modified
+00:32 +658: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: an io failure mid batch continues with the rest
+00:32 +659: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: permissionLost stops the batch and counts the rest as failed
+00:32 +660: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: accessLost stops the batch
+00:32 +661: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: stopping on the last item reports progress once
+00:32 +662: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: firstError is the first one only
+00:32 +663: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: a repository that throws becomes an unexpected failure
+00:32 +664: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: an empty batch succeeds without progress
+00:32 +665: /home/runner/work/StatusSozo/StatusSozo/app/test/core/save_coordinator_test.dart: SaveSummary exposes an unmodifiable saved list
+00:32 +666: /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: Ok exposes its value
+00:32 +667: /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: Err exposes its error
+00:32 +668: /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: when folds both cases
+00:32 +669: /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: map transforms success and passes failure through
+00:32 +670: /home/runner/work/StatusSozo/StatusSozo/app/test/core/result_test.dart: a void result works
+00:33 +671: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppConfig derived URLs
+00:33 +672: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppConfig values
+00:33 +673: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: MediaKind fromMime
+00:33 +674: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: MediaKind isVideo
+00:33 +675: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusSource fromId
+00:33 +676: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusSource folder paths and picker URI
+00:33 +677: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem json round trip
+00:33 +678: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem id kind and copyWith
+00:33 +679: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem equality and hash
+00:33 +680: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem fromJson rejects bad shapes
+00:33 +681: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: StatusItem accepts integral doubles from the wire
+00:33 +682: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: SavedItem json round trip, id, kind
+00:33 +683: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: SavedItem copyWith, equality and hash
+00:33 +684: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant json round trip
+00:33 +685: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant copyWith, equality and hash
+00:33 +686: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: FolderGrant unknown source is rejected
+00:33 +687: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings defaults
+00:33 +688: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings json round trip
+00:33 +689: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings grants map is unmodifiable
+00:33 +690: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings copyWith can clear the language
+00:33 +691: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings equality and hash use map equality
+00:33 +692: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings fromJson tolerates garbage
+00:33 +693: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings fromJson drops bad grant entries and keeps good ones
+00:33 +694: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings an empty language code means follow the system
+00:33 +695: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings keeps a newer schema version number it did not write
+00:33 +696: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings review counters default to nothing counted and not asked
+00:33 +697: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings review counters round trip through JSON
+00:33 +698: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings review counters settings saved before these fields existed still load
+00:33 +699: /home/runner/work/StatusSozo/StatusSozo/app/test/core/models_test.dart: AppSettings review counters garbage values fall back to the defaults
+00:33 +700: /home/runner/work/StatusSozo/StatusSozo/app/test/core/consent_rules_test.dart: follows the SDK when nothing went wrong
+00:33 +701: /home/runner/work/StatusSozo/StatusSozo/app/test/core/consent_rules_test.dart: still attempts ads when the consent step failed
+00:33 +702: /home/runner/work/StatusSozo/StatusSozo/app/test/core/consent_rules_test.dart: a failed step keeps the privacy choices flag as read
+00:34 +703: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: batch save needs at least two items
+00:34 +704: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: actions that need one item InterstitialTrigger.viewerSave needs at least one item
+00:34 +705: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: actions that need one item InterstitialTrigger.savedDelete needs at least one item
+00:34 +706: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: actions that need one item InterstitialTrigger.viewerDelete needs at least one item
+00:34 +707: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: viewer close qualifies on every fifth close only
+00:34 +708: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: viewer close the count restarts after an interstitial is shown
+00:34 +709: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: viewer close a close blocked by the spacing still counts toward the next
+00:34 +710: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: spacing waits at least seven minutes between interstitials
+00:34 +711: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: spacing every trigger shares the same spacing
+00:34 +712: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: spacing there is no daily limit
+00:34 +713: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: spacing the first interstitial of a session is not delayed
+00:34 +714: /home/runner/work/StatusSozo/StatusSozo/app/test/core/interstitial_policy_test.dart: dayKey is a zero-padded local date
+00:35 +715: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState starts idle
+00:35 +716: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState progress is zero without a duration
+00:35 +717: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState progress is position over duration, clamped
+00:35 +718: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: VideoState copyWith, equality and hash
+00:35 +719: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory tracks alive sessions
+00:35 +720: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory initialise, play, pause and seek update state
+00:35 +721: /home/runner/work/StatusSozo/StatusSozo/app/test/core/video_state_test.dart: fake video factory failed initialise sets hasError
+00:35 +722: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider starts idle and empty
+00:35 +723: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider refresh lists newest first and builds the name set
+00:35 +724: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider refresh failure shows the error and keeps the list
+00:35 +725: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider onSaved merges without querying the gallery again
+00:35 +726: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider onSaved ignores an empty list and de-duplicates by uri
+00:35 +727: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider a save during a slow refresh is not lost
+00:35 +728: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider a delete during a slow refresh is not undone
+00:35 +729: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SavedLibraryProvider delete removes items one by one and reports the outcome
+00:35 +730: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider starts idle
+00:35 +731: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider saving updates the library and the badge set
+00:35 +732: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider success emits one saved toast with the count
+00:35 +733: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider names already saved are skipped
+00:35 +734: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider everything already saved emits alreadySaved and no haptic
+00:35 +735: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider a partial result emits savedPartial with both counts
+00:35 +736: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider total failure emits saveFailed
+00:35 +737: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider lost folder access emits accessLost
+00:35 +738: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider an empty batch is refused and emits nothing
+00:35 +739: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider a second save while one runs is refused
+00:35 +740: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/saved_save_provider_test.dart: SaveProvider reports progress while saving
+00:36 +741: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: counting counts saved items and different days
+00:36 +742: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: counting ignores a save of nothing
+00:36 +743: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: counting is saved to the store
+00:36 +744: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking not before ten saves
+00:36 +745: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking not before three different days
+00:36 +746: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking asks once the thresholds are met
+00:36 +747: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking never asks twice
+00:36 +748: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking does not ask while an ad is busy, and asks later
+00:36 +749: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking does not ask when the system cannot show it, and asks later
+00:36 +750: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: asking a failing prompt is still counted as asked
+2026-11-12T08:10:36.229461Z W/review: The review prompt failed | Bad state: the review prompt failed
+00:36 +751: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: a person who reviewed on their own marking it stops the automatic prompt for good
+00:36 +752: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/review_provider_test.dart: a person who reviewed on their own is saved to the store
+00:36 +753: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider starts with defaults and not loaded
+00:36 +754: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider load success
+00:36 +755: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider a corrupt store sets recovered, and it is consumed once
+00:36 +756: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider unavailable persistence at load sets the warning
+00:36 +757: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider update applies in memory before the write finishes
+00:36 +758: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider a failing save sets the warning and keeps the value
+00:36 +759: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider a later successful save clears the warning
+00:36 +760: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider rapid updates are serialised and the last value wins
+00:36 +761: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SettingsProvider notifies listeners on change
+00:36 +762: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: ThemeProvider starts from settings
+00:36 +763: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: ThemeProvider setPreference applies at once and persists
+00:36 +764: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: ThemeProvider follows changes made to settings
+00:36 +765: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: ThemeProvider follows a load
+00:36 +766: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: ThemeProvider exposes every preference
+00:36 +767: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SourceProvider starts from settings
+00:36 +768: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SourceProvider select notifies only on change
+00:36 +769: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SourceProvider select persists
+00:36 +770: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/settings_theme_source_test.dart: SourceProvider follows changes made to settings
+00:37 +771: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: follows the system by default
+00:37 +772: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: a chosen language applies at once and is saved
+00:37 +773: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: choosing System default clears the saved language
+00:37 +774: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: a language the app does not have is ignored
+00:37 +775: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: a stored unsupported language is treated as System default
+00:37 +776: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: a stored supported language is restored
+00:37 +777: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: changes made elsewhere in settings are followed
+00:37 +778: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/locale_provider_test.dart: the language list has the 11 languages and marks Arabic and Hebrew
+00:37 +779: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start does nothing before it is called
+00:37 +780: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start with consent it starts the SDK and loads an interstitial
+00:37 +781: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start without consent no ad request is ever made
+00:37 +782: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start an SDK that does not start disables ads without throwing
+00:37 +783: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start a second start while one is running is ignored
+00:37 +784: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: start the privacy choices flag follows the consent outcome
+00:37 +785: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: resume tops up the interstitial when ads are running
+00:37 +786: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: resume looks at consent again when ads were off
+00:37 +787: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: privacy options reopens the form and applies the new outcome
+00:37 +788: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials never before ads are ready
+00:37 +789: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials never without consent
+00:37 +790: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials shows when the rules allow
+00:37 +791: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials does not show when none is loaded yet and asks for one
+00:37 +792: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials a batch of one item does not qualify
+00:37 +793: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials keeps seven minutes between interstitials
+00:37 +794: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials has no daily limit
+00:37 +795: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials a failed show records nothing
+00:37 +796: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials every fifth viewer close qualifies
+00:37 +797: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/ad_provider_test.dart: interstitials loads the next interstitial after one is shown
+00:38 +798: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: starts unknown for every source
+00:38 +799: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: verifyAll no grants means not connected
+00:38 +800: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: verifyAll a working grant is connected
+00:38 +801: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: verifyAll a grant that no longer works needs renewal
+00:38 +802: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: verifyAll the latest verification wins when two overlap
+00:38 +803: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect success stores the grant and marks the source connected
+00:38 +804: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect selects the source when the current one is not usable
+00:38 +805: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect keeps the current source when it is already connected
+00:38 +806: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect a cancelled picker returns the error and changes nothing
+00:38 +807: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect a wrong folder returns the error
+00:38 +808: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect shows which source is connecting while the picker is open
+00:38 +809: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect a second connect while one is open is ignored
+00:38 +810: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: connect reconnecting with a new folder releases the old grant
+00:38 +811: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: disconnect releases the grant, removes it and marks not connected
+00:38 +812: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: disconnect switches the selected source to another connected one
+00:38 +813: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: disconnect keeps the selection when the other source is not connected
+00:38 +814: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: disconnect does nothing for a source without a grant
+00:38 +815: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/folder_access_provider_test.dart: state equality ignores identity
+00:38 +816: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: starts inactive and empty
+00:38 +817: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: the first toggle enters selection mode
+00:38 +818: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: toggle adds and removes
+00:38 +819: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: removing the last id leaves selection mode
+00:38 +820: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: selectAll selects everything and activates
+00:38 +821: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: selectAll with nothing stays inactive
+00:38 +822: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: clear leaves selection mode and notifies once
+00:38 +823: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: retainOnly drops ids that no longer exist
+00:38 +824: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: retainOnly leaves selection mode when nothing remains
+00:38 +825: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: retainOnly does not notify when nothing changes
+00:38 +826: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: retainOnly does nothing while inactive
+00:38 +827: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: the id set is unmodifiable
+00:38 +828: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/selection_provider_test.dart: two instances are independent
+00:39 +829: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: shows a message with its code, kind and counts
+00:39 +830: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: auto-dismisses after three seconds
+00:39 +831: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: a sticky toast stays until dismissed
+00:39 +832: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: only one is visible; the next waits its turn
+00:39 +833: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: an identical message within one second is dropped
+00:39 +834: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: the same message is allowed again after the window
+00:39 +835: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: different counts are different messages
+00:39 +836: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: a new message replaces a sticky one, which returns afterwards
+00:39 +837: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: dismiss with a stale id does nothing
+00:39 +838: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: dismiss shows the next queued message
+00:39 +839: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: the queue is capped
+00:39 +840: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: carries a retry callback
+00:39 +841: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: every code has a default kind
+00:39 +842: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/toast_provider_test.dart: the code list matches the specification
+00:39 +843: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: starts idle
+00:39 +844: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: without a grant a refresh stays idle and does not list
+00:39 +845: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: goes from loading to ready, newest first, with tab splits
+00:39 +846: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: maps a listing error to the error phase
+00:39 +847: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: silent refresh keeps the old list on screen while it runs
+00:39 +848: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: silent refresh a failure keeps the old list
+2026-11-12T08:10:39.844124Z W/list: silent refresh failed | AppError(io)
+00:39 +849: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: silent refresh a non-silent refresh clears to loading first
+00:39 +850: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: access lost calls the callback and shows the error
+00:39 +851: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: access lost also when it happens during a silent refresh
+00:39 +852: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: stale responses a slow response for the old source never overwrites the new one
+00:39 +853: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: stale responses a slow earlier request for the same source loses to a newer one
+00:39 +854: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: a source change clears and refreshes
+00:39 +855: /home/runner/work/StatusSozo/StatusSozo/app/test/core/providers/status_list_provider_test.dart: switching to a source without a grant goes idle
+00:40 +856: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: the table covers all 9 kinds
+00:40 +857: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in listLoad
+00:40 +858: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in userAction
+00:40 +859: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor accessLost in startup
+00:40 +860: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in listLoad
+00:40 +861: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in userAction
+00:40 +862: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor wrongFolder in startup
+00:40 +863: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in listLoad
+00:40 +864: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in userAction
+00:40 +865: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor pickerCancelled in startup
+00:40 +866: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in listLoad
+00:40 +867: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in userAction
+00:40 +868: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor notFound in startup
+00:40 +869: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in listLoad
+00:40 +870: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in userAction
+00:40 +871: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor io in startup
+00:40 +872: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in listLoad
+00:40 +873: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in userAction
+00:40 +874: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor permissionLost in startup
+00:40 +875: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in listLoad
+00:40 +876: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in userAction
+00:40 +877: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unsupported in startup
+00:40 +878: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in listLoad
+00:40 +879: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in userAction
+00:40 +880: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor persistence in startup
+00:40 +881: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in listLoad
+00:40 +882: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in userAction
+00:40 +883: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: treatmentFor unexpected in startup
+00:40 +884: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags accessLost
+00:40 +885: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags wrongFolder
+00:40 +886: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags pickerCancelled
+00:40 +887: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags notFound
+00:40 +888: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags io
+00:40 +889: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags permissionLost
+00:40 +890: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags unsupported
+00:40 +891: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags persistence
+00:40 +892: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: flags unexpected
+00:40 +893: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode maps every native code
+00:40 +894: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode unknown codes become unexpected
+00:40 +895: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode keeps the code, message and cause for logs
+00:40 +896: /home/runner/work/StatusSozo/StatusSozo/app/test/core/app_error_test.dart: appErrorFromCode code strings match the native contract
+00:41 +897: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: encode stamps the current schema version
+00:41 +898: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: round trip keeps every field
+00:41 +899: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: null input gives defaults and is not a recovery
+00:41 +900: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true invalid JSON
+00:41 +901: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true empty string
+00:41 +902: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a list
+00:41 +903: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a string
+00:41 +904: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a number
+00:41 +905: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a map without a version
+00:41 +906: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a non-numeric version
+00:41 +907: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: corrupt input gives defaults and recovered = true a negative version
+00:41 +908: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: a newer version is read leniently and stamped current
+00:41 +909: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: grant entries with a bad source are dropped
+00:41 +910: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations the shipped table is empty for version 1
+00:41 +911: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations an older version with no migration still decodes
+00:41 +912: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations an older version runs its migration
+00:41 +913: /home/runner/work/StatusSozo/StatusSozo/app/test/core/settings_codec_test.dart: migrations a current version does not run migrations
+00:41 +914: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst orders by modified time, newest first
+00:41 +915: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst ties are ordered by name descending
+00:41 +916: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst is deterministic for identical time and name
+00:41 +917: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst does not change the input list
+00:41 +918: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: newestFirst empty list
+00:41 +919: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNewestFirst orders by saved time, then name descending, then uri
+00:41 +920: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNewestFirst does not change the input
+00:41 +921: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split photos
+00:41 +922: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split videos
+00:41 +923: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: tab split the two tabs together cover every item
+00:41 +924: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNames collects distinct names
+00:41 +925: /home/runner/work/StatusSozo/StatusSozo/app/test/core/status_organizer_test.dart: savedNames empty list
+00:41 +926: All tests passed!
