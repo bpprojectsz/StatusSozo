@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/models/saved_item.dart';
+import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/screens/access_screen.dart';
 import 'package:statussozo/screens/home_screen.dart';
@@ -200,6 +201,118 @@ void main() {
       await tester.tap(find.text('Delete'));
       await tester.pumpAndSettle();
       expect(rig.adService.showCalls, 1);
+      handle.dispose();
+    });
+
+    testScreen('saving a photo in the viewer shows one', (
+      WidgetTester tester,
+    ) async {
+      await enableAds(tester);
+      await pumpScreen(
+        tester,
+        _launcher(
+          () => ViewerScreen(
+            items: <StatusItem>[statusItem('p1.jpg', modifiedMs: 5)],
+            initialIndex: 0,
+            mode: ViewerMode.status,
+          ),
+        ),
+        height: 1200,
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Save'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(rig.adService.showCalls, 1);
+    });
+
+    testScreen('saving a video in the viewer shows none', (
+      WidgetTester tester,
+    ) async {
+      await enableAds(tester);
+      await pumpScreen(
+        tester,
+        _launcher(
+          () => ViewerScreen(
+            items: <StatusItem>[
+              statusItem('v1.mp4', mime: 'video/mp4', modifiedMs: 5),
+            ],
+            initialIndex: 0,
+            mode: ViewerMode.status,
+          ),
+        ),
+        height: 1200,
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Save'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(rig.adService.showCalls, 0);
+    });
+
+    testScreen('deleting a photo in the Saved viewer shows one when a photo follows', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      final List<SavedItem> saved = <SavedItem>[
+        savedItem('a.jpg', savedAtMs: 3),
+        savedItem('b.jpg', savedAtMs: 2),
+      ];
+      rig.saved.items.addAll(saved);
+      await enableAds(tester);
+      await pumpScreen(
+        tester,
+        _launcher(
+          () => ViewerScreen(
+            items: List<SavedItem>.of(saved),
+            initialIndex: 0,
+            mode: ViewerMode.saved,
+          ),
+        ),
+        height: 1200,
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.bySemanticsLabel('Delete'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Delete').last);
+      await tester.pumpAndSettle();
+      expect(rig.adService.showCalls, 1);
+      handle.dispose();
+    });
+
+    testScreen('deleting in the Saved viewer shows none when a video follows', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      final List<SavedItem> saved = <SavedItem>[
+        savedItem('a.jpg', savedAtMs: 3),
+        savedItem('b.mp4', mime: 'video/mp4', savedAtMs: 2),
+      ];
+      rig.saved.items.addAll(saved);
+      await enableAds(tester);
+      await pumpScreen(
+        tester,
+        _launcher(
+          () => ViewerScreen(
+            items: List<SavedItem>.of(saved),
+            initialIndex: 0,
+            mode: ViewerMode.saved,
+          ),
+        ),
+        height: 1200,
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.bySemanticsLabel('Delete'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Delete').last);
+      await tester.pumpAndSettle();
+      expect(rig.adService.showCalls, 0);
       handle.dispose();
     });
 

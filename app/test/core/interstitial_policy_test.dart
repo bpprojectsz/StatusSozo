@@ -12,104 +12,90 @@ void main() {
 
   group('batch save', () {
     test('needs at least two items', () {
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 1, shownToday: 0),
-        isFalse,
-      );
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 2, shownToday: 0),
-        isTrue,
-      );
+      expect(policy.allows(InterstitialTrigger.batchSave, items: 1), isFalse);
+      expect(policy.allows(InterstitialTrigger.batchSave, items: 2), isTrue);
     });
   });
 
-  group('saved delete', () {
-    test('needs at least one item', () {
-      expect(
-        policy.allows(InterstitialTrigger.savedDelete, items: 0, shownToday: 0),
-        isFalse,
-      );
-      expect(
-        policy.allows(InterstitialTrigger.savedDelete, items: 1, shownToday: 0),
-        isTrue,
-      );
-    });
+  group('actions that need one item', () {
+    for (final InterstitialTrigger t in <InterstitialTrigger>[
+      InterstitialTrigger.viewerSave,
+      InterstitialTrigger.savedDelete,
+      InterstitialTrigger.viewerDelete,
+    ]) {
+      test('$t needs at least one item', () {
+        expect(policy.allows(t, items: 0), isFalse);
+        expect(policy.allows(t, items: 1), isTrue);
+      });
+    }
   });
 
   group('viewer close', () {
     test('qualifies on every fifth close only', () {
       for (int i = 1; i <= 4; i++) {
         expect(
-          policy.allows(InterstitialTrigger.viewerClose, shownToday: 0),
+          policy.allows(InterstitialTrigger.viewerClose),
           isFalse,
           reason: 'close $i',
         );
       }
-      expect(
-        policy.allows(InterstitialTrigger.viewerClose, shownToday: 0),
-        isTrue,
-      );
+      expect(policy.allows(InterstitialTrigger.viewerClose), isTrue);
     });
 
     test('the count restarts after an interstitial is shown', () {
       for (int i = 0; i < 5; i++) {
-        policy.allows(InterstitialTrigger.viewerClose, shownToday: 0);
+        policy.allows(InterstitialTrigger.viewerClose);
       }
       policy.markShown();
       now += const Duration(minutes: 10).inMilliseconds;
-      expect(
-        policy.allows(InterstitialTrigger.viewerClose, shownToday: 1),
-        isFalse,
-      );
+      expect(policy.allows(InterstitialTrigger.viewerClose), isFalse);
     });
 
     test('a close blocked by the spacing still counts toward the next', () {
       policy.markShown();
       for (int i = 0; i < 5; i++) {
-        expect(
-          policy.allows(InterstitialTrigger.viewerClose, shownToday: 1),
-          isFalse,
-        );
+        expect(policy.allows(InterstitialTrigger.viewerClose), isFalse);
       }
-      now += const Duration(minutes: 6).inMilliseconds;
-      expect(
-        policy.allows(InterstitialTrigger.viewerClose, shownToday: 1),
-        isTrue,
-      );
+      now += const Duration(minutes: 8).inMilliseconds;
+      expect(policy.allows(InterstitialTrigger.viewerClose), isTrue);
     });
   });
 
-  group('spacing and daily limit', () {
-    test('waits at least five minutes between interstitials', () {
+  group('spacing', () {
+    test('waits at least seven minutes between interstitials', () {
       policy.markShown();
-      now += const Duration(minutes: 4, seconds: 59).inMilliseconds;
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 1),
-        isFalse,
-      );
+      now += const Duration(minutes: 6, seconds: 59).inMilliseconds;
+      expect(policy.allows(InterstitialTrigger.batchSave, items: 3), isFalse);
       now += const Duration(seconds: 1).inMilliseconds;
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 1),
-        isTrue,
-      );
+      expect(policy.allows(InterstitialTrigger.batchSave, items: 3), isTrue);
     });
 
-    test('stops at the daily maximum', () {
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 20),
-        isTrue,
-      );
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 3, shownToday: 21),
-        isFalse,
-      );
+    test('every trigger shares the same spacing', () {
+      policy.markShown();
+      now += const Duration(minutes: 3).inMilliseconds;
+      for (final InterstitialTrigger t in <InterstitialTrigger>[
+        InterstitialTrigger.viewerSave,
+        InterstitialTrigger.savedDelete,
+        InterstitialTrigger.viewerDelete,
+      ]) {
+        expect(policy.allows(t, items: 1), isFalse, reason: '$t');
+      }
+    });
+
+    test('there is no daily limit', () {
+      for (int i = 0; i < 100; i++) {
+        expect(
+          policy.allows(InterstitialTrigger.batchSave, items: 3),
+          isTrue,
+          reason: 'ad ${i + 1}',
+        );
+        policy.markShown();
+        now += const Duration(minutes: 7).inMilliseconds;
+      }
     });
 
     test('the first interstitial of a session is not delayed', () {
-      expect(
-        policy.allows(InterstitialTrigger.batchSave, items: 2, shownToday: 0),
-        isTrue,
-      );
+      expect(policy.allows(InterstitialTrigger.batchSave, items: 2), isTrue);
     });
   });
 

@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
-import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 
 import '../../fakes/fakes.dart';
@@ -9,31 +8,24 @@ import '../../fakes/fakes.dart';
 void main() {
   late FakeAdService ads;
   late FakeConsentService consent;
-  late FakeSettingsStore store;
-  late SettingsProvider settings;
   late DateTime clock;
   late AdProvider provider;
 
   AdProvider build() => AdProvider(
     ads: ads,
     consent: consent,
-    settings: settings,
     policy: InterstitialPolicy(nowMs: () => clock.millisecondsSinceEpoch),
     now: () => clock,
   );
 
-  setUp(() async {
+  setUp(() {
     ads = FakeAdService();
     consent = FakeConsentService();
-    store = FakeSettingsStore();
-    settings = SettingsProvider(store);
-    await settings.load();
     clock = DateTime(2026, 11, 3, 12);
     provider = build();
   });
   tearDown(() {
     provider.dispose();
-    settings.dispose();
   });
 
   group('start', () {
@@ -152,13 +144,11 @@ void main() {
       expect(ads.showCalls, 0);
     });
 
-    test('shows when the rules allow, then records it', () async {
+    test('shows when the rules allow', () async {
       await provider.start();
       expect(await batch(), isTrue);
       expect(ads.showCalls, 1);
-      expect(settings.settings.interstitialDay, '2026-11-03');
-      expect(settings.settings.interstitialsToday, 1);
-      expect(store.saves.last.interstitialsToday, 1);
+      expect(provider.lastInterstitialAt, clock);
     });
 
     test('does not show when none is loaded yet and asks for one', () async {
@@ -180,37 +170,28 @@ void main() {
       );
     });
 
-    test('keeps five minutes between interstitials', () async {
+    test('keeps seven minutes between interstitials', () async {
       await provider.start();
       expect(await batch(), isTrue);
-      clock = clock.add(const Duration(minutes: 3));
+      clock = clock.add(const Duration(minutes: 5));
       expect(await batch(), isFalse);
       clock = clock.add(const Duration(minutes: 3));
       expect(await batch(), isTrue);
-      expect(settings.settings.interstitialsToday, 2);
     });
 
-    test('stops at the daily maximum and starts over the next day', () async {
+    test('has no daily limit', () async {
       await provider.start();
-      for (int i = 0; i < 21; i++) {
-        clock = clock.add(const Duration(minutes: 6));
+      for (int i = 0; i < 40; i++) {
+        clock = clock.add(const Duration(minutes: 8));
         expect(await batch(), isTrue, reason: 'ad ${i + 1}');
       }
-      clock = clock.add(const Duration(minutes: 6));
-      expect(await batch(), isFalse);
-      expect(settings.settings.interstitialsToday, 21);
-
-      clock = DateTime(2026, 11, 4, 9);
-      expect(await batch(), isTrue);
-      expect(settings.settings.interstitialDay, '2026-11-04');
-      expect(settings.settings.interstitialsToday, 1);
     });
 
     test('a failed show records nothing', () async {
       await provider.start();
       ads.showResult = false;
       expect(await batch(), isFalse);
-      expect(settings.settings.interstitialsToday, 0);
+      expect(provider.lastInterstitialAt, isNull);
     });
 
     test('every fifth viewer close qualifies', () async {

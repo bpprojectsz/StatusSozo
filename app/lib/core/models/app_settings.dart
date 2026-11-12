@@ -16,8 +16,6 @@ class AppSettings {
     required this.languageCode,
     required this.lastSource,
     required Map<StatusSource, FolderGrant> grants,
-    this.interstitialDay,
-    this.interstitialsToday = 0,
     this.reviewSaves = 0,
     this.reviewDays = 0,
     this.reviewLastDay,
@@ -73,8 +71,6 @@ class AppSettings {
           StatusSource.fromId(tryReadString(json, 'lastSource')) ??
           defaults.lastSource,
       grants: grants,
-      interstitialDay: tryReadString(json, 'interstitialDay'),
-      interstitialsToday: tryReadInt(json, 'interstitialsToday') ?? 0,
       reviewSaves: tryReadInt(json, 'reviewSaves') ?? 0,
       reviewDays: tryReadInt(json, 'reviewDays') ?? 0,
       reviewLastDay: tryReadString(json, 'reviewLastDay'),
@@ -105,12 +101,6 @@ class AppSettings {
   /// Folder grants by source. Unmodifiable.
   final Map<StatusSource, FolderGrant> grants;
 
-  /// The local day (yyyy-MM-dd) the daily interstitial count belongs to.
-  final String? interstitialDay;
-
-  /// Interstitials shown on [interstitialDay].
-  final int interstitialsToday;
-
   /// Items saved so far, counted toward the review prompt.
   final int reviewSaves;
 
@@ -131,8 +121,6 @@ class AppSettings {
     bool clearLanguage = false,
     StatusSource? lastSource,
     Map<StatusSource, FolderGrant>? grants,
-    String? interstitialDay,
-    int? interstitialsToday,
     int? reviewSaves,
     int? reviewDays,
     String? reviewLastDay,
@@ -144,8 +132,6 @@ class AppSettings {
       languageCode: clearLanguage ? null : (languageCode ?? this.languageCode),
       lastSource: lastSource ?? this.lastSource,
       grants: grants ?? this.grants,
-      interstitialDay: interstitialDay ?? this.interstitialDay,
-      interstitialsToday: interstitialsToday ?? this.interstitialsToday,
       reviewSaves: reviewSaves ?? this.reviewSaves,
       reviewDays: reviewDays ?? this.reviewDays,
       reviewLastDay: reviewLastDay ?? this.reviewLastDay,
@@ -162,8 +148,6 @@ class AppSettings {
       for (final MapEntry<StatusSource, FolderGrant> entry in grants.entries)
         entry.key.id: entry.value.toJson(),
     },
-    'interstitialDay': interstitialDay,
-    'interstitialsToday': interstitialsToday,
     'reviewSaves': reviewSaves,
     'reviewDays': reviewDays,
     'reviewLastDay': reviewLastDay,
@@ -177,8 +161,6 @@ class AppSettings {
       other.themePreference == themePreference &&
       other.languageCode == languageCode &&
       other.lastSource == lastSource &&
-      other.interstitialDay == interstitialDay &&
-      other.interstitialsToday == interstitialsToday &&
       other.reviewSaves == reviewSaves &&
       other.reviewDays == reviewDays &&
       other.reviewLastDay == reviewLastDay &&
@@ -191,8 +173,6 @@ class AppSettings {
     themePreference,
     languageCode,
     lastSource,
-    interstitialDay,
-    interstitialsToday,
     reviewSaves,
     reviewDays,
     reviewLastDay,

@@ -33,7 +33,7 @@ AdMob asks you to publish an `app-ads.txt` file at the root of the developer web
 |---|---|
 | Consent first | No ad is requested until Google's consent step reports that ads may be requested. If the consent step itself fails, the app still asks for ads, as Google advises, and Google applies the last saved choice. After a person declines, Google may still serve non-personalised (limited) ads or none, and that is Google's decision. |
 | Banners | Home, Viewer, Saved and Settings. Not on the access screen or the crash screen. Each is released when another screen covers it. |
-| Interstitials | After a batch save of two or more items, after every fifth viewer close, and after deleting from Saved. At least 5 minutes apart and at most 21 a day. Never at launch, on exit or during video playback. |
+| Interstitials | After a batch save of two or more items on Home, after saving a photo in the viewer, after deleting from Saved, after deleting a photo in the Saved viewer, and after every fifth viewer close. At least 7 minutes apart, with no daily limit. Never at launch, on exit, before consent, or during video playback: a save or delete in the viewer only counts when a photo is showing. |
 | Content rating | The app asks the network for general-audience ads |
 
 ## Before you update the store forms

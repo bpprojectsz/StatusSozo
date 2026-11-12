@@ -167,7 +167,6 @@ class AppServices {
     final AdProvider ads = AdProvider(
       ads: adService,
       consent: consent,
-      settings: settings,
       policy: InterstitialPolicy(
         nowMs: () => (now ?? DateTime.now)().millisecondsSinceEpoch,
       ),

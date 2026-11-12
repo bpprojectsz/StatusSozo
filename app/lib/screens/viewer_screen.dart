@@ -152,11 +152,22 @@ class _ViewerScreenState extends State<ViewerScreen> {
     }
   }
 
-  void _save() {
+  Future<void> _save() async {
     final services = AppScope.of(context);
     final ViewableMedia item = _items[_current];
-    if (item is StatusItem) {
-      unawaited(services.save.save(<StatusItem>[item]));
+    if (item is! StatusItem) {
+      return;
+    }
+    await services.save.save(<StatusItem>[item]);
+    final int saved = services.save.value.last?.saved.length ?? 0;
+    // Never over a video: only a saved photo may be followed by an ad.
+    if (saved > 0 && !item.kind.isVideo) {
+      unawaited(
+        services.ads.maybeShowInterstitial(
+          InterstitialTrigger.viewerSave,
+          items: saved,
+        ),
+      );
     }
   }
 
@@ -204,6 +215,15 @@ class _ViewerScreenState extends State<ViewerScreen> {
       _pager.jumpToPage(_current);
     }
     _prefetch(_current);
+    // Never over a video: the item now showing must be a photo.
+    if (!_items[_current].kind.isVideo) {
+      unawaited(
+        services.ads.maybeShowInterstitial(
+          InterstitialTrigger.viewerDelete,
+          items: 1,
+        ),
+      );
+    }
   }
 
   @override

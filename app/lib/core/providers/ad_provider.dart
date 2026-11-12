@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:statussozo/core/contracts/ad_service.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
-import 'package:statussozo/core/models/app_settings.dart';
-import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 
 /// Where ads stand for the whole app.
@@ -49,12 +47,10 @@ class AdProvider extends ValueNotifier<AdProviderState> {
   AdProvider({
     required AdService ads,
     required ConsentService consent,
-    required SettingsProvider settings,
     required InterstitialPolicy policy,
     DateTime Function()? now,
   }) : _ads = ads,
        _consent = consent,
-       _settings = settings,
        _policy = policy,
        _now = now ?? DateTime.now,
        super(const AdProviderState(phase: AdsPhase.idle)) {
@@ -63,7 +59,6 @@ class AdProvider extends ValueNotifier<AdProviderState> {
 
   final AdService _ads;
   final ConsentService _consent;
-  final SettingsProvider _settings;
   final InterstitialPolicy _policy;
   final DateTime Function() _now;
 
@@ -162,10 +157,7 @@ class AdProvider extends ValueNotifier<AdProviderState> {
     if (!enabled || _showing) {
       return false;
     }
-    final String today = dayKey(_now());
-    final AppSettings s = _settings.settings;
-    final int shownToday = s.interstitialDay == today ? s.interstitialsToday : 0;
-    if (!_policy.allows(trigger, items: items, shownToday: shownToday)) {
+    if (!_policy.allows(trigger, items: items)) {
       return false;
     }
     if (!_ads.interstitialReady.value) {
@@ -178,16 +170,6 @@ class AdProvider extends ValueNotifier<AdProviderState> {
       if (shown) {
         _lastInterstitialAt = _now();
         _policy.markShown();
-        await _settings.update(
-          (AppSettings current) => current.copyWith(
-            interstitialDay: today,
-            interstitialsToday:
-                (current.interstitialDay == today
-                    ? current.interstitialsToday
-                    : 0) +
-                1,
-          ),
-        );
       }
       return shown;
     } finally {
