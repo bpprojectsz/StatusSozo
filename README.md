@@ -4,6 +4,10 @@ Browse, save and share status photos and videos from the folders you choose. And
 
 StatusSozo is an independent app and is not affiliated with or endorsed by any messaging service.
 
+## Project documents
+
+Start with `docs/handoff.md`, then `docs/decisions.md`, then `docs/blueprint.md`.
+
 ## Layout
 
 | Path | Purpose |
