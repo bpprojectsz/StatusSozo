@@ -8,6 +8,7 @@
         android:name="${applicationName}"
         android:allowBackup="false"
         android:enableOnBackInvokedCallback="true"
+        android:localeConfig="@xml/locales_config"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

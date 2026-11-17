@@ -4,6 +4,7 @@ import 'package:statussozo/app/app_scope.dart';
 import 'package:statussozo/app/app_services.dart';
 import 'package:statussozo/app/error_handling.dart';
 import 'package:statussozo/app/lifecycle_refresher.dart';
+import 'package:statussozo/core/models/app_language.dart';
 import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
@@ -91,6 +92,17 @@ class _StatusSozoAppState extends State<StatusSozoApp>
                   localizationsDelegates:
                       AppLocalizations.localizationsDelegates,
                   supportedLocales: AppLocalizations.supportedLocales,
+                  // Used only while no language is chosen in the app: a chosen
+                  // language always wins over the system setting.
+                  localeListResolutionCallback:
+                      (List<Locale>? preferred, Iterable<Locale> supported) =>
+                          Locale(
+                            AppLanguages.resolve(
+                              (preferred ?? const <Locale>[]).map(
+                                (Locale l) => l.languageCode,
+                              ),
+                            ),
+                          ),
                   scrollBehavior: const AppScrollBehavior(),
                   builder: (BuildContext context, Widget? app) =>
                       ToastHost(provider: services.toasts, child: app!),

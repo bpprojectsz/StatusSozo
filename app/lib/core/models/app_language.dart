@@ -43,6 +43,20 @@ abstract final class AppLanguages {
     return null;
   }
 
+  /// The language to use when the person has not chosen one: the first of the
+  /// phone's preferred languages, in the phone's own order, that the app is
+  /// translated into. A phone whose list holds no translated language gets
+  /// English. Regions and scripts are ignored, so pt-BR is Portuguese and
+  /// zh-TW is Chinese (Simplified is the only Chinese the app has).
+  static String resolve(Iterable<String> preferredCodes) {
+    for (final String code in preferredCodes) {
+      if (byCode(code) != null) {
+        return code;
+      }
+    }
+    return 'en';
+  }
+
   /// Whether [code] is written right to left.
   static bool isRtl(String? code) => byCode(code)?.rtl ?? false;
 }

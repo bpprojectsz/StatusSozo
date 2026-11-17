@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The languages the app is translated into. Android 13 and later lists exactly
+     these on the system "App languages" screen. Keep it in step with
+     lib/core/models/app_language.dart (a test checks that). -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en"/>
+    <locale android:name="es"/>
+    <locale android:name="fr"/>
+    <locale android:name="de"/>
+    <locale android:name="pt"/>
+    <locale android:name="ar"/>
+    <locale android:name="hi"/>
+    <locale android:name="ja"/>
+    <locale android:name="ko"/>
+    <locale android:name="zh"/>
+    <locale android:name="he"/>
+</locale-config>

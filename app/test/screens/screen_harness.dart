@@ -32,10 +32,12 @@ class Rig {
     required this.services,
   });
 
-  factory Rig() {
+  /// [store] lets a second rig start from what an earlier one saved, which is
+  /// how a restart is simulated.
+  factory Rig({FakeSettingsStore? store}) {
     final FakeStatusRepository status = FakeStatusRepository();
     final FakeSavedRepository saved = FakeSavedRepository();
-    final FakeSettingsStore store = FakeSettingsStore();
+    final FakeSettingsStore settingsStore = store ?? FakeSettingsStore();
     final FakeThumbnailSource thumbs = FakeThumbnailSource();
     final FakeShareService share = FakeShareService();
     final FakeLinkLauncher links = FakeLinkLauncher();
@@ -46,7 +48,7 @@ class Rig {
     return Rig._(
       status: status,
       saved: saved,
-      store: store,
+      store: settingsStore,
       thumbs: thumbs,
       share: share,
       links: links,
@@ -59,7 +61,7 @@ class Rig {
         savedRepository: saved,
         thumbnails: thumbs,
         share: share,
-        settingsStore: store,
+        settingsStore: settingsStore,
         links: links,
         haptics: haptics,
         videoFactory: video,

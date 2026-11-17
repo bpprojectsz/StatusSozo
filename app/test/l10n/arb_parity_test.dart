@@ -54,6 +54,36 @@ List<List<String>> _pluralBranches(String message) {
   return blocks;
 }
 
+
+/// ICU quoting: an apostrophe next to a brace starts a quoted section and
+/// breaks gen-l10n, so it must never appear as `'{` or `}'`.
+bool _hasQuoteNextToBrace(String message) =>
+    message.contains("'{") || message.contains("}'");
+
+/// Every opening brace has a closing one, and none closes early.
+bool _bracesBalanced(String message) {
+  int depth = 0;
+  for (final int unit in message.codeUnits) {
+    if (unit == 0x7B) {
+      depth++;
+    } else if (unit == 0x7D) {
+      depth--;
+      if (depth < 0) {
+        return false;
+      }
+    }
+  }
+  return depth == 0;
+}
+
+void _expectSafeMessages(Map<String, Object?> arb, Iterable<String> keys) {
+  for (final String key in keys) {
+    final String value = arb[key]! as String;
+    expect(_hasQuoteNextToBrace(value), isFalse, reason: "$key has ' next to a brace");
+    expect(_bracesBalanced(value), isTrue, reason: '$key has unbalanced braces');
+  }
+}
+
 void main() {
   final Map<String, Object?> english = _read('en');
   final List<String> keys = _messageKeys(english).toList();
@@ -76,9 +106,17 @@ void main() {
     );
   });
 
+  test('English has no apostrophe next to a brace and balanced braces', () {
+    _expectSafeMessages(english, keys);
+  });
+
   for (final String code in AppLanguages.codes.where((String c) => c != 'en')) {
     group('app_$code.arb', () {
       final Map<String, Object?> arb = _read(code);
+
+      test('has no apostrophe next to a brace and balanced braces', () {
+        _expectSafeMessages(arb, keys);
+      });
 
       test('declares its own locale', () {
         expect(arb['@@locale'], code);
