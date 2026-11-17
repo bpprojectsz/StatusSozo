@@ -157,5 +157,9 @@
   "licensesTitle": "רישיונות קוד פתוח",
   "licensesEmptyTitle": "לא נמצאו רישיונות",
   "settingsReviewNow": "דרג את האפליקציה עכשיו",
-  "settingsReviewTap": "הקש כדי לדרג בחנות"
+  "settingsReviewTap": "הקש כדי לדרג בחנות",
+  "settingsStorage": "קבצים זמניים",
+  "settingsStorageNone": "אין",
+  "settingsStorageClear": "נקה",
+  "toastCacheCleared": "הקבצים הזמניים נמחקו"
 }

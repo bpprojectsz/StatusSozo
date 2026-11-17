@@ -33,6 +33,10 @@ abstract final class AppConfig {
   /// Flutter's decoded-image cache is capped at 50 MB (its default is 100 MB).
   static const int imageCacheBytes = 50 * 1024 * 1024;
   static const Duration shareCacheTtl = Duration(hours: 24);
+
+  /// The share cache is also kept under this size: once over it, the oldest
+  /// copies go first, on top of the 24 hour rule.
+  static const int shareCacheMaxBytes = 200 * 1024 * 1024;
   static const Duration toastDuration = Duration(seconds: 3);
 
   // Ads. The defaults are Google's published test IDs. Live IDs are compiled in

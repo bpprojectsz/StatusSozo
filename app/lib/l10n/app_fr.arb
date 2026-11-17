@@ -157,5 +157,9 @@
   "licensesTitle": "Licences open source",
   "licensesEmptyTitle": "Aucune licence trouvée",
   "settingsReviewNow": "Noter l'application maintenant",
-  "settingsReviewTap": "Touchez pour noter sur le store"
+  "settingsReviewTap": "Touchez pour noter sur le store",
+  "settingsStorage": "Fichiers temporaires",
+  "settingsStorageNone": "Aucun",
+  "settingsStorageClear": "Effacer",
+  "toastCacheCleared": "Fichiers temporaires supprimés"
 }

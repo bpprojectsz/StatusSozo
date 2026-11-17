@@ -157,5 +157,9 @@
   "licensesTitle": "Open-Source-Lizenzen",
   "licensesEmptyTitle": "Keine Lizenzen gefunden",
   "settingsReviewNow": "App jetzt bewerten",
-  "settingsReviewTap": "Tippen, um im Store zu bewerten"
+  "settingsReviewTap": "Tippen, um im Store zu bewerten",
+  "settingsStorage": "Temporäre Dateien",
+  "settingsStorageNone": "Keine",
+  "settingsStorageClear": "Löschen",
+  "toastCacheCleared": "Temporäre Dateien gelöscht"
 }

@@ -308,6 +308,20 @@ class FakeShareService implements ShareService {
     return const Ok<void>(null);
   }
 
+  /// What [cacheSize] reports.
+  int cacheBytes = 0;
+  int clearCalls = 0;
+
+  @override
+  Future<int> cacheSize() async => cacheBytes;
+
+  @override
+  Future<int> clearCache() async {
+    clearCalls++;
+    cacheBytes = 0;
+    return 1;
+  }
+
   @override
   Future<void> pruneCache() async {
     pruneCalls++;

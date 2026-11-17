@@ -157,5 +157,9 @@
   "licensesTitle": "开源许可",
   "licensesEmptyTitle": "未找到许可",
   "settingsReviewNow": "立即为应用评分",
-  "settingsReviewTap": "点按即可在商店中评分"
+  "settingsReviewTap": "点按即可在商店中评分",
+  "settingsStorage": "临时文件",
+  "settingsStorageNone": "无",
+  "settingsStorageClear": "清除",
+  "toastCacheCleared": "已清除临时文件"
 }

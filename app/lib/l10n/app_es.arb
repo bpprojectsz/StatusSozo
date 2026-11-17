@@ -157,5 +157,9 @@
   "licensesTitle": "Licencias de código abierto",
   "licensesEmptyTitle": "No se encontraron licencias",
   "settingsReviewNow": "Valorar la app ahora",
-  "settingsReviewTap": "Toca para valorar en la tienda"
+  "settingsReviewTap": "Toca para valorar en la tienda",
+  "settingsStorage": "Archivos temporales",
+  "settingsStorageNone": "Ninguno",
+  "settingsStorageClear": "Borrar",
+  "toastCacheCleared": "Archivos temporales borrados"
 }

@@ -87,6 +87,15 @@ class PlusShareService implements ShareService {
 
   @override
   Future<void> pruneCache() async {
-    await _channel.pruneShareCache(AppConfig.shareCacheTtl.inMilliseconds);
+    await _channel.pruneShareCache(
+      AppConfig.shareCacheTtl.inMilliseconds,
+      maxBytes: AppConfig.shareCacheMaxBytes,
+    );
   }
+
+  @override
+  Future<int> cacheSize() => _channel.shareCacheSize();
+
+  @override
+  Future<int> clearCache() => _channel.clearShareCache();
 }

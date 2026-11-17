@@ -377,4 +377,46 @@ void main() {
       expect(rig.services.settings.settings.reviewLastAskedMs, isNull);
     });
   });
+
+  group('the temporary files row', () {
+    testScreen('says None when nothing is stored, with no Clear button', (
+      WidgetTester tester,
+    ) async {
+      rig.share.cacheBytes = 0;
+      await pumpSettings(tester);
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text('Temporary files'), findsOneWidget);
+      expect(find.text('None'), findsOneWidget);
+      expect(find.text('Clear'), findsNothing);
+    });
+
+    testScreen('shows the size and a Clear button when files exist', (
+      WidgetTester tester,
+    ) async {
+      rig.share.cacheBytes = 3 * 1024 * 1024;
+      await pumpSettings(tester);
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      expect(find.text('3 MB'), findsOneWidget);
+      expect(find.text('Clear'), findsOneWidget);
+    });
+
+    testScreen('Clear deletes them, says so, and shows None', (
+      WidgetTester tester,
+    ) async {
+      rig.share.cacheBytes = 5 * 1024 * 1024;
+      await pumpSettings(tester);
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Clear'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pumpAndSettle();
+      expect(rig.share.clearCalls, 1);
+      expect(rig.services.toasts.value?.code, ToastCode.cacheCleared);
+      expect(find.text('None'), findsOneWidget);
+      expect(find.text('Clear'), findsNothing);
+    });
+  });
 }

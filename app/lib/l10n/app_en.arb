@@ -737,5 +737,21 @@
   "settingsReviewTap": "Tap to review on store",
   "@settingsReviewTap": {
     "description": "Second line under Rate the app."
+  },
+  "settingsStorage": "Temporary files",
+  "@settingsStorage": {
+    "description": "Settings row: the temporary copies made for sharing."
+  },
+  "settingsStorageNone": "None",
+  "@settingsStorageNone": {
+    "description": "Value shown when there are no temporary files."
+  },
+  "settingsStorageClear": "Clear",
+  "@settingsStorageClear": {
+    "description": "Button on the temporary files row that deletes them."
+  },
+  "toastCacheCleared": "Temporary files cleared",
+  "@toastCacheCleared": {
+    "description": "Toast after the temporary files were cleared."
   }
 }

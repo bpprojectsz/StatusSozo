@@ -45,8 +45,34 @@ class ShareCache(private val context: Context) {
         return target.absolutePath
     }
 
-    /** Deletes staged files older than [olderThanMs] and returns how many. */
-    fun prune(olderThanMs: Long): Int {
+    /** Total size in bytes of every staged file. */
+    fun size(): Long =
+        root.walkTopDown().filter { it.isFile }.sumOf { it.length() }
+
+    /** Deletes every staged file and returns how many. */
+    fun clear(): Int {
+        var deleted = 0
+        for (entry in root.walkBottomUp()) {
+            if (entry == root) {
+                continue
+            }
+            if (entry.isFile) {
+                if (entry.delete()) {
+                    deleted++
+                }
+            } else {
+                entry.delete()
+            }
+        }
+        return deleted
+    }
+
+    /**
+     * Deletes staged files older than [olderThanMs] and returns how many. When
+     * [maxBytes] is above zero, the oldest staging folders are then deleted
+     * until the total is at or under it.
+     */
+    fun prune(olderThanMs: Long, maxBytes: Long = 0L): Int {
         val cutoff = System.currentTimeMillis() - olderThanMs
         var deleted = 0
         val directories = root.listFiles() ?: return 0
@@ -68,8 +94,27 @@ class ShareCache(private val context: Context) {
                 directory.delete()
             }
         }
+        if (maxBytes > 0L) {
+            var total = size()
+            val oldestFirst = (root.listFiles() ?: emptyArray()).sortedBy { newestStamp(it) }
+            for (entry in oldestFirst) {
+                if (total <= maxBytes) {
+                    break
+                }
+                val files = entry.walkTopDown().filter { it.isFile }.toList()
+                val bytes = files.sumOf { it.length() }
+                if (entry.deleteRecursively()) {
+                    total -= bytes
+                    deleted += files.size
+                }
+            }
+        }
         return deleted
     }
+
+    private fun newestStamp(entry: File): Long =
+        entry.walkTopDown().filter { it.isFile }.maxOfOrNull { it.lastModified() }
+            ?: entry.lastModified()
 
     private fun sanitise(name: String): String {
         val cleaned = name.replace(Regex("[^A-Za-z0-9._ -]"), "_").trim().trim('.')

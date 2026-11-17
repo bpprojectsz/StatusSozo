@@ -184,7 +184,18 @@ void main() {
       expect(native.calls.single.method, 'pruneShareCache');
       expect(native.calls.single.arguments, <String, Object?>{
         'olderThanMs': AppConfig.shareCacheTtl.inMilliseconds,
+        'maxBytes': AppConfig.shareCacheMaxBytes,
       });
+    });
+
+    test('cacheSize and clearCache go to native', () async {
+      native.responder = (MethodCall call) => 123;
+      expect(await service().cacheSize(), 123);
+      expect(await service().clearCache(), 123);
+      expect(
+        native.calls.map((MethodCall c) => c.method),
+        <String>['shareCacheSize', 'clearShareCache'],
+      );
     });
   });
 

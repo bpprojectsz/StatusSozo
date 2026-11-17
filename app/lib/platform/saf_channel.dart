@@ -218,11 +218,36 @@ class SafChannel {
     );
   }
 
-  /// Deletes share-cache files older than [olderThanMs]. Returns the count.
-  Future<int> pruneShareCache(int olderThanMs) async {
+  /// Deletes share-cache files older than [olderThanMs]. When [maxBytes] is
+  /// given, the oldest copies are then deleted until the folder is at or under
+  /// it. Returns how many files went.
+  Future<int> pruneShareCache(int olderThanMs, {int? maxBytes}) async {
     final Result<int> result = await _call<int>(
       'pruneShareCache',
-      <String, Object?>{'olderThanMs': olderThanMs},
+      <String, Object?>{
+        'olderThanMs': olderThanMs,
+        if (maxBytes != null) 'maxBytes': maxBytes,
+      },
+      (Object? raw) => raw is int ? raw : 0,
+    );
+    return result.valueOrNull ?? 0;
+  }
+
+  /// The total size of the share cache in bytes, or 0 if it cannot be read.
+  Future<int> shareCacheSize() async {
+    final Result<int> result = await _call<int>(
+      'shareCacheSize',
+      const <String, Object?>{},
+      (Object? raw) => raw is int ? raw : 0,
+    );
+    return result.valueOrNull ?? 0;
+  }
+
+  /// Deletes every share-cache file. Returns how many went.
+  Future<int> clearShareCache() async {
+    final Result<int> result = await _call<int>(
+      'clearShareCache',
+      const <String, Object?>{},
       (Object? raw) => raw is int ? raw : 0,
     );
     return result.valueOrNull ?? 0;

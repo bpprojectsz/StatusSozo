@@ -157,5 +157,9 @@
   "licensesTitle": "オープンソースライセンス",
   "licensesEmptyTitle": "ライセンスが見つかりません",
   "settingsReviewNow": "今すぐアプリを評価",
-  "settingsReviewTap": "タップしてストアで評価"
+  "settingsReviewTap": "タップしてストアで評価",
+  "settingsStorage": "一時ファイル",
+  "settingsStorageNone": "なし",
+  "settingsStorageClear": "消去",
+  "toastCacheCleared": "一時ファイルを消去しました"
 }

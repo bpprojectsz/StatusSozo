@@ -213,6 +213,29 @@ void main() {
         'olderThanMs': 86400000,
       });
     });
+
+    test('pruneShareCache also sends the size cap when given', () async {
+      native.responder = (MethodCall call) => 2;
+      expect(await channel.pruneShareCache(1000, maxBytes: 5000), 2);
+      expect(native.calls.single.arguments, <String, Object?>{
+        'olderThanMs': 1000,
+        'maxBytes': 5000,
+      });
+    });
+
+    test('shareCacheSize returns the size, or 0 when native says nothing', () async {
+      native.responder = (MethodCall call) => 4096;
+      expect(await channel.shareCacheSize(), 4096);
+      expect(native.calls.single.method, 'shareCacheSize');
+      native.responder = (MethodCall call) => null;
+      expect(await channel.shareCacheSize(), 0);
+    });
+
+    test('clearShareCache returns how many files went', () async {
+      native.responder = (MethodCall call) => 7;
+      expect(await channel.clearShareCache(), 7);
+      expect(native.calls.single.method, 'clearShareCache');
+    });
   });
 
   group('native error codes', () {

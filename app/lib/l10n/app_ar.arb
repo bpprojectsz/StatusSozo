@@ -157,5 +157,9 @@
   "licensesTitle": "تراخيص المصدر المفتوح",
   "licensesEmptyTitle": "لم يتم العثور على تراخيص",
   "settingsReviewNow": "قيّم التطبيق الآن",
-  "settingsReviewTap": "اضغط للتقييم في المتجر"
+  "settingsReviewTap": "اضغط للتقييم في المتجر",
+  "settingsStorage": "ملفات مؤقتة",
+  "settingsStorageNone": "لا شيء",
+  "settingsStorageClear": "مسح",
+  "toastCacheCleared": "تم مسح الملفات المؤقتة"
 }

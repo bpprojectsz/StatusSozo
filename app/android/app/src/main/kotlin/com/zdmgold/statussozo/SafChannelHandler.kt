@@ -60,8 +60,13 @@ class SafChannelHandler(private val activity: Activity) : MethodChannel.MethodCa
                     shareCache.copy(text(call, "uri"), text(call, "name"))
                 }
                 "pruneShareCache" -> async(result) {
-                    shareCache.prune(number(call, "olderThanMs"))
+                    shareCache.prune(
+                        number(call, "olderThanMs"),
+                        call.argument<Number>("maxBytes")?.toLong() ?: 0L,
+                    )
                 }
+                "shareCacheSize" -> async(result) { shareCache.size() }
+                "clearShareCache" -> async(result) { shareCache.clear() }
                 else -> result.notImplemented()
             }
         } catch (error: Throwable) {

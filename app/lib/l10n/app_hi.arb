@@ -157,5 +157,9 @@
   "licensesTitle": "ओपन-सोर्स लाइसेंस",
   "licensesEmptyTitle": "कोई लाइसेंस नहीं मिला",
   "settingsReviewNow": "अभी ऐप को रेटिंग दें",
-  "settingsReviewTap": "स्टोर पर रेटिंग देने के लिए टैप करें"
+  "settingsReviewTap": "स्टोर पर रेटिंग देने के लिए टैप करें",
+  "settingsStorage": "अस्थायी फ़ाइलें",
+  "settingsStorageNone": "कोई नहीं",
+  "settingsStorageClear": "साफ़ करें",
+  "toastCacheCleared": "अस्थायी फ़ाइलें साफ़ कर दी गईं"
 }

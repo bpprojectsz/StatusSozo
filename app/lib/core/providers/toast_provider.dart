@@ -23,6 +23,7 @@ enum ToastCode {
   settingsRecovered,
   persistenceWarning,
   linkFailed,
+  cacheCleared,
   ioError,
   unexpected,
 }
@@ -60,6 +61,7 @@ class ToastMessage {
 ToastKind defaultToastKind(ToastCode code) => switch (code) {
   ToastCode.saved ||
   ToastCode.deleted ||
+  ToastCode.cacheCleared ||
   ToastCode.folderConnected => ToastKind.success,
   ToastCode.alreadySaved ||
   ToastCode.folderDisconnected ||

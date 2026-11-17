@@ -16,6 +16,7 @@ import 'package:statussozo/screens/debug_logs_screen.dart';
 import 'package:statussozo/screens/licenses_screen.dart';
 import 'package:statussozo/screens/screen_text.dart';
 import 'package:statussozo/utils/app_log.dart';
+import 'package:statussozo/utils/formatters.dart';
 import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/layout/app_nav_bar.dart';
@@ -290,6 +291,7 @@ class SettingsScreen extends StatelessWidget {
               builder: (BuildContext context, int _, Widget? child) {
                 return AppGroup(
                   children: <Widget>[
+                    const _StorageRow(),
                     AppRow(
                       icon: AppIcons.debug,
                       label: l10n.settingsDebugLogs,
@@ -410,6 +412,65 @@ class _FolderRow extends StatelessWidget {
       label: sourceName(l10n, source),
       trailing: chip,
       onPressed: () => _openSheet(context, status),
+    );
+  }
+}
+
+/// The temporary files row: how much the share copies take up, with a button
+/// that deletes them.
+class _StorageRow extends StatefulWidget {
+  const _StorageRow();
+
+  @override
+  State<_StorageRow> createState() => _StorageRowState();
+}
+
+class _StorageRowState extends State<_StorageRow> {
+  int? _bytes;
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_started) {
+      _started = true;
+      unawaited(_read());
+    }
+  }
+
+  Future<void> _read() async {
+    final int bytes = await AppScope.of(context).share.cacheSize();
+    if (mounted) {
+      setState(() => _bytes = bytes); // ui-local
+    }
+  }
+
+  Future<void> _clear() async {
+    final services = AppScope.of(context);
+    await services.share.clearCache();
+    services.toasts.show(ToastCode.cacheCleared);
+    await _read();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    final int? bytes = _bytes;
+    final String? size = bytes == null
+        ? null
+        : (bytes == 0
+              ? l10n.settingsStorageNone
+              : formatFileSize(bytes, l10n.localeName));
+    return AppRow(
+      icon: AppIcons.delete,
+      label: l10n.settingsStorage,
+      secondary: size,
+      trailing: (bytes != null && bytes > 0)
+          ? AppChip(
+              label: l10n.settingsStorageClear,
+              onPressed: () => unawaited(_clear()),
+            )
+          : null,
     );
   }
 }
