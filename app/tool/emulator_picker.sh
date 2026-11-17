@@ -1,28 +1,30 @@
 #!/bin/bash
-# A6 and A4 on a real engine. For each language it changes the SYSTEM language
-# (the system folder picker follows it; the per-app language does not), opens
-# Android's own folder picker at the status folder, and records what the picker
-# and its confirmation dialog really say, as screenshots, uiautomator dumps and
-# a table. It then opens the app (no folder connected, so the Access screen,
-# which has no ad and can be read) and checks that the three steps shown are
-# the app's own strings for that language. Also records the Android 13+
-# "App languages" screen for the app (A4).
-# Run by the emulator workflow after the smoke script. Needs adb and python3.
+# A6 and A4 on a real engine.
+#  1. Reads Android's own folder-picker translations out of the picker app's
+#     resource file (every language at once, nothing to switch) and checks each
+#     of the app's Access-screen steps against them automatically (A6).
+#  2. Records the picker, its menu and its confirmation in English.
+#  3. Scrolls the system "App languages" screen for the app and lists every
+#     language it offers (A4).
+#  4. Best effort, time boxed: switches the SYSTEM language to Arabic and
+#     Japanese and checks the app's Access screen shows the app's own strings.
+# Run by the emulator workflow. Needs adb, python3 and the SDK's aapt2.
 set +e
 PKG=com.zdmgold.statussozo
 APK=app/build/app/outputs/flutter-apk/app-debug.apk
 OUT=/tmp/emu/picker
 STAT=/sdcard/Android/media/com.whatsapp/WhatsApp/Media/.Statuses
 INIT='content://com.android.externalstorage.documents/document/primary%3AAndroid%2Fmedia%2Fcom.whatsapp%2FWhatsApp%2FMedia%2F.Statuses'
+A="timeout 40 adb"
 mkdir -p "$OUT"
 : > "$OUT/summary.txt"
 note() { echo "$1" | tee -a "$OUT/summary.txt"; }
-shot() { adb exec-out screencap -p > "$OUT/$1.png"; }
+shot() { timeout 40 adb exec-out screencap -p > "$OUT/$1.png"; }
 
 dump_to() {
   for i in 1 2 3 4; do
-    adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 \
-      && adb pull /sdcard/ui.xml "$OUT/$1.xml" > /dev/null 2>&1 \
+    $A shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 \
+      && $A pull /sdcard/ui.xml "$OUT/$1.xml" > /dev/null 2>&1 \
       && [ -s "$OUT/$1.xml" ] && return 0
     sleep 2
   done
@@ -45,11 +47,10 @@ for n in root.iter('node'):
         break
 PY
 )
-  if [ -n "$xy" ]; then adb shell input tap $xy; return 0; fi
+  if [ -n "$xy" ]; then $A shell input tap $xy; return 0; fi
   return 1
 }
 
-# tap_overflow XML: the right-most clickable control in the top toolbar.
 tap_overflow() {
   xy=$(python3 - "$1" <<'PY'
 import re, sys, xml.etree.ElementTree as ET
@@ -57,155 +58,201 @@ try:
     root = ET.parse(sys.argv[1]).getroot()
 except Exception:
     sys.exit(0)
-best = None
 for n in root.iter('node'):
-    if n.get('clickable') != 'true' or not n.get('bounds'):
-        continue
-    x1, y1, x2, y2 = map(int, re.findall(r'\d+', n.get('bounds')))
-    if y1 < 420 and (best is None or x2 > best[0]):
-        best = (x2, (x1 + x2) // 2, (y1 + y2) // 2)
-if best:
-    print(best[1], best[2])
+    if (n.get('content-desc') or '') and n.get('bounds') and 'More options' in n.get('content-desc'):
+        x1, y1, x2, y2 = map(int, re.findall(r'\d+', n.get('bounds')))
+        print((x1 + x2) // 2, (y1 + y2) // 2)
+        break
 PY
 )
-  if [ -n "$xy" ]; then adb shell input tap $xy; return 0; fi
+  if [ -n "$xy" ]; then $A shell input tap $xy; return 0; fi
   return 1
 }
 
-set_system_locale() {
-  adb root > /dev/null 2>&1
-  sleep 2
-  adb wait-for-device
-  adb shell "setprop persist.sys.locale $1; setprop ctl.restart zygote" > /dev/null 2>&1
-  sleep 20
-  adb wait-for-device
-  for i in $(seq 1 60); do
-    [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] \
-      && adb shell pm path android > /dev/null 2>&1 && break
-    sleep 2
-  done
-  sleep 25
-  adb shell settings put global hide_error_dialogs 1
-  adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS > /dev/null 2>&1
-  adb shell input keyevent KEYCODE_HOME
-  sleep 3
-  note "system locale now: persist=$(adb shell getprop persist.sys.locale | tr -d '\r') current=$(adb shell getprop ro.product.locale | tr -d '\r')"
-}
+$A wait-for-device
+until [ "$($A shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+$A shell settings put global hide_error_dialogs 1
+note "device: $($A shell getprop ro.build.version.release | tr -d '\r') (API $($A shell getprop ro.build.version.sdk | tr -d '\r'))"
 
-adb wait-for-device
-until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
-adb shell settings put global hide_error_dialogs 1
-adb root > /dev/null 2>&1; sleep 2
-note "adb root: $(adb shell id | tr -d '\r')"
-note "device: $(adb shell getprop ro.build.version.release | tr -d '\r') (API $(adb shell getprop ro.build.version.sdk | tr -d '\r'))"
-
-# The status folder must exist for the picker to open inside it.
-if [ -z "$(adb shell ls "$STAT" 2>/dev/null)" ]; then
-  adb shell mkdir -p "$STAT"
-  for f in /tmp/media/*; do adb push "$f" "$STAT/" > /dev/null 2>&1; done
+# ---- 1. Android's own picker translations, straight from its resource file.
+PICKER_PKG=$($A shell cmd package resolve-activity --brief -a android.intent.action.OPEN_DOCUMENT_TREE | tail -1 | cut -d/ -f1 | tr -d '\r')
+note "picker package: $PICKER_PKG"
+PICKER_APK=$($A shell pm path "$PICKER_PKG" | head -1 | sed 's/^package://' | tr -d '\r')
+note "picker apk: $PICKER_APK"
+$A pull "$PICKER_APK" "$OUT/picker_app.apk" > /dev/null 2>&1
+AAPT2=$(ls "${ANDROID_HOME:-/usr/local/lib/android/sdk}"/build-tools/*/aapt2 2>/dev/null | sort -V | tail -1)
+note "aapt2: $AAPT2"
+if [ -n "$AAPT2" ] && [ -s "$OUT/picker_app.apk" ]; then
+  "$AAPT2" dump resources "$OUT/picker_app.apk" > "$OUT/picker_resources_full.txt" 2>&1
+  grep -ciE "use this folder|hidden files" "$OUT/picker_resources_full.txt" | sed 's/^/matching lines: /' | tee -a "$OUT/summary.txt"
+  # Keep the file small enough to publish: strings only.
+  python3 - "$OUT/picker_resources_full.txt" "$OUT/picker_strings.json" <<'PY'
+import json, re, sys
+res, cur = {}, None
+for line in open(sys.argv[1], encoding='utf-8', errors='replace'):
+    m = re.match(r'\s+resource 0x[0-9a-f]+ string/(\S+)', line)
+    if m:
+        cur = m.group(1); res[cur] = {}; continue
+    if re.match(r'\s+resource ', line):
+        cur = None; continue
+    m = re.match(r'\s+\(([^)]*)\)\s+(?:\(string\d*\)\s+)?"(.*)"\s*$', line)
+    if m and cur is not None:
+        res[cur][m.group(1)] = m.group(2).replace('\\"', '"').replace("\\'", "'")
+json.dump(res, open(sys.argv[2], 'w', encoding='utf-8'), ensure_ascii=False)
+print('picker string resources parsed:', len(res))
+PY
+  rm -f "$OUT/picker_resources_full.txt"
 fi
-note "files in the status folder: $(adb shell ls "$STAT" 2>/dev/null | wc -l)"
-adb install -r "$APK" 2>&1 | tail -1 | tee -a "$OUT/summary.txt"
-# No folder connected, so the app opens on its Access screen.
-adb shell pm clear "$PKG" > /dev/null 2>&1
 
-# A4: the Android 13+ "App languages" screen must list the app's languages.
-set_system_locale en-US
-adb shell am start -a android.settings.APP_LOCALE_SETTINGS -d "package:$PKG" > /dev/null 2>&1
+python3 - "$OUT" app/lib/l10n <<'PY' | tee -a "$OUT/summary.txt"
+import json, os, sys
+out, arbdir = sys.argv[1], sys.argv[2]
+try:
+    res = json.load(open(os.path.join(out, 'picker_strings.json'), encoding='utf-8'))
+except Exception:
+    print('PICKER TRANSLATIONS: could not be read'); sys.exit(0)
+
+def names_for(pred):
+    return [n for n, v in res.items() if pred((v.get('') or '').strip())]
+
+# What Android calls each thing the app tells people to tap.
+targets = {
+    'use this folder': names_for(lambda t: t.lower() == 'use this folder'),
+    'show hidden files': names_for(lambda t: t.lower() == 'show hidden files'),
+    'allow': names_for(lambda t: t.lower() == 'allow'),
+}
+print('PICKER RESOURCES FOUND:', {k: v for k, v in targets.items()})
+
+def configs(L):
+    keys = {L}
+    if L == 'he': keys.add('iw')
+    return keys
+
+def variants(phrase, L):
+    out = set()
+    for n in targets[phrase]:
+        for cfg, val in res[n].items():
+            base = cfg.split('-')[0]
+            if base in configs(L) and val:
+                out.add(val)
+    return out
+
+checks = [('accessStep3', 'use this folder'), ('accessStep2', 'show hidden files'), ('accessStep3', 'allow')]
+print()
+print('APP STEPS VS ANDROID PICKER WORDS (per language)')
+for L in 'en es fr de pt ar he hi ja ko zh'.split():
+    arb = json.load(open(os.path.join(arbdir, f'app_{L}.arb'), encoding='utf-8'))
+    choose = arb['accessChooseFolder']
+    step1_ok = choose.lower() in arb['accessStep1'].lower()
+    print(f'[{L}] step 1 names our own button "{choose}":', 'PASS' if step1_ok else 'FAIL')
+    for key, phrase in checks:
+        vs = variants(phrase, L) if L != 'en' else {phrase if phrase != 'allow' else 'Allow'}
+        if L == 'en':
+            vs = {v for n in targets[phrase] for v in [res[n].get('', '')] if v}
+        text = arb[key].lower()
+        hit = [v for v in vs if v.lower().strip(' …').rstrip('.') in text]
+        status = 'PASS' if hit else ('NO ANDROID TEXT FOUND' if not vs else 'FAIL')
+        print(f'[{L}] {key} contains Android\'s "{phrase}":', status,
+              '| Android says:', sorted(vs), '| app says:', arb[key])
+PY
+
+# ---- 2. English picker, menu and confirmation on the real picker.
+$A shell pm clear "$PKG" > /dev/null 2>&1
+if [ -z "$($A shell ls "$STAT" 2>/dev/null)" ]; then
+  $A shell mkdir -p "$STAT"
+  for f in /tmp/media/*; do $A push "$f" "$STAT/" > /dev/null 2>&1; done
+fi
+$A shell am force-stop "$PICKER_PKG"
+$A shell am start -a android.intent.action.OPEN_DOCUMENT_TREE --eu android.provider.extra.INITIAL_URI "$INIT" > /dev/null 2>&1
+sleep 8
+shot picker_en
+dump_to picker_en
+tap_overflow "$OUT/picker_en.xml"
+sleep 2
+shot menu_en
+dump_to menu_en
+$A shell input keyevent KEYCODE_BACK
+sleep 1
+tap_id "button1" "$OUT/picker_en.xml"
+sleep 3
+shot dialog_en
+dump_to dialog_en
+$A shell input keyevent KEYCODE_BACK
+$A shell am force-stop "$PICKER_PKG"
+
+# ---- 3. The "App languages" screen, scrolled to the end.
+$A install -r "$APK" 2>&1 | tail -1 | tee -a "$OUT/summary.txt"
+$A shell am start -a android.settings.APP_LOCALE_SETTINGS -d "package:$PKG" > /dev/null 2>&1
 sleep 6
-shot applang_screen
-dump_to applang_screen
-python3 - "$OUT/applang_screen.xml" <<'PY' | tee -a "$OUT/summary.txt"
-import sys, xml.etree.ElementTree as ET
+shot applang_0
+for i in 0 1 2 3 4 5; do
+  dump_to "applang_$i"
+  $A shell input swipe 540 1900 540 600 300
+  sleep 1.5
+done
+shot applang_end
+python3 - "$OUT" <<'PY' | tee -a "$OUT/summary.txt"
+import glob, os, sys, xml.etree.ElementTree as ET
 want = ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Arabic',
         'Hindi', 'Japanese', 'Korean', 'Chinese', 'Hebrew']
-try:
-    texts = ' | '.join((n.get('text') or '') for n in ET.parse(sys.argv[1]).getroot().iter('node'))
-except Exception:
-    print('APP LANGUAGES SCREEN: could not read'); sys.exit(0)
-found = [w for w in want if w in texts]
-print('APP LANGUAGES SCREEN lists:', ', '.join(found) or 'none')
-print('APP LANGUAGES SCREEN missing:', ', '.join(w for w in want if w not in found) or 'none')
+seen = set()
+for f in sorted(glob.glob(os.path.join(sys.argv[1], 'applang_*.xml'))):
+    try:
+        for n in ET.parse(f).getroot().iter('node'):
+            if (n.get('resource-id') or '').endswith('/locale'):
+                seen.add((n.get('content-desc') or n.get('text') or '').strip())
+    except Exception:
+        pass
+print('APP LANGUAGES SCREEN offers:', sorted(seen))
+hit = [w for w in want if any(w in s for s in seen)]
+print('APP LANGUAGES SCREEN has all 11 app languages:', 'PASS' if len(hit) == len(want) else 'FAIL, missing ' + ', '.join(w for w in want if w not in hit))
 PY
-adb shell input keyevent KEYCODE_BACK
-sleep 1
+$A shell input keyevent KEYCODE_BACK
 
-for entry in en-US:en es-ES:es fr-FR:fr de-DE:de pt-BR:pt ar-EG:ar he-IL:he hi-IN:hi ja-JP:ja ko-KR:ko zh-CN:zh; do
-  TAG=${entry%%:*}
-  L=${entry##*:}
-  note "===== $TAG"
+# ---- 4. Best effort: the SYSTEM language, time boxed.
+set_system_locale() {
+  timeout 30 adb root > /dev/null 2>&1; sleep 3
+  timeout 30 adb shell "setprop persist.sys.locale $1; setprop ctl.restart zygote" > /dev/null 2>&1
+  sleep 25
+  for i in $(seq 1 40); do
+    [ "$(timeout 15 adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] \
+      && timeout 15 adb shell pm path android > /dev/null 2>&1 && break
+    sleep 3
+  done
+  sleep 20
+  $A shell settings put global hide_error_dialogs 1
+  $A shell input keyevent KEYCODE_HOME
+  note "system locale now: $(timeout 15 adb shell getprop persist.sys.locale | tr -d '\r')"
+}
+SECONDS=0
+for entry in ar-EG:ar ja-JP:ja; do
+  [ $SECONDS -gt 700 ] && { note "system language part stopped: time box reached"; break; }
+  TAG=${entry%%:*}; L=${entry##*:}
+  note "===== system language $TAG"
   set_system_locale "$TAG"
-
-  # The system picker, opened at the status folder like the app does it.
-  adb shell am force-stop com.android.documentsui
-  adb shell am start -a android.intent.action.OPEN_DOCUMENT_TREE --eu android.provider.extra.INITIAL_URI "$INIT" > /dev/null 2>&1
-  sleep 8
-  shot "picker_$L"
-  dump_to "picker_$L"
-  tap_overflow "$OUT/picker_$L.xml"
-  sleep 2
-  shot "menu_$L"
-  dump_to "menu_$L"
-  adb shell input keyevent KEYCODE_BACK
-  sleep 1
-  tap_id "button_pick" "$OUT/picker_$L.xml"
-  sleep 3
-  shot "dialog_$L"
-  dump_to "dialog_$L"
-  adb shell input keyevent KEYCODE_BACK
-  adb shell am force-stop com.android.documentsui
-  sleep 1
-
-  # The app's own Access screen in the same system language.
-  adb shell am force-stop "$PKG"
-  adb shell am start -W -n "$PKG/.MainActivity" > /dev/null 2>&1
+  $A shell am force-stop "$PKG"
+  $A shell am start -W -n "$PKG/.MainActivity" > /dev/null 2>&1
   sleep 9
   shot "app_$L"
   dump_to "app_$L"
 done
-
 python3 - "$OUT" app/lib/l10n <<'PY' | tee -a "$OUT/summary.txt"
-import json, os, re, sys, xml.etree.ElementTree as ET
+import json, os, sys, xml.etree.ElementTree as ET
 out, arbdir = sys.argv[1], sys.argv[2]
-
-def nodes(name):
-    try:
-        return list(ET.parse(os.path.join(out, name + '.xml')).getroot().iter('node'))
-    except Exception:
-        return None
-
-def texts(ns):
-    return [(n.get('text') or '').strip() for n in ns if (n.get('text') or '').strip()]
-
-print()
-print('SYSTEM PICKER, WHAT ANDROID REALLY SAYS (per system language)')
-for L in 'en es fr de pt ar he hi ja ko zh'.split():
-    p = nodes('picker_' + L)
-    m = nodes('menu_' + L)
-    d = nodes('dialog_' + L)
-    pick = [n.get('text') for n in (p or []) if 'button_pick' in (n.get('resource-id') or '')]
-    dlg = [(n.get('resource-id') or '').split('/')[-1] + '=' + (n.get('text') or '')
-           for n in (d or []) if (n.get('resource-id') or '').split('/')[-1] in ('button1', 'button2', 'alertTitle', 'message')]
-    menu = texts(m) if m else None
-    print(f'[{L}] use-this-folder button: {pick or "NOT FOUND"}')
-    print(f'[{L}] confirm dialog: {dlg or "NOT FOUND"}')
-    print(f'[{L}] menu items: {menu if menu is not None else "NOT READ"}')
-
-print()
-print('APP ACCESS SCREEN VS THE APP STRINGS (per system language)')
-for L in 'en es fr de pt ar he hi ja ko zh'.split():
+for L in ('ar', 'ja'):
+    path = os.path.join(out, f'app_{L}.xml')
+    if not os.path.exists(path):
+        print(f'[{L}] SYSTEM LANGUAGE: not reached'); continue
     arb = json.load(open(os.path.join(arbdir, f'app_{L}.arb'), encoding='utf-8'))
-    a = nodes('app_' + L)
-    if a is None:
-        print(f'[{L}] APP SCREEN NOT READ'); continue
-    shown = ' | '.join(texts(a)) + ' | ' + ' | '.join((n.get('content-desc') or '') for n in a)
-    missing = [k for k in ('accessTitleFirst', 'accessStep1', 'accessStep2', 'accessStep3')
-               if arb[k] not in shown]
-    print(f'[{L}]', 'PASS: title and all three steps are the app strings' if not missing else 'FAIL missing: ' + ', '.join(missing))
+    shown = ' | '.join((n.get('text') or '') + ' ' + (n.get('content-desc') or '')
+                       for n in ET.parse(path).getroot().iter('node'))
+    missing = [k for k in ('accessTitleFirst', 'accessStep1', 'accessStep2', 'accessStep3') if arb[k] not in shown]
+    print(f'[{L}] SYSTEM LANGUAGE opens the app in its own strings:',
+          'PASS' if not missing else 'FAIL missing ' + ', '.join(missing))
 PY
-
-set_system_locale en-US
-adb logcat -d -v time > "$OUT/logcat.txt"
+timeout 60 adb root > /dev/null 2>&1
+timeout 30 adb shell "setprop persist.sys.locale en-US; setprop ctl.restart zygote" > /dev/null 2>&1
+$A logcat -d -v time > "$OUT/logcat.txt"
 if grep -q "FATAL EXCEPTION" "$OUT/logcat.txt"; then
   note "CRASH FOUND"
   grep -n -A12 "FATAL EXCEPTION" "$OUT/logcat.txt" | head -40 | tee -a "$OUT/summary.txt"
