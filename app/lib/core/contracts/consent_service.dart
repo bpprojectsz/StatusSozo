@@ -6,6 +6,7 @@ class ConsentOutcome {
   const ConsentOutcome({
     required this.canRequestAds,
     required this.privacyOptionsRequired,
+    this.needsRetry = false,
   });
 
   /// Ads may be requested.
@@ -14,14 +15,21 @@ class ConsentOutcome {
   /// The person must be able to reopen their privacy choices (EEA and UK).
   final bool privacyOptionsRequired;
 
+  /// The consent step itself failed (no connection, form error, the SDK could
+  /// not be read). Ads are still requested, and the step is run once more the
+  /// next time the app comes to the foreground.
+  final bool needsRetry;
+
   @override
   bool operator ==(Object other) =>
       other is ConsentOutcome &&
       other.canRequestAds == canRequestAds &&
-      other.privacyOptionsRequired == privacyOptionsRequired;
+      other.privacyOptionsRequired == privacyOptionsRequired &&
+      other.needsRetry == needsRetry;
 
   @override
-  int get hashCode => Object.hash(canRequestAds, privacyOptionsRequired);
+  int get hashCode =>
+      Object.hash(canRequestAds, privacyOptionsRequired, needsRetry);
 }
 
 /// Port for the consent step. **No method may throw.** Any failure falls back

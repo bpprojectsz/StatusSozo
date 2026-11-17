@@ -64,6 +64,13 @@ class AdProvider extends ValueNotifier<AdProviderState> {
 
   bool _starting = false;
   bool _showing = false;
+
+  /// The last consent step failed and has not been retried yet.
+  bool _retryPending = false;
+
+  /// The one retry of this launch has been used; a second failure does not
+  /// schedule another, so a broken consent step can never loop.
+  bool _retryUsed = false;
   DateTime? _lastInterstitialAt;
 
   /// An interstitial is on screen right now.
@@ -111,6 +118,9 @@ class AdProvider extends ValueNotifier<AdProviderState> {
   }
 
   Future<void> _apply(ConsentOutcome outcome) async {
+    if (outcome.needsRetry && !_retryUsed) {
+      _retryPending = true;
+    }
     if (!outcome.canRequestAds) {
       value = AdProviderState(
         phase: AdsPhase.disabled,
@@ -136,6 +146,19 @@ class AdProvider extends ValueNotifier<AdProviderState> {
   /// The app came back to the foreground: top up the interstitial, or look at
   /// consent again if ads were off.
   Future<void> onResumed() async {
+    if (_retryPending && !_starting) {
+      // The consent step failed earlier: run it once more, once. Ads keep
+      // running meanwhile.
+      _retryPending = false;
+      _retryUsed = true;
+      _starting = true;
+      try {
+        await _apply(await _consent.gather());
+      } finally {
+        _starting = false;
+      }
+      return;
+    }
     if (value.phase == AdsPhase.ready) {
       unawaited(_ads.loadInterstitial());
     } else if (value.phase == AdsPhase.disabled) {

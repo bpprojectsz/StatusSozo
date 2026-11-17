@@ -106,6 +106,78 @@ void main() {
     });
   });
 
+  group('a failed consent step is retried once', () {
+    const ConsentOutcome failed = ConsentOutcome(
+      canRequestAds: true,
+      privacyOptionsRequired: false,
+      needsRetry: true,
+    );
+    const ConsentOutcome fine = ConsentOutcome(
+      canRequestAds: true,
+      privacyOptionsRequired: false,
+    );
+
+    test('ads still start while the step is failing', () async {
+      consent.queue.add(failed);
+      await provider.start();
+      expect(provider.enabled, isTrue);
+      expect(consent.gatherCalls, 1);
+    });
+
+    test('the next foreground runs the step once more', () async {
+      consent.queue.add(failed);
+      await provider.start();
+      await provider.onResumed();
+      expect(consent.gatherCalls, 2);
+      expect(provider.enabled, isTrue);
+    });
+
+    test('it does not loop: later foregrounds do not run it again', () async {
+      consent.queue
+        ..add(failed)
+        ..add(failed);
+      await provider.start();
+      await provider.onResumed();
+      await provider.onResumed();
+      await provider.onResumed();
+      expect(consent.gatherCalls, 2);
+    });
+
+    test('the retry result is applied', () async {
+      consent.queue
+        ..add(failed)
+        ..add(
+          const ConsentOutcome(
+            canRequestAds: false,
+            privacyOptionsRequired: true,
+          ),
+        );
+      await provider.start();
+      expect(provider.enabled, isTrue);
+      await provider.onResumed();
+      expect(provider.enabled, isFalse);
+      expect(provider.value.privacyOptionsRequired, isTrue);
+    });
+
+    test('a step that did not fail is never retried', () async {
+      consent.queue.add(fine);
+      await provider.start();
+      await provider.onResumed();
+      await provider.onResumed();
+      expect(consent.gatherCalls, 1);
+    });
+
+    test('a launch that failed once has one retry, not one per failure', () async {
+      consent.queue
+        ..add(failed)
+        ..add(fine);
+      await provider.start();
+      await provider.onResumed();
+      await provider.onResumed();
+      expect(consent.gatherCalls, 2);
+    });
+  });
+
   group('privacy options', () {
     test('reopens the form and applies the new outcome', () async {
       consent.outcome = const ConsentOutcome(

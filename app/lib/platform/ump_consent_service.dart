@@ -79,22 +79,16 @@ class UmpConsentService implements ConsentService {
     return _current();
   }
 
-  Future<ConsentOutcome> _current({bool errored = false}) async {
-    bool canRequest = false;
-    bool optionsRequired = false;
-    try {
-      canRequest = await ConsentInformation.instance.canRequestAds();
-      optionsRequired =
+  Future<ConsentOutcome> _current({bool errored = false}) {
+    return readConsentState(
+      errored: errored,
+      canRequestAds: () => ConsentInformation.instance.canRequestAds(),
+      privacyOptionsRequired: () async =>
           await ConsentInformation.instance
               .getPrivacyOptionsRequirementStatus() ==
-          PrivacyOptionsRequirementStatus.required;
-    } on Object catch (error) {
-      AppLog.warn('consent', 'Could not read the consent state', error);
-    }
-    return consentOutcome(
-      errored: errored,
-      canRequestAds: canRequest,
-      privacyOptionsRequired: optionsRequired,
+          PrivacyOptionsRequirementStatus.required,
+      onError: (String what, Object error) =>
+          AppLog.warn('consent', what, error),
     );
   }
 }

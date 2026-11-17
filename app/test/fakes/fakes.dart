@@ -586,10 +586,13 @@ class FakeConsentService implements ConsentService {
   int gatherCalls = 0;
   int privacyCalls = 0;
 
+  /// Outcomes handed out one per gather() call before [outcome] is used.
+  final List<ConsentOutcome> queue = <ConsentOutcome>[];
+
   @override
   Future<ConsentOutcome> gather() async {
     gatherCalls++;
-    return outcome;
+    return queue.isNotEmpty ? queue.removeAt(0) : outcome;
   }
 
   @override
