@@ -4,7 +4,7 @@ Read this first, then `docs/decisions.md`, then `docs/blueprint.md`. **Update th
 
 ## 1. State in one paragraph
 
-Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **926 tests**. Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **No batch of the approved language, consent, review and storage plan has been started.** No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
+Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **1113 tests** (at 359fb38). Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **Done: A5, A1, A2, A3, A4 (commits fa51f70 and 359fb38). Not started: A6, A7, A8, B, C, D.** A4's emulator proof on API 33 and 34 is still to do (it needs the emulator job extended, together with A6). No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
 
 ## 2. Access and identities (no secrets in this file, the repository is public)
 
@@ -59,7 +59,7 @@ Known traps: a job-level `if` cannot read `matrix` (build the matrix from the in
 
 ## 5. What exists (full detail in `docs/blueprint.md`)
 
-Screens: Access, Home, Viewer, Saved, Settings, Debug logs, Licenses, License detail, Crash fallback (9; banners on 4). Providers: settings, theme, source, locale, folder access, status list, saved library, selection x2, save, toast, ad, review. Native: Kotlin channel `statussozo/saf` (11 methods). Languages: 11. Tests: 926 across 52 files. Workflows: `verify`, `build_android`, `emulator`, plus the finished one-offs `bootstrap`, `brand`. Pinned: Flutter 3.29.2, Kotlin 2.2.0, AGP 8.9.1, Gradle 8.11.1, NDK 27.0.12077973. `google_mobile_ads` 6.0.0, `hugeicons` 4.4.0, `share_plus` 12.0.2, `package_info_plus` 9.0.1, `in_app_review` 2.0.12.
+Screens: Access, Home, Viewer, Saved, Settings, Debug logs, Licenses, License detail, Crash fallback (9; banners on 4). Providers: settings, theme, source, locale, folder access, status list, saved library, selection x2, save, toast, ad, review. Native: Kotlin channel `statussozo/saf` (11 methods). Languages: 11. Tests: 1113 across 56 files. Workflows: `verify`, `build_android`, `emulator`, plus the finished one-offs `bootstrap`, `brand`. Pinned: Flutter 3.29.2, Kotlin 2.2.0, AGP 8.9.1, Gradle 8.11.1, NDK 27.0.12077973. `google_mobile_ads` 6.0.0, `hugeicons` 4.4.0, `share_plus` 12.0.2, `package_info_plus` 9.0.1, `in_app_review` 2.0.12.
 
 Last shipped test APK: **test-5** (Releases page), built before b15. Everything since is untested on the phone: icon, splash, wordmark, source selector, refresh, Terms and licenses, Debug logs, languages, ads, review row, new packages.
 
@@ -71,14 +71,16 @@ Suggested batch names continue the sequence: b21, b22, and so on. Report after e
 
 | ID | Work | Detail and acceptance |
 |---|---|---|
-| A5 | CI string check | Move the apostrophe-next-to-brace check (`'{` or `}'`) into `test/l10n/arb_parity_test.dart` so CI enforces it |
-| A1 | System language on first install | Tests that set the phone's language list (`tester.platformDispatcher.localesTestValue`) with `languageCode` null: each of the 11; variants pt-BR, es-MX, zh-TW, en-GB, he-IL; an unsupported language; a list whose first entry is unsupported and second supported. Assert and document what Flutter's default resolution does. If the second preference is ignored, add a `localeListResolutionCallback` so the first supported language in the list wins, and test it |
-| A2 | Manual choice survives restart | Start-up test: choose a language, build a new `AppServices` from the same stored settings, assert the language and direction. Also "System default" after restart |
-| A3 | Everything in every language | Extend `test/screens/languages_test.dart` to Viewer (both modes), Licenses, License detail, all 6 sheets, every `ToastCode`, every error kind, at 1x and 2x text: no overflow, locale applied |
-| A4 | Android 13+ App language screen | Add `res/xml/locales_config.xml` listing en, es, fr, de, pt, ar, hi, ja, ko, zh, he, and `android:localeConfig="@xml/locales_config"` in the manifest. Rule: the in-app choice wins; "System default" follows the system or per-app setting. Prove on the emulator (API 33 and 34) |
+| A5 (DONE) | CI string check | Move the apostrophe-next-to-brace check (`'{` or `}'`) into `test/l10n/arb_parity_test.dart` so CI enforces it |
+| A1 (DONE) | System language on first install | Tests that set the phone's language list (`tester.platformDispatcher.localesTestValue`) with `languageCode` null: each of the 11; variants pt-BR, es-MX, zh-TW, en-GB, he-IL; an unsupported language; a list whose first entry is unsupported and second supported. Assert and document what Flutter's default resolution does. If the second preference is ignored, add a `localeListResolutionCallback` so the first supported language in the list wins, and test it |
+| A2 (DONE) | Manual choice survives restart | Start-up test: choose a language, build a new `AppServices` from the same stored settings, assert the language and direction. Also "System default" after restart |
+| A3 (DONE) | Everything in every language | Extend `test/screens/languages_test.dart` to Viewer (both modes), Licenses, License detail, all 6 sheets, every `ToastCode`, every error kind, at 1x and 2x text: no overflow, locale applied |
+| A4 (DONE) | Android 13+ App language screen | (Files and manifest done; emulator proof still open.) Add `res/xml/locales_config.xml` listing en, es, fr, de, pt, ar, hi, ja, ko, zh, he, and `android:localeConfig="@xml/locales_config"` in the manifest. Rule: the in-app choice wins; "System default" follows the system or per-app setting. Prove on the emulator (API 33 and 34) |
 | A6 | Picker wording | Extend the emulator job to switch the **system** language and screenshot Android's own folder picker in each language. Compare "Use this folder", "Allow", "Show hidden files" with `accessStep2` and `accessStep3` in every language and fix mismatches (biggest comprehension risk) |
 | A7 | Back-translation audit | Per language, one at a time, by you, no agents: a table of key, English, translation, back-translation, verdict for **all 156 strings**, key name and English beside every row. Output a short flagged list with corrections, apply, re-check, next language. Store reports as `docs/i18n-audit/<code>.md` and a final `SUMMARY.md` listing every change. The audit shares the author's blind spots: say so, and keep recommending a native review |
 | A8 | Comprehension pass | Same reading, rating each **instruction** string (Access steps, errors, empty states, toasts): does a first-time user know what to do? Propose and apply rewrites |
+
+A1 outcome: a deterministic resolver `AppLanguages.resolve` (first supported language in the phone's list, else English; regions ignored) is wired through `localeListResolutionCallback`. It only runs while no language is chosen in the app. zh-TW opens Simplified Chinese (the only Chinese shipped).
 
 Order approved: A5, A1, A2, A3, A4, report; then A6; then A7 and A8 language by language.
 
