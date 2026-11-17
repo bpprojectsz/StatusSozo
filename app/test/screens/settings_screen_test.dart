@@ -384,8 +384,6 @@ void main() {
     ) async {
       rig.share.cacheBytes = 0;
       await pumpSettings(tester);
-      await tester.tap(find.text('Open'));
-      await tester.pumpAndSettle();
       expect(find.text('Temporary files'), findsOneWidget);
       expect(find.text('None'), findsOneWidget);
       expect(find.text('Clear'), findsNothing);
@@ -396,8 +394,6 @@ void main() {
     ) async {
       rig.share.cacheBytes = 3 * 1024 * 1024;
       await pumpSettings(tester);
-      await tester.tap(find.text('Open'));
-      await tester.pumpAndSettle();
       expect(find.text('3 MB'), findsOneWidget);
       expect(find.text('Clear'), findsOneWidget);
     });
@@ -407,8 +403,6 @@ void main() {
     ) async {
       rig.share.cacheBytes = 5 * 1024 * 1024;
       await pumpSettings(tester);
-      await tester.tap(find.text('Open'));
-      await tester.pumpAndSettle();
       await tester.tap(find.text('Clear'));
       await tester.pump();
       await tester.pump();
