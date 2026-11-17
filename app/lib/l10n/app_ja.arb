@@ -23,7 +23,7 @@
   "accessTitleReconnect": "フォルダをもう一度選択",
   "accessBody": "{appName} がステータスを表示できるように、ステータスフォルダを選択してください。",
   "accessStep1": "［フォルダを選択］をタップします。",
-  "accessStep2": "ピッカーに表示されない場合は、メニューを開いて［隠しファイルを表示］をオンにします。",
+  "accessStep2": "ピッカーに表示されない場合は、メニューを開いて［非表示のファイルを表示］をオンにします。",
   "accessStep3": "［このフォルダを使用］をタップし、［許可］をタップします。",
   "accessChooseFolder": "フォルダを選択",
   "accessUseOther": "代わりに {source} を使用",

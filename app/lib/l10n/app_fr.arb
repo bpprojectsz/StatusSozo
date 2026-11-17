@@ -23,7 +23,7 @@
   "accessTitleReconnect": "Choisissez à nouveau le dossier",
   "accessBody": "Choisissez votre dossier de statuts pour que {appName} puisse les afficher.",
   "accessStep1": "Touchez Choisir un dossier.",
-  "accessStep2": "Si le sélecteur ne l'affiche pas, ouvrez le menu et activez Afficher les fichiers cachés.",
+  "accessStep2": "Si le sélecteur ne l'affiche pas, ouvrez le menu et activez Afficher les fichiers masqués.",
   "accessStep3": "Touchez Utiliser ce dossier, puis Autoriser.",
   "accessChooseFolder": "Choisir un dossier",
   "accessUseOther": "Utiliser {source} à la place",

@@ -6,8 +6,6 @@
 #  2. Records the picker, its menu and its confirmation in English.
 #  3. Scrolls the system "App languages" screen for the app and lists every
 #     language it offers (A4).
-#  4. Best effort, time boxed: switches the SYSTEM language to Arabic and
-#     Japanese and checks the app's Access screen shows the app's own strings.
 # Run by the emulator workflow. Needs adb, python3 and the SDK's aapt2.
 set +e
 PKG=com.zdmgold.statussozo
@@ -209,49 +207,9 @@ print('APP LANGUAGES SCREEN has all 11 app languages:', 'PASS' if len(hit) == le
 PY
 $A shell input keyevent KEYCODE_BACK
 
-# ---- 4. Best effort: the SYSTEM language, time boxed.
-set_system_locale() {
-  timeout 30 adb root > /dev/null 2>&1; sleep 3
-  timeout 30 adb shell "setprop persist.sys.locale $1; setprop ctl.restart zygote" > /dev/null 2>&1
-  sleep 25
-  for i in $(seq 1 40); do
-    [ "$(timeout 15 adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] \
-      && timeout 15 adb shell pm path android > /dev/null 2>&1 && break
-    sleep 3
-  done
-  sleep 20
-  $A shell settings put global hide_error_dialogs 1
-  $A shell input keyevent KEYCODE_HOME
-  note "system locale now: $(timeout 15 adb shell getprop persist.sys.locale | tr -d '\r')"
-}
-SECONDS=0
-for entry in ar-EG:ar ja-JP:ja; do
-  [ $SECONDS -gt 700 ] && { note "system language part stopped: time box reached"; break; }
-  TAG=${entry%%:*}; L=${entry##*:}
-  note "===== system language $TAG"
-  set_system_locale "$TAG"
-  $A shell am force-stop "$PKG"
-  $A shell am start -W -n "$PKG/.MainActivity" > /dev/null 2>&1
-  sleep 9
-  shot "app_$L"
-  dump_to "app_$L"
-done
-python3 - "$OUT" app/lib/l10n <<'PY' | tee -a "$OUT/summary.txt"
-import json, os, sys, xml.etree.ElementTree as ET
-out, arbdir = sys.argv[1], sys.argv[2]
-for L in ('ar', 'ja'):
-    path = os.path.join(out, f'app_{L}.xml')
-    if not os.path.exists(path):
-        print(f'[{L}] SYSTEM LANGUAGE: not reached'); continue
-    arb = json.load(open(os.path.join(arbdir, f'app_{L}.arb'), encoding='utf-8'))
-    shown = ' | '.join((n.get('text') or '') + ' ' + (n.get('content-desc') or '')
-                       for n in ET.parse(path).getroot().iter('node'))
-    missing = [k for k in ('accessTitleFirst', 'accessStep1', 'accessStep2', 'accessStep3') if arb[k] not in shown]
-    print(f'[{L}] SYSTEM LANGUAGE opens the app in its own strings:',
-          'PASS' if not missing else 'FAIL missing ' + ', '.join(missing))
-PY
-timeout 60 adb root > /dev/null 2>&1
-timeout 30 adb shell "setprop persist.sys.locale en-US; setprop ctl.restart zygote" > /dev/null 2>&1
+# The system-language switch (adb root plus a zygote restart) drops the adb
+# connection on these images, so it is not attempted. System-language
+# resolution is covered by the widget tests (language_system_test.dart).
 $A logcat -d -v time > "$OUT/logcat.txt"
 if grep -q "FATAL EXCEPTION" "$OUT/logcat.txt"; then
   note "CRASH FOUND"

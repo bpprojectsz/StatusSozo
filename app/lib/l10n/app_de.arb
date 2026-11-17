@@ -23,7 +23,7 @@
   "accessTitleReconnect": "Ordner erneut auswählen",
   "accessBody": "Wähle deinen Status-Ordner aus, damit {appName} deine Status anzeigen kann.",
   "accessStep1": "Tippe auf Ordner auswählen.",
-  "accessStep2": "Wird er in der Auswahl nicht angezeigt, öffne das Menü und aktiviere Versteckte Dateien anzeigen.",
+  "accessStep2": "Wird er in der Auswahl nicht angezeigt, öffne das Menü und aktiviere Ausgeblendete Dateien anzeigen.",
   "accessStep3": "Tippe auf Diesen Ordner verwenden und dann auf Zulassen.",
   "accessChooseFolder": "Ordner auswählen",
   "accessUseOther": "Stattdessen {source} verwenden",

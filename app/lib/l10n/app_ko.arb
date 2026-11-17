@@ -23,7 +23,7 @@
   "accessTitleReconnect": "폴더를 다시 선택하세요",
   "accessBody": "{appName}에서 상태를 표시할 수 있도록 상태 폴더를 선택하세요.",
   "accessStep1": "폴더 선택을 탭하세요.",
-  "accessStep2": "선택기에 표시되지 않으면 메뉴를 열고 숨김 파일 표시를 켜세요.",
+  "accessStep2": "선택기에 표시되지 않으면 메뉴를 열고 숨겨진 파일 표시를 켜세요.",
   "accessStep3": "이 폴더 사용을 탭한 다음 허용을 탭하세요.",
   "accessChooseFolder": "폴더 선택",
   "accessUseOther": "대신 {source} 사용",
