@@ -298,7 +298,8 @@ void main() {
       expect(d.reviewSaves, 0);
       expect(d.reviewDays, 0);
       expect(d.reviewLastDay, isNull);
-      expect(d.reviewAsked, isFalse);
+      expect(d.reviewAskCount, 0);
+      expect(d.reviewLastAskedMs, isNull);
     });
 
     test('round trip through JSON', () {
@@ -306,28 +307,40 @@ void main() {
         reviewSaves: 12,
         reviewDays: 3,
         reviewLastDay: '2026-11-03',
-        reviewAsked: true,
+        reviewAskCount: 2,
+        reviewLastAskedMs: 1762171200000,
       );
       final AppSettings back = AppSettings.fromJson(s.toJson());
       expect(back, s);
       expect(back.reviewSaves, 12);
-      expect(back.reviewAsked, isTrue);
+      expect(back.reviewAskCount, 2);
+      expect(back.reviewLastAskedMs, 1762171200000);
     });
 
     test('settings saved before these fields existed still load', () {
       final AppSettings s = AppSettings.fromJson(<String, Object?>{
         'schemaVersion': 1,
       });
-      expect(s.reviewAsked, isFalse);
+      expect(s.reviewAskCount, 0);
+    });
+
+    test('an old yes-or-no "asked" becomes one request with an unknown date', () {
+      final AppSettings s = AppSettings.fromJson(<String, Object?>{
+        'schemaVersion': 1,
+        'reviewAsked': true,
+      });
+      expect(s.reviewAskCount, 1);
+      expect(s.reviewLastAskedMs, isNull);
     });
 
     test('garbage values fall back to the defaults', () {
       final AppSettings s = AppSettings.fromJson(<String, Object?>{
         'schemaVersion': 1,
         'reviewAsked': 5,
+        'reviewAskCount': 'twice',
         'reviewSaves': 'many',
       });
-      expect(s.reviewAsked, isFalse);
+      expect(s.reviewAskCount, 0);
       expect(s.reviewSaves, 0);
     });
   });

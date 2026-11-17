@@ -364,16 +364,17 @@ void main() {
       expect(find.text('Off'), findsNothing);
     });
 
-    testScreen('tapping opens the store listing and counts as reviewed', (
+    testScreen('tapping opens the store listing and leaves the prompt alone', (
       WidgetTester tester,
     ) async {
       await pumpSettings(tester);
-      expect(rig.services.settings.settings.reviewAsked, isFalse);
+      expect(rig.services.settings.settings.reviewAskCount, 0);
       await tester.tap(find.text('Review this app now'));
       await tester.pump();
       await tester.pump();
       expect(rig.links.storeListingOpened, 1);
-      expect(rig.services.settings.settings.reviewAsked, isTrue);
+      expect(rig.services.settings.settings.reviewAskCount, 0);
+      expect(rig.services.settings.settings.reviewLastAskedMs, isNull);
     });
   });
 }

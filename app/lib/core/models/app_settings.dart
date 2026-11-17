@@ -19,7 +19,8 @@ class AppSettings {
     this.reviewSaves = 0,
     this.reviewDays = 0,
     this.reviewLastDay,
-    this.reviewAsked = false,
+    this.reviewAskCount = 0,
+    this.reviewLastAskedMs,
   }) : grants = Map<StatusSource, FolderGrant>.unmodifiable(grants);
 
   /// Tolerant decoding: unknown enum values fall back to defaults and bad
@@ -74,9 +75,11 @@ class AppSettings {
       reviewSaves: tryReadInt(json, 'reviewSaves') ?? 0,
       reviewDays: tryReadInt(json, 'reviewDays') ?? 0,
       reviewLastDay: tryReadString(json, 'reviewLastDay'),
-      reviewAsked: json['reviewAsked'] is bool
-          ? json['reviewAsked']! as bool
-          : false,
+      // Settings from before the cooldowns kept a single yes or no.
+      reviewAskCount:
+          tryReadInt(json, 'reviewAskCount') ??
+          (json['reviewAsked'] == true ? 1 : 0),
+      reviewLastAskedMs: tryReadInt(json, 'reviewLastAskedMs'),
     );
   }
 
@@ -110,8 +113,12 @@ class AppSettings {
   /// The last day (yyyy-MM-dd) a save was counted.
   final String? reviewLastDay;
 
-  /// The review prompt was already requested once.
-  final bool reviewAsked;
+  /// How many times the review prompt has been requested.
+  final int reviewAskCount;
+
+  /// When it was last requested (epoch milliseconds), or null if never or not
+  /// known.
+  final int? reviewLastAskedMs;
 
   /// Copies with changes. Pass [clearLanguage] to reset [languageCode] to null.
   AppSettings copyWith({
@@ -124,7 +131,8 @@ class AppSettings {
     int? reviewSaves,
     int? reviewDays,
     String? reviewLastDay,
-    bool? reviewAsked,
+    int? reviewAskCount,
+    int? reviewLastAskedMs,
   }) {
     return AppSettings(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -135,7 +143,8 @@ class AppSettings {
       reviewSaves: reviewSaves ?? this.reviewSaves,
       reviewDays: reviewDays ?? this.reviewDays,
       reviewLastDay: reviewLastDay ?? this.reviewLastDay,
-      reviewAsked: reviewAsked ?? this.reviewAsked,
+      reviewAskCount: reviewAskCount ?? this.reviewAskCount,
+      reviewLastAskedMs: reviewLastAskedMs ?? this.reviewLastAskedMs,
     );
   }
 
@@ -151,7 +160,8 @@ class AppSettings {
     'reviewSaves': reviewSaves,
     'reviewDays': reviewDays,
     'reviewLastDay': reviewLastDay,
-    'reviewAsked': reviewAsked,
+    'reviewAskCount': reviewAskCount,
+    'reviewLastAskedMs': reviewLastAskedMs,
   };
 
   @override
@@ -164,7 +174,8 @@ class AppSettings {
       other.reviewSaves == reviewSaves &&
       other.reviewDays == reviewDays &&
       other.reviewLastDay == reviewLastDay &&
-      other.reviewAsked == reviewAsked &&
+      other.reviewAskCount == reviewAskCount &&
+      other.reviewLastAskedMs == reviewLastAskedMs &&
       mapEquals(other.grants, grants);
 
   @override
@@ -176,7 +187,8 @@ class AppSettings {
     reviewSaves,
     reviewDays,
     reviewLastDay,
-    reviewAsked,
+    reviewAskCount,
+    reviewLastAskedMs,
     Object.hashAllUnordered(
       grants.entries.map(
         (MapEntry<StatusSource, FolderGrant> e) => Object.hash(e.key, e.value),

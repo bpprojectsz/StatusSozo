@@ -41,14 +41,9 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  /// Opens the store's review page. A person who went there has reviewed, so
-  /// the automatic prompt is never requested afterwards.
+  /// Opens the store's review page. It does not touch the automatic prompt.
   Future<void> _reviewNow(BuildContext context) async {
     final services = AppScope.of(context);
-    await services.review.markAsked();
-    if (!context.mounted) {
-      return;
-    }
     await _open(context, services.links.openStoreListing);
   }
 

@@ -57,11 +57,18 @@ abstract final class AppConfig {
   static const int viewerClosesPerInterstitial = 5;
   static const int batchSaveMinItems = 2;
 
-  // Review prompt: once, after this many saved items on this many different
-  // days, and never within this long of an interstitial.
+  // Review prompt: the first request comes after this many saved items on this
+  // many different days. After that only the wait counts: 30 days after the
+  // first request, 90 after the second, 180 after every later one. Never within
+  // 10 minutes of an interstitial. The system decides whether it shows.
   static const int reviewMinSaves = 10;
   static const int reviewMinDays = 3;
-  static const Duration reviewQuietAfterInterstitial = Duration(minutes: 2);
+  static const List<Duration> reviewCooldowns = <Duration>[
+    Duration(days: 30),
+    Duration(days: 90),
+    Duration(days: 180),
+  ];
+  static const Duration reviewQuietAfterInterstitial = Duration(minutes: 10);
 
   /// How often Home silently re-reads the status folder while it is showing.
   static const Duration autoRefreshInterval = Duration(seconds: 4);
