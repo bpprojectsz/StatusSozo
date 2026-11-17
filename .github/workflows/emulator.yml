@@ -12,6 +12,11 @@ on:
         type: choice
         options: [all, "33", "34"]
         default: all
+      suite:
+        description: "What to run: smoke, picker (system folder picker in 11 system languages and the App languages screen), or both"
+        type: choice
+        options: [both, smoke, picker]
+        default: both
 
 permissions:
   contents: write
@@ -72,6 +77,8 @@ jobs:
           ls /tmp/media | wc -l
 
       - name: Run on the emulator
+        env:
+          SUITE: ${{ inputs.suite }}
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api }}
@@ -80,7 +87,7 @@ jobs:
           profile: pixel_5
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: bash app/tool/emulator_smoke.sh
+          script: bash app/tool/emulator_all.sh
 
       - name: Publish results
         if: always()
