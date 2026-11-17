@@ -119,7 +119,7 @@ void main() {
         expectLocale(tester, language, find.byType(LicensesScreen));
         await pumpApp(
           tester,
-          LicenseDetailScreen(
+          const LicenseDetailScreen(
             PackageLicense(
               name: 'example_package',
               paragraphs: <LicenseParagraph>[
