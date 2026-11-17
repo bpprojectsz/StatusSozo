@@ -4,7 +4,7 @@ Read this first, then `docs/decisions.md`, then `docs/blueprint.md`. **Update th
 
 ## 1. State in one paragraph
 
-Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **1113 tests** (at 359fb38). Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **Done: A5, A1, A2, A3, A4 (commits fa51f70 and 359fb38). Not started: A6, A7, A8, B, C, D.** A4's emulator proof on API 33 and 34 is still to do (it needs the emulator job extended, together with A6). No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
+Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **1113 tests** (at 359fb38). Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **Done: A1 to A6 (fa51f70, 359fb38, e62db36). Not started: A7, A8, B, C, D.** A4 and A6 are proven on emulators (API 33 and 34, Google DocumentsUI): the App languages screen lists all 11 languages, and every Access-screen step matches Android's own picker wording in all 11 languages. Not proven on a device: system-language resolution (adb system-locale switching drops the connection; it is covered by widget tests only), and other makers' pickers (Samsung, Xiaomi and others word things differently). No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
 
 ## 2. Access and identities (no secrets in this file, the repository is public)
 
@@ -76,7 +76,7 @@ Suggested batch names continue the sequence: b21, b22, and so on. Report after e
 | A2 (DONE) | Manual choice survives restart | Start-up test: choose a language, build a new `AppServices` from the same stored settings, assert the language and direction. Also "System default" after restart |
 | A3 (DONE) | Everything in every language | Extend `test/screens/languages_test.dart` to Viewer (both modes), Licenses, License detail, all 6 sheets, every `ToastCode`, every error kind, at 1x and 2x text: no overflow, locale applied |
 | A4 (DONE) | Android 13+ App language screen | (Files and manifest done; emulator proof still open.) Add `res/xml/locales_config.xml` listing en, es, fr, de, pt, ar, hi, ja, ko, zh, he, and `android:localeConfig="@xml/locales_config"` in the manifest. Rule: the in-app choice wins; "System default" follows the system or per-app setting. Prove on the emulator (API 33 and 34) |
-| A6 | Picker wording | Extend the emulator job to switch the **system** language and screenshot Android's own folder picker in each language. Compare "Use this folder", "Allow", "Show hidden files" with `accessStep2` and `accessStep3` in every language and fix mismatches (biggest comprehension risk) |
+| A6 (DONE) | Picker wording | Extend the emulator job to switch the **system** language and screenshot Android's own folder picker in each language. Compare "Use this folder", "Allow", "Show hidden files" with `accessStep2` and `accessStep3` in every language and fix mismatches (biggest comprehension risk) |
 | A7 | Back-translation audit | Per language, one at a time, by you, no agents: a table of key, English, translation, back-translation, verdict for **all 156 strings**, key name and English beside every row. Output a short flagged list with corrections, apply, re-check, next language. Store reports as `docs/i18n-audit/<code>.md` and a final `SUMMARY.md` listing every change. The audit shares the author's blind spots: say so, and keep recommending a native review |
 | A8 | Comprehension pass | Same reading, rating each **instruction** string (Access steps, errors, empty states, toasts): does a first-time user know what to do? Propose and apply rewrites |
 
@@ -135,3 +135,9 @@ Play account type and creation date; AdMob publisher ID; his "build" go-ahead; r
 | Play badge on the website is a crop from a screenshot (about 240 px wide) | Replace with Google's official file when available |
 | `docs/blueprint.md` file inventory (section 10) is generated | Regenerate when many files change |
 | The original four-part specification is not in the repository | Ask the owner to add it as `docs/spec/` if it is not in the project instructions |
+
+
+## Decisions added after the plan (from the owner)
+- C2 cooldowns: 30 days after the first ask, 90 after the second, 180 after every later one. A new ask needs only the wait to pass.
+- C3: exactly 10 minutes after an interstitial.
+- D2: the 500-line email was rejected as far too long; the owner has not yet given the new number.
