@@ -24,6 +24,7 @@ void main() {
       AppLog.info('t', 'line $i');
     }
     final List<String> lines = AppLog.report().split('\n');
+    expect(AppLog.capacity, 50);
     expect(lines, hasLength(AppLog.capacity));
     expect(lines.first, contains('line 30'));
     expect(lines.last, contains('line 79'));

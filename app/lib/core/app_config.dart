@@ -29,6 +29,9 @@ abstract final class AppConfig {
   static const int thumbnailConcurrency = 3;
   static const int thumbnailCacheEntries = 200;
   static const int imageMaxBytes = 25 * 1024 * 1024;
+
+  /// Flutter's decoded-image cache is capped at 50 MB (its default is 100 MB).
+  static const int imageCacheBytes = 50 * 1024 * 1024;
   static const Duration shareCacheTtl = Duration(hours: 24);
   static const Duration toastDuration = Duration(seconds: 3);
 

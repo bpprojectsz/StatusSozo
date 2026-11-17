@@ -42,7 +42,7 @@ class ReviewProvider {
     if (asks <= 0) {
       return Duration.zero;
     }
-    final List<Duration> steps = AppConfig.reviewCooldowns;
+    const List<Duration> steps = AppConfig.reviewCooldowns;
     return steps[(asks - 1).clamp(0, steps.length - 1)];
   }
 
