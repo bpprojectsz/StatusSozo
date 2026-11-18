@@ -8,7 +8,6 @@ import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/status_list_provider.dart';
-import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
