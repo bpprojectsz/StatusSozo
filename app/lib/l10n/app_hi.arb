@@ -161,5 +161,9 @@
   "settingsStorage": "अस्थायी फ़ाइलें",
   "settingsStorageNone": "कोई नहीं",
   "settingsStorageClear": "साफ़ करें",
-  "toastCacheCleared": "अस्थायी फ़ाइलें साफ़ कर दी गईं"
+  "toastCacheCleared": "अस्थायी फ़ाइलें साफ़ कर दी गईं",
+  "toastLowStorage": "स्टोरेज में जगह कम है। कुछ जगह खाली करें और फिर कोशिश करें।",
+  "errorLowStorageTitle": "स्टोरेज में जगह कम है",
+  "errorLowStorageMessage": "अपने फ़ोन में कुछ जगह खाली करें, फिर दोबारा कोशिश करें।",
+  "errorLowStorageAction": "फिर से कोशिश करें"
 }

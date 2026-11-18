@@ -161,5 +161,9 @@
   "settingsStorage": "Fichiers temporaires",
   "settingsStorageNone": "Aucun",
   "settingsStorageClear": "Effacer",
-  "toastCacheCleared": "Fichiers temporaires supprimés"
+  "toastCacheCleared": "Fichiers temporaires supprimés",
+  "toastLowStorage": "Espace de stockage insuffisant. Libérez de l'espace et réessayez.",
+  "errorLowStorageTitle": "Espace de stockage insuffisant",
+  "errorLowStorageMessage": "Libérez de l'espace sur votre téléphone, puis réessayez.",
+  "errorLowStorageAction": "Réessayer"
 }

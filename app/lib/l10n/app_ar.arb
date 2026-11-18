@@ -161,5 +161,9 @@
   "settingsStorage": "ملفات مؤقتة",
   "settingsStorageNone": "لا شيء",
   "settingsStorageClear": "مسح",
-  "toastCacheCleared": "تم مسح الملفات المؤقتة"
+  "toastCacheCleared": "تم مسح الملفات المؤقتة",
+  "toastLowStorage": "مساحة التخزين غير كافية. أفرغ بعض المساحة وحاول مرة أخرى.",
+  "errorLowStorageTitle": "مساحة التخزين غير كافية",
+  "errorLowStorageMessage": "أفرغ بعض المساحة على هاتفك ثم حاول مرة أخرى.",
+  "errorLowStorageAction": "إعادة المحاولة"
 }

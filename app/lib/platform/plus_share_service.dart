@@ -1,9 +1,11 @@
 import 'package:share_plus/share_plus.dart';
 import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/contracts/share_service.dart';
+import 'package:statussozo/core/contracts/storage_space.dart';
 import 'package:statussozo/core/errors/app_error.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
 import 'package:statussozo/core/result.dart';
+import 'package:statussozo/core/services/storage_check.dart';
 import 'package:statussozo/platform/saf_channel.dart';
 import 'package:statussozo/utils/app_log.dart';
 
@@ -20,12 +22,15 @@ class PlusShareService implements ShareService {
     this._channel, {
     FileSharer? sharer,
     TextSharer? textSharer,
+    StorageSpace? storage,
   }) : _sharer = sharer ?? _systemSharer,
-       _textSharer = textSharer ?? _systemTextSharer;
+       _textSharer = textSharer ?? _systemTextSharer,
+       _storage = storage;
 
   final SafChannel _channel;
   final FileSharer _sharer;
   final TextSharer _textSharer;
+  final StorageSpace? _storage;
 
   static Future<void> _systemSharer(List<XFile> files) async {
     await SharePlus.instance.share(ShareParams(files: files));
@@ -56,6 +61,14 @@ class PlusShareService implements ShareService {
   Future<Result<void>> share(List<ViewableMedia> items) async {
     if (items.isEmpty) {
       return const Ok<void>(null);
+    }
+    final AppError? noRoom = await lowStorageError(
+      _storage,
+      StorageTarget.cache,
+      items.fold<int>(0, (int sum, ViewableMedia item) => sum + item.sizeBytes),
+    );
+    if (noRoom != null) {
+      return Err<void>(noRoom);
     }
     final List<XFile> files = <XFile>[];
     for (final ViewableMedia item in items) {

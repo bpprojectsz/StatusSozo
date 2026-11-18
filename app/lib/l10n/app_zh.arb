@@ -161,5 +161,9 @@
   "settingsStorage": "临时文件",
   "settingsStorageNone": "无",
   "settingsStorageClear": "清除",
-  "toastCacheCleared": "已清除临时文件"
+  "toastCacheCleared": "已清除临时文件",
+  "toastLowStorage": "存储空间不足。请释放一些空间后重试。",
+  "errorLowStorageTitle": "存储空间不足",
+  "errorLowStorageMessage": "请先释放手机上的一些空间，然后重试。",
+  "errorLowStorageAction": "重试"
 }

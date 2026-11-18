@@ -753,5 +753,21 @@
   "toastCacheCleared": "Temporary files cleared",
   "@toastCacheCleared": {
     "description": "Toast after the temporary files were cleared."
+  },
+  "toastLowStorage": "Not enough storage space. Free some space and try again.",
+  "@toastLowStorage": {
+    "description": "Toast when saving or sharing is stopped because the phone is almost full."
+  },
+  "errorLowStorageTitle": "Not enough storage",
+  "@errorLowStorageTitle": {
+    "description": "Error title when the phone is almost full."
+  },
+  "errorLowStorageMessage": "Free some space on your phone, then try again.",
+  "@errorLowStorageMessage": {
+    "description": "Error message when the phone is almost full."
+  },
+  "errorLowStorageAction": "Try again",
+  "@errorLowStorageAction": {
+    "description": "Button on the low storage error."
   }
 }

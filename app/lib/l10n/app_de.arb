@@ -161,5 +161,9 @@
   "settingsStorage": "Temporäre Dateien",
   "settingsStorageNone": "Keine",
   "settingsStorageClear": "Löschen",
-  "toastCacheCleared": "Temporäre Dateien gelöscht"
+  "toastCacheCleared": "Temporäre Dateien gelöscht",
+  "toastLowStorage": "Nicht genug Speicherplatz. Gib Speicher frei und versuche es erneut.",
+  "errorLowStorageTitle": "Nicht genug Speicherplatz",
+  "errorLowStorageMessage": "Gib Speicherplatz auf deinem Telefon frei und versuche es dann erneut.",
+  "errorLowStorageAction": "Erneut versuchen"
 }

@@ -19,11 +19,19 @@ ToastCode toastForError(AppErrorKind kind) => switch (kind) {
   AppErrorKind.wrongFolder => ToastCode.wrongFolder,
   AppErrorKind.pickerCancelled => ToastCode.pickerCancelled,
   AppErrorKind.notFound || AppErrorKind.io => ToastCode.ioError,
+  AppErrorKind.lowStorage => ToastCode.lowStorage,
   AppErrorKind.permissionLost ||
   AppErrorKind.unsupported ||
   AppErrorKind.persistence ||
   AppErrorKind.unexpected => ToastCode.unexpected,
 };
+
+/// The toast for a share that failed: running out of room is named, anything
+/// else is the generic share failure.
+ToastCode toastForShareError(AppError? error) =>
+    error?.kind == AppErrorKind.lowStorage
+    ? ToastCode.lowStorage
+    : ToastCode.shareFailed;
 
 /// Opens an email draft to report a problem, with the local log attached to
 /// the body. The log stays on the device unless the person sends the email.

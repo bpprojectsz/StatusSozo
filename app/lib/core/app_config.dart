@@ -37,6 +37,9 @@ abstract final class AppConfig {
   /// The share cache is also kept under this size: once over it, the oldest
   /// copies go first, on top of the 24 hour rule.
   static const int shareCacheMaxBytes = 200 * 1024 * 1024;
+
+  /// Free space that must remain after a save or a share copy.
+  static const int lowStorageMarginBytes = 50 * 1024 * 1024;
   static const Duration toastDuration = Duration(seconds: 3);
 
   // Ads. The defaults are Google's published test IDs. Live IDs are compiled in

@@ -11,6 +11,7 @@ import 'package:statussozo/core/contracts/saved_repository.dart';
 import 'package:statussozo/core/contracts/settings_store.dart';
 import 'package:statussozo/core/contracts/share_service.dart';
 import 'package:statussozo/core/contracts/status_repository.dart';
+import 'package:statussozo/core/contracts/storage_space.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
 import 'package:statussozo/core/contracts/video_playback.dart';
 import 'package:statussozo/core/models/save_summary.dart';
@@ -36,6 +37,7 @@ import 'package:statussozo/core/services/save_coordinator.dart';
 import 'package:statussozo/platform/google_ad_service.dart';
 import 'package:statussozo/platform/in_app_review_service.dart';
 import 'package:statussozo/platform/media_store_saved_repository.dart';
+import 'package:statussozo/platform/native_storage_space.dart';
 import 'package:statussozo/platform/native_thumbnail_source.dart';
 import 'package:statussozo/platform/plus_share_service.dart';
 import 'package:statussozo/platform/prefs_settings_store.dart';
@@ -77,12 +79,14 @@ class AppServices {
   /// Builds the real platform implementations.
   static Future<AppServices> create() async {
     final SafChannel channel = SafChannel();
+    final NativeStorageSpace storage = NativeStorageSpace(channel);
     final PackageInfo info = await PackageInfo.fromPlatform();
     return _assemble(
       statusRepository: SafStatusRepository(channel),
       savedRepository: MediaStoreSavedRepository(channel),
       thumbnails: NativeThumbnailSource(channel),
-      share: PlusShareService(channel),
+      share: PlusShareService(channel, storage: storage),
+      storageSpace: storage,
       settingsStore: PrefsSettingsStore(),
       links: UrlLinkLauncher(),
       haptics: const SystemHaptics(),
@@ -108,6 +112,7 @@ class AppServices {
     AdService? adService,
     ConsentService? consent,
     ReviewService? reviewService,
+    StorageSpace? storageSpace,
     DateTime Function()? now,
   }) => _assemble(
     statusRepository: statusRepository,
@@ -122,6 +127,7 @@ class AppServices {
     adService: adService ?? DisabledAdService(),
     consent: consent ?? DisabledConsentService(),
     reviewService: reviewService ?? DisabledReviewService(),
+    storageSpace: storageSpace,
     now: now,
   );
 
@@ -138,6 +144,7 @@ class AppServices {
     required AdService adService,
     required ConsentService consent,
     required ReviewService reviewService,
+    StorageSpace? storageSpace,
     DateTime Function()? now,
   }) {
     final SettingsProvider settings = SettingsProvider(settingsStore);
@@ -159,7 +166,7 @@ class AppServices {
     );
     final ToastProvider toasts = ToastProvider();
     final SaveProvider save = SaveProvider(
-      coordinator: SaveCoordinator(savedRepository),
+      coordinator: SaveCoordinator(savedRepository, storage: storageSpace),
       library: savedLibrary,
       haptics: haptics,
       toasts: toasts,

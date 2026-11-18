@@ -81,9 +81,11 @@ class SaveProvider extends ValueNotifier<SaveState> {
     } else if (saved > 0) {
       _toasts.show(ToastCode.saved, count: saved);
     } else if (summary.failed > 0) {
-      final bool lostAccess =
-          summary.firstError?.kind == AppErrorKind.accessLost;
-      _toasts.show(lostAccess ? ToastCode.accessLost : ToastCode.saveFailed);
+      _toasts.show(switch (summary.firstError?.kind) {
+        AppErrorKind.accessLost => ToastCode.accessLost,
+        AppErrorKind.lowStorage => ToastCode.lowStorage,
+        _ => ToastCode.saveFailed,
+      });
     } else if (summary.skippedDuplicates > 0) {
       _toasts.show(ToastCode.alreadySaved);
     }

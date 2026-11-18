@@ -24,6 +24,7 @@ enum ToastCode {
   persistenceWarning,
   linkFailed,
   cacheCleared,
+  lowStorage,
   ioError,
   unexpected,
 }
@@ -75,6 +76,7 @@ ToastKind defaultToastKind(ToastCode code) => switch (code) {
   ToastCode.shareFailed ||
   ToastCode.wrongFolder ||
   ToastCode.linkFailed ||
+  ToastCode.lowStorage ||
   ToastCode.ioError ||
   ToastCode.unexpected => ToastKind.error,
 };

@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:statussozo/core/app_config.dart';
+import 'package:statussozo/core/contracts/storage_space.dart';
 import 'package:statussozo/core/errors/app_error.dart';
 import 'package:statussozo/core/models/save_summary.dart';
 import 'package:statussozo/core/models/saved_item.dart';
@@ -166,5 +168,83 @@ void main() {
       failed: 0,
     );
     expect(() => summary.saved.add(savedItem('x.jpg')), throwsUnsupportedError);
+  });
+
+  group('low storage', () {
+    late FakeStorageSpace storage;
+    late SaveCoordinator guarded;
+    const int margin = AppConfig.lowStorageMarginBytes;
+
+    setUp(() {
+      storage = FakeStorageSpace();
+      guarded = SaveCoordinator(repository, storage: storage);
+    });
+
+    List<StatusItem> sized(List<String> names, int size) =>
+        names.map((String n) => statusItem(n, sizeBytes: size)).toList();
+
+    test('saves when the whole batch fits with the margin to spare', () async {
+      storage.free = 3000 + margin;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg', 'b.jpg', 'c.jpg'], 1000),
+        alreadySavedNames: <String>{},
+      );
+      expect(summary.saved, hasLength(3));
+      expect(storage.asked, <StorageTarget>[StorageTarget.gallery]);
+    });
+
+    test('saves nothing and says so when it does not fit', () async {
+      storage.free = 3000 + margin - 1;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg', 'b.jpg', 'c.jpg'], 1000),
+        alreadySavedNames: <String>{},
+        onProgress: record,
+      );
+      expect(summary.saved, isEmpty);
+      expect(summary.failed, 3);
+      expect(summary.firstError?.kind, AppErrorKind.lowStorage);
+      expect(repository.saveCalls, 0);
+      expect(progress, <String>['3/3']);
+    });
+
+    test('names already saved and duplicates do not count toward the need', () async {
+      storage.free = 1000 + margin;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg', 'a.jpg', 'b.jpg'], 1000),
+        alreadySavedNames: <String>{'b.jpg'},
+      );
+      expect(summary.saved, hasLength(1));
+      expect(summary.skippedDuplicates, 2);
+    });
+
+    test('a batch of only duplicates asks nothing', () async {
+      storage.free = 0;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg'], 1 << 30),
+        alreadySavedNames: <String>{'a.jpg'},
+      );
+      expect(summary.skippedDuplicates, 1);
+      expect(summary.firstError, isNull);
+      expect(storage.asked, isEmpty);
+    });
+
+    test('an unknown amount of space still saves', () async {
+      storage.free = null;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg'], 1 << 30),
+        alreadySavedNames: <String>{},
+      );
+      expect(summary.saved, hasLength(1));
+    });
+
+    test('the low-storage summary reports the stop, not a partial save', () async {
+      storage.free = 0;
+      final SaveSummary summary = await guarded.saveAll(
+        sized(<String>['a.jpg', 'b.jpg'], 10),
+        alreadySavedNames: <String>{},
+      );
+      expect(summary.allSucceeded, isFalse);
+      expect(summary.total, 2);
+    });
   });
 }

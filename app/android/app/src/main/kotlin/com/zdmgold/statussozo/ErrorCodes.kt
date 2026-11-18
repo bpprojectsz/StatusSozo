@@ -10,6 +10,7 @@ object ErrorCodes {
     const val PERMISSION_LOST = "PERMISSION_LOST"
     const val TOO_LARGE = "TOO_LARGE"
     const val UNSUPPORTED = "UNSUPPORTED"
+    const val LOW_STORAGE = "LOW_STORAGE"
 }
 
 /** An error that already carries one of the [ErrorCodes] strings. */

@@ -65,6 +65,7 @@ class SafChannelHandler(private val activity: Activity) : MethodChannel.MethodCa
                         call.argument<Number>("maxBytes")?.toLong() ?: 0L,
                     )
                 }
+                "freeSpace" -> async(result) { freeSpace(text(call, "target")) }
                 "shareCacheSize" -> async(result) { shareCache.size() }
                 "clearShareCache" -> async(result) { shareCache.clear() }
                 else -> result.notImplemented()
@@ -131,7 +132,35 @@ class SafChannelHandler(private val activity: Activity) : MethodChannel.MethodCa
         }
     }
 
+    /** Free bytes where files would go: the cache folder, or the shared storage. */
+    private fun freeSpace(target: String): Long {
+        val path = if (target == "cache") {
+            appContext.cacheDir.path
+        } else {
+            android.os.Environment.getExternalStorageDirectory().path
+        }
+        return android.os.StatFs(path).availableBytes
+    }
+
+    /** True when the error, or anything it was caused by, is "no space left". */
+    private fun isOutOfSpace(error: Throwable?): Boolean {
+        var current = error
+        var depth = 0
+        while (current != null && depth < 6) {
+            val message = current.message ?: ""
+            if (message.contains("ENOSPC") || message.contains("No space left", ignoreCase = true)) {
+                return true
+            }
+            current = current.cause
+            depth++
+        }
+        return false
+    }
+
     private fun codeFor(error: Throwable): String =
+        if (isOutOfSpace(error)) ErrorCodes.LOW_STORAGE else codeForKind(error)
+
+    private fun codeForKind(error: Throwable): String =
         when (error) {
             is NativeException -> error.code
             is SecurityException -> ErrorCodes.ACCESS_LOST

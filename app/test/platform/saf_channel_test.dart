@@ -231,6 +231,34 @@ void main() {
       expect(await channel.shareCacheSize(), 0);
     });
 
+    test('freeSpace sends the target and returns the bytes, or null', () async {
+      native.responder = (MethodCall call) => 123456789;
+      expect(await channel.freeSpace('gallery'), 123456789);
+      expect(native.calls.single.method, 'freeSpace');
+      expect(native.calls.single.arguments, <String, Object?>{
+        'target': 'gallery',
+      });
+      native.responder = (MethodCall call) => null;
+      expect(await channel.freeSpace('cache'), isNull);
+    });
+
+    test('a failing freeSpace is null, not an exception', () async {
+      native.responder = (MethodCall call) => throw PlatformException(code: 'IO');
+      expect(await channel.freeSpace('cache'), isNull);
+    });
+
+    test('LOW_STORAGE from native becomes lowStorage', () async {
+      native.responder = (MethodCall call) =>
+          throw PlatformException(code: 'LOW_STORAGE', message: 'No space left');
+      final Result<Map<String, Object?>> result = await channel.saveToGallery(
+        uri: 'content://a',
+        name: 'a.jpg',
+        mime: 'image/jpeg',
+        subfolder: 'StatusSozo',
+      );
+      expect(result.errorOrNull?.kind, AppErrorKind.lowStorage);
+    });
+
     test('clearShareCache returns how many files went', () async {
       native.responder = (MethodCall call) => 7;
       expect(await channel.clearShareCache(), 7);

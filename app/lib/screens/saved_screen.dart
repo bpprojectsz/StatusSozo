@@ -11,6 +11,7 @@ import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
+import 'package:statussozo/screens/screen_text.dart';
 import 'package:statussozo/screens/viewer_screen.dart';
 import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/feedback/empty_state.dart';
@@ -88,7 +89,7 @@ class _SavedScreenState extends State<SavedScreen> {
     final services = AppScope.of(context);
     final result = await services.share.share(_selected());
     if (result.errorOrNull != null) {
-      services.toasts.show(ToastCode.shareFailed);
+      services.toasts.show(toastForShareError(result.errorOrNull));
     }
   }
 

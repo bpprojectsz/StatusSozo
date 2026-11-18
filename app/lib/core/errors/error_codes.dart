@@ -8,6 +8,7 @@ abstract final class ErrorCodes {
   static const String permissionLost = 'PERMISSION_LOST';
   static const String tooLarge = 'TOO_LARGE';
   static const String unsupported = 'UNSUPPORTED';
+  static const String lowStorage = 'LOW_STORAGE';
 }
 
 /// Converts a native error [code] to an [AppError]. Unknown codes become
@@ -18,6 +19,7 @@ AppError appErrorFromCode(String code, {String? message, Object? cause}) {
     ErrorCodes.accessLost => AppErrorKind.accessLost,
     ErrorCodes.notFound => AppErrorKind.notFound,
     ErrorCodes.io || ErrorCodes.tooLarge => AppErrorKind.io,
+    ErrorCodes.lowStorage => AppErrorKind.lowStorage,
     ErrorCodes.permissionLost => AppErrorKind.permissionLost,
     ErrorCodes.unsupported => AppErrorKind.unsupported,
     _ => AppErrorKind.unexpected,

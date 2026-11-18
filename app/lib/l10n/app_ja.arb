@@ -161,5 +161,9 @@
   "settingsStorage": "一時ファイル",
   "settingsStorageNone": "なし",
   "settingsStorageClear": "消去",
-  "toastCacheCleared": "一時ファイルを消去しました"
+  "toastCacheCleared": "一時ファイルを消去しました",
+  "toastLowStorage": "空き容量が足りません。容量を空けてからもう一度お試しください。",
+  "errorLowStorageTitle": "空き容量が足りません",
+  "errorLowStorageMessage": "スマートフォンの空き容量を増やしてから、もう一度お試しください。",
+  "errorLowStorageAction": "再試行"
 }

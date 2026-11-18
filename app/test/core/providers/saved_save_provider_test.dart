@@ -199,6 +199,20 @@ void main() {
       expect(toasts.value?.secondCount, 1);
     });
 
+    test('a full phone emits lowStorage and saves nothing', () async {
+      final FakeStorageSpace storage = FakeStorageSpace()..free = 0;
+      final SaveProvider guarded = SaveProvider(
+        coordinator: SaveCoordinator(repository, storage: storage),
+        library: library,
+        haptics: haptics,
+        toasts: toasts,
+      );
+      addTearDown(guarded.dispose);
+      await guarded.save(batch(<String>['a.jpg', 'b.jpg']));
+      expect(shown, <ToastCode>[ToastCode.lowStorage]);
+      expect(repository.saveCalls, 0);
+    });
+
     test('total failure emits saveFailed', () async {
       repository.saveErrors['a.jpg'] = const AppError(AppErrorKind.io);
       await save.save(batch(<String>['a.jpg']));

@@ -7,6 +7,7 @@ enum AppErrorKind {
   pickerCancelled,
   notFound,
   io,
+  lowStorage,
   permissionLost,
   unsupported,
   persistence,
@@ -46,7 +47,8 @@ class AppError {
   bool get retriable => switch (kind) {
     AppErrorKind.wrongFolder ||
     AppErrorKind.pickerCancelled ||
-    AppErrorKind.io => true,
+    AppErrorKind.io ||
+    AppErrorKind.lowStorage => true,
     _ => false,
   };
 
@@ -77,6 +79,8 @@ ErrorTreatment treatmentFor(AppError error, ErrorScope scope) {
       return action ? ErrorTreatment.toast : ErrorTreatment.emptyState;
     case AppErrorKind.io:
       return action ? ErrorTreatment.toast : ErrorTreatment.inlineError;
+    case AppErrorKind.lowStorage:
+      return ErrorTreatment.toast;
     case AppErrorKind.permissionLost:
       return scope == ErrorScope.listLoad
           ? ErrorTreatment.inlineError

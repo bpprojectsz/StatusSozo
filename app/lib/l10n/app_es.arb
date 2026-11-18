@@ -161,5 +161,9 @@
   "settingsStorage": "Archivos temporales",
   "settingsStorageNone": "Ninguno",
   "settingsStorageClear": "Borrar",
-  "toastCacheCleared": "Archivos temporales borrados"
+  "toastCacheCleared": "Archivos temporales borrados",
+  "toastLowStorage": "No hay espacio suficiente. Libera espacio e inténtalo de nuevo.",
+  "errorLowStorageTitle": "No hay espacio suficiente",
+  "errorLowStorageMessage": "Libera espacio en tu teléfono e inténtalo de nuevo.",
+  "errorLowStorageAction": "Reintentar"
 }

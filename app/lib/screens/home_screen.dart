@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final services = AppScope.of(context);
     final result = await services.share.share(_selectedItems());
     if (result.errorOrNull != null) {
-      services.toasts.show(ToastCode.shareFailed);
+      services.toasts.show(toastForShareError(result.errorOrNull));
     }
   }
 

@@ -11,6 +11,7 @@ import 'package:statussozo/core/contracts/link_launcher.dart';
 import 'package:statussozo/core/contracts/review_service.dart';
 import 'package:statussozo/core/contracts/saved_repository.dart';
 import 'package:statussozo/core/contracts/settings_store.dart';
+import 'package:statussozo/core/contracts/storage_space.dart';
 import 'package:statussozo/core/contracts/share_service.dart';
 import 'package:statussozo/core/contracts/status_repository.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
@@ -325,6 +326,23 @@ class FakeShareService implements ShareService {
   @override
   Future<void> pruneCache() async {
     pruneCalls++;
+  }
+}
+
+/// A controllable view of free space.
+class FakeStorageSpace implements StorageSpace {
+  /// Free bytes reported for every target; null means unknown.
+  int? free = 1024 * 1024 * 1024;
+  bool throwOnRead = false;
+  final List<StorageTarget> asked = <StorageTarget>[];
+
+  @override
+  Future<int?> freeBytes(StorageTarget target) async {
+    asked.add(target);
+    if (throwOnRead) {
+      throw StateError('cannot read');
+    }
+    return free;
   }
 }
 

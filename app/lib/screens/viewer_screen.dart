@@ -13,6 +13,7 @@ import 'package:statussozo/core/result.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
+import 'package:statussozo/screens/screen_text.dart';
 import 'package:statussozo/widgets/ads/ad_slot.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/media/media_thumbnail.dart';
@@ -148,7 +149,7 @@ class _ViewerScreenState extends State<ViewerScreen> {
       <ViewableMedia>[_items[_current]],
     );
     if (result.errorOrNull != null) {
-      services.toasts.show(ToastCode.shareFailed);
+      services.toasts.show(toastForShareError(result.errorOrNull));
     }
   }
 

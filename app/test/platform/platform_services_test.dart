@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:statussozo/core/app_config.dart';
+import 'package:statussozo/core/contracts/storage_space.dart';
 import 'package:statussozo/core/errors/app_error.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
 import 'package:statussozo/core/result.dart';
@@ -101,8 +102,12 @@ void main() {
     });
     tearDown(native.uninstall);
 
-    PlusShareService service({bool failShare = false}) => PlusShareService(
+    PlusShareService service({
+      bool failShare = false,
+      StorageSpace? storage,
+    }) => PlusShareService(
       SafChannel(),
+      storage: storage,
       sharer: (List<XFile> files) async {
         if (failShare) {
           throw StateError('sheet failed');
@@ -149,6 +154,27 @@ void main() {
         'image/jpeg',
         'video/mp4',
       ]);
+    });
+
+    test('a full phone stops the share before copying anything', () async {
+      final FakeStorageSpace storage = FakeStorageSpace()..free = 0;
+      final Result<void> result = await service(storage: storage).share(
+        <ViewableMedia>[statusItem('a.jpg'), statusItem('b.jpg')],
+      );
+      expect(result.errorOrNull?.kind, AppErrorKind.lowStorage);
+      expect(native.methods, isEmpty);
+      expect(sharedBatches, isEmpty);
+      expect(storage.asked, <StorageTarget>[StorageTarget.cache]);
+    });
+
+    test('enough room shares as usual', () async {
+      native.responder = (MethodCall call) => '/cache/share/a.jpg';
+      final FakeStorageSpace storage = FakeStorageSpace();
+      final Result<void> result = await service(storage: storage).share(
+        <ViewableMedia>[statusItem('a.jpg')],
+      );
+      expect(result.isOk, isTrue);
+      expect(sharedBatches, hasLength(1));
     });
 
     test('stops and returns the error when a copy fails', () async {

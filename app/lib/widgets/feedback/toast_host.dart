@@ -29,6 +29,7 @@ String toastText(AppLocalizations l10n, ToastMessage message) {
     ToastCode.persistenceWarning => l10n.toastPersistenceWarning,
     ToastCode.linkFailed => l10n.toastLinkFailed,
     ToastCode.cacheCleared => l10n.toastCacheCleared,
+    ToastCode.lowStorage => l10n.toastLowStorage,
     ToastCode.ioError => l10n.toastIoError,
     ToastCode.unexpected => l10n.toastUnexpected,
   };

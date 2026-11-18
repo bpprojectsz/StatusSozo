@@ -31,6 +31,11 @@ void main() {
           ErrorTreatment.toast,
           ErrorTreatment.inlineError,
         ],
+        AppErrorKind.lowStorage: <ErrorTreatment>[
+          ErrorTreatment.toast,
+          ErrorTreatment.toast,
+          ErrorTreatment.toast,
+        ],
         AppErrorKind.permissionLost: <ErrorTreatment>[
           ErrorTreatment.inlineError,
           ErrorTreatment.toast,
@@ -60,14 +65,15 @@ void main() {
     AppErrorKind.pickerCancelled: <bool>[true, true, true],
     AppErrorKind.notFound: <bool>[true, false, false],
     AppErrorKind.io: <bool>[true, true, false],
+    AppErrorKind.lowStorage: <bool>[true, true, false],
     AppErrorKind.permissionLost: <bool>[true, false, false],
     AppErrorKind.unsupported: <bool>[false, false, false],
     AppErrorKind.persistence: <bool>[true, false, false],
     AppErrorKind.unexpected: <bool>[false, false, false],
   };
 
-  test('the table covers all 9 kinds', () {
-    expect(AppErrorKind.values, hasLength(9));
+  test('the table covers all 10 kinds', () {
+    expect(AppErrorKind.values, hasLength(10));
     expect(expected.keys.toSet(), AppErrorKind.values.toSet());
     expect(flags.keys.toSet(), AppErrorKind.values.toSet());
   });
@@ -112,6 +118,10 @@ void main() {
         AppErrorKind.permissionLost,
       );
       expect(appErrorFromCode(ErrorCodes.tooLarge).kind, AppErrorKind.io);
+      expect(
+        appErrorFromCode(ErrorCodes.lowStorage).kind,
+        AppErrorKind.lowStorage,
+      );
       expect(
         appErrorFromCode(ErrorCodes.unsupported).kind,
         AppErrorKind.unsupported,

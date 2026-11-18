@@ -112,10 +112,13 @@ shot 06_after_scroll
 adb shell input tap 200 640
 sleep 4
 shot 07_viewer
-# Android shows a one-time "Viewing full screen" tip. Back dismisses it.
-adb shell input keyevent KEYCODE_BACK
+# Android sometimes shows a one-time "Viewing full screen" tip; it goes away on
+# its own. Back is NOT pressed here, because without the tip it would close the
+# viewer. Save is tapped twice: the second tap is harmless on a saved item.
 sleep 15
 shot 07b_viewer_with_ad
+adb shell input tap 540 1986
+sleep 3
 adb shell input tap 540 1986
 sleep 4
 shot 07c_after_save

@@ -13,6 +13,7 @@ String errorTitle(AppLocalizations l10n, AppErrorKind kind) => switch (kind) {
   AppErrorKind.wrongFolder => l10n.errorWrongFolderTitle,
   AppErrorKind.notFound => l10n.errorNotFoundTitle,
   AppErrorKind.io => l10n.errorIoTitle,
+  AppErrorKind.lowStorage => l10n.errorLowStorageTitle,
   AppErrorKind.permissionLost => l10n.errorPermissionLostTitle,
   AppErrorKind.unsupported => l10n.errorUnsupportedTitle,
   AppErrorKind.pickerCancelled ||
@@ -27,6 +28,7 @@ String errorMessage(AppLocalizations l10n, AppErrorKind kind) =>
       AppErrorKind.wrongFolder => l10n.errorWrongFolderMessage,
       AppErrorKind.notFound => l10n.errorNotFoundMessage,
       AppErrorKind.io => l10n.errorIoMessage,
+      AppErrorKind.lowStorage => l10n.errorLowStorageMessage,
       AppErrorKind.permissionLost => l10n.errorPermissionLostMessage,
       AppErrorKind.unsupported => l10n.errorUnsupportedMessage,
       AppErrorKind.pickerCancelled ||
@@ -42,6 +44,7 @@ String? errorAction(AppLocalizations l10n, AppErrorKind kind) =>
       AppErrorKind.wrongFolder => l10n.errorWrongFolderAction,
       AppErrorKind.notFound => l10n.errorNotFoundAction,
       AppErrorKind.io => l10n.errorIoAction,
+      AppErrorKind.lowStorage => l10n.errorLowStorageAction,
       AppErrorKind.permissionLost => null,
       AppErrorKind.unsupported => l10n.errorUnsupportedAction,
       AppErrorKind.pickerCancelled ||
@@ -53,6 +56,7 @@ AppIconData _iconFor(AppErrorKind kind) => switch (kind) {
   AppErrorKind.accessLost => AppIcons.folderLink,
   AppErrorKind.wrongFolder || AppErrorKind.notFound => AppIcons.folder,
   AppErrorKind.io ||
+  AppErrorKind.lowStorage ||
   AppErrorKind.permissionLost ||
   AppErrorKind.unsupported => AppIcons.warning,
   AppErrorKind.pickerCancelled ||

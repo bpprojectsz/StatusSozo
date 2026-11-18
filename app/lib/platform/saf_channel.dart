@@ -233,6 +233,16 @@ class SafChannel {
     return result.valueOrNull ?? 0;
   }
 
+  /// Free bytes at [target] ('gallery' or 'cache'), or null if unknown.
+  Future<int?> freeSpace(String target) async {
+    final Result<int?> result = await _call<int?>(
+      'freeSpace',
+      <String, Object?>{'target': target},
+      (Object? raw) => raw is int ? raw : null,
+    );
+    return result.valueOrNull;
+  }
+
   /// The total size of the share cache in bytes, or 0 if it cannot be read.
   Future<int> shareCacheSize() async {
     final Result<int> result = await _call<int>(

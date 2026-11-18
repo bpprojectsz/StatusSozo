@@ -181,7 +181,7 @@ void main() {
   });
 
   test('the code list matches the specification', () {
-    expect(ToastCode.values, hasLength(18));
+    expect(ToastCode.values, hasLength(19));
     expect(ToastCode.saved.name, 'saved');
   });
 }
