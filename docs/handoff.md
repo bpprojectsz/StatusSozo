@@ -4,7 +4,7 @@ Read this first, then `docs/decisions.md`, then `docs/blueprint.md`. **Update th
 
 ## 1. State in one paragraph
 
-Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **1113 tests** (at 359fb38). Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **Done: A1 to A6 (fa51f70, 359fb38, e62db36). Not started: A7, A8, B, C, D.** A4 and A6 are proven on emulators (API 33 and 34, Google DocumentsUI): the App languages screen lists all 11 languages, and every Access-screen step matches Android's own picker wording in all 11 languages. Not proven on a device: system-language resolution (adb system-locale switching drops the connection; it is covered by widget tests only), and other makers' pickers (Samsung, Xiaomi and others word things differently). No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
+Stage 1 and Stage 2 of the specification are built and green: `main` passes `flutter analyze` (0 issues), the forbidden-pattern gate, and **1168 tests** (at 2947663). Android 13 and 14 emulators ran the app (launch, folder picker, 12 photos and 2 videos listed, viewer, save into `Pictures/StatusSozo`, relaunch persistence, ads banner, seven languages). **Done: A1 to A6, B1 to B3, C1 to C3, D1 to D5 (last green 2947663, 1168 tests). Not started: A7, A8 (back-translation audit, language by language, by hand).** A4 and A6 are proven on emulators (API 33 and 34, Google DocumentsUI): the App languages screen lists all 11 languages, and every Access-screen step matches Android's own picker wording in all 11 languages. Not proven on a device: system-language resolution (adb system-locale switching drops the connection; it is covered by widget tests only), and other makers' pickers (Samsung, Xiaomi and others word things differently). No test APK has been built since test-5, so nothing from b15 onward has run on the owner's phone. The owner has said: **no APK until he writes "build".**
 
 ## 2. Access and identities (no secrets in this file, the repository is public)
 
@@ -59,7 +59,7 @@ Known traps: a job-level `if` cannot read `matrix` (build the matrix from the in
 
 ## 5. What exists (full detail in `docs/blueprint.md`)
 
-Screens: Access, Home, Viewer, Saved, Settings, Debug logs, Licenses, License detail, Crash fallback (9; banners on 4). Providers: settings, theme, source, locale, folder access, status list, saved library, selection x2, save, toast, ad, review. Native: Kotlin channel `statussozo/saf` (11 methods). Languages: 11. Tests: 1113 across 56 files. Workflows: `verify`, `build_android`, `emulator`, plus the finished one-offs `bootstrap`, `brand`. Pinned: Flutter 3.29.2, Kotlin 2.2.0, AGP 8.9.1, Gradle 8.11.1, NDK 27.0.12077973. `google_mobile_ads` 6.0.0, `hugeicons` 4.4.0, `share_plus` 12.0.2, `package_info_plus` 9.0.1, `in_app_review` 2.0.12.
+Screens: Access, Home, Viewer, Saved, Settings, Debug logs, Licenses, License detail, Crash fallback (9; banners on 4). Providers: settings, theme, source, locale, folder access, status list, saved library, selection x2, save, toast, ad, review. Native: Kotlin channel `statussozo/saf` (11 methods). Languages: 11. Tests: 1168 across 60 files. Workflows: `verify`, `build_android`, `emulator`, plus the finished one-offs `bootstrap`, `brand`. Pinned: Flutter 3.29.2, Kotlin 2.2.0, AGP 8.9.1, Gradle 8.11.1, NDK 27.0.12077973. `google_mobile_ads` 6.0.0, `hugeicons` 4.4.0, `share_plus` 12.0.2, `package_info_plus` 9.0.1, `in_app_review` 2.0.12.
 
 Last shipped test APK: **test-5** (Releases page), built before b15. Everything since is untested on the phone: icon, splash, wordmark, source selector, refresh, Terms and licenses, Debug logs, languages, ads, review row, new packages.
 
@@ -141,3 +141,10 @@ Play account type and creation date; AdMob publisher ID; his "build" go-ahead; r
 - C2 cooldowns: 30 days after the first ask, 90 after the second, 180 after every later one. A new ask needs only the wait to pass.
 - C3: exactly 10 minutes after an interstitial.
 - D2: the 500-line email was rejected as far too long; the owner has not yet given the new number.
+
+
+## Built after the plan (B, C, D), with the rules as built
+- Consent (B): a failed consent step (or a throwing canRequestAds) still asks for ads and is retried once on the next foreground; never more than once per launch.
+- Review (C): tapping Rate never touches the automatic prompt. First request after 10 saves on 3 days; then only time counts: 30 days after the first request, 90 after the second, 180 after every later one. Never within 10 minutes of an interstitial. Old "asked" settings become one request, and the wait starts at the next save.
+- Storage (D): Flutter image cache capped at 50 MB; debug log 50 lines on screen and in the email; Settings row "Temporary files" with size and Clear; share cache capped at 200 MB (oldest first) plus the 24 hour rule; a save or share that would leave under 50 MB free is stopped before anything is copied and says so (lowStorage error, toast and error state in 11 languages); native out-of-space errors map to lowStorage.
+- Native code from D3, D4 and D5 was compiled and smoke-tested on the Android 13 and 14 emulators (save works, relaunch goes straight to Home). The low-storage stop and the 200 MB cap themselves were not exercised on a device.
