@@ -12,7 +12,7 @@ void main() {
   setUp(() {
     native = MockSaf()..install();
   });
-  tearDown(native.uninstall);
+  tearDown(() => native.uninstall());
 
   test('the gallery is asked as "gallery" and the cache as "cache"', () async {
     native.responder = (MethodCall call) => 4096;
