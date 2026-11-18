@@ -144,13 +144,19 @@ void main() {
         }
       });
 
-      test('plural blocks match English and use valid branches', () {
+      test('keeps English plural blocks, adds only valid ones', () {
         for (final String key in keys) {
           final List<List<String>> mine = _pluralBranches(arb[key]! as String);
           final List<List<String>> theirs = _pluralBranches(
             english[key]! as String,
           );
-          expect(mine.length, theirs.length, reason: '$key plural count');
+          // Every plural English has must be kept. A language may add more where
+          // its grammar needs agreement ("1 guardado", "2 guardados").
+          expect(
+            mine.length,
+            greaterThanOrEqualTo(theirs.length),
+            reason: '$key plural count',
+          );
           for (final List<String> names in mine) {
             expect(names, contains('other'), reason: key);
             for (final String name in names) {
