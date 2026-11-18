@@ -6,7 +6,7 @@ Method: every key was read with its key name and the English beside the Spanish,
 | Verdict | Count |
 |---|---|
 | Matches the English | 163 |
-| Corrected | 3 |
+| Corrected | 3 (plus the 25 regional changes below) |
 
 ## Corrections
 | Key | Before | Back-translation of the old text | Problem | After |
@@ -21,5 +21,5 @@ Method: every key was read with its key name and the English beside the Spanish,
 - Register is "tú" throughout.
 - "Eliminar" (delete) and "Borrar" (clear) are used for different actions on purpose.
 
-## Open choice for the owner (not a mistake)
-The Spanish leans to Spain: Ajustes (Settings), Valorar (Rate), Vídeos, Informar de un problema. Latin American phones usually say Configuración, Calificar, Videos, Reportar un problema. All are understood in both regions. Say if you want the Latin American set.
+## Decision by the owner: Latin American Spanish
+Applied to 25 strings. Changes: Ajustes to Configuración; Valorar to Calificar; Vídeo(s) to Video(s); Informar de un problema to Reportar un problema; informe to reporte; "ha pasado / ha ocurrido / ha tenido" to the simple past (pasó / ocurrió / tuvo); Comprueba to Verifica; "encima de esta línea" to "arriba de esta línea". A scan of all 166 values found no Spain-only wording left. The Android picker wording in the Access steps is unchanged and is re-checked on the emulator.
