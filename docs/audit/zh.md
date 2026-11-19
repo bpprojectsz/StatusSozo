@@ -18,5 +18,11 @@ Method: every key was read with its key name and the English beside the Chinese,
 - "支持" for Support is understood; "帮助与反馈" or "获取支持" would be more explicit.
 - "商业版" for Business; "商务版" is also common.
 
-## Finding that affects every language
-homeEmptyMessage tells people to "Open its Status tab". As far as I know, current WhatsApp shows statuses under a tab called Updates, not Status. If so, the instruction is outdated in all 11 languages. This is a wording decision for the owner, not a translation fault. See the report.
+## Finding that affects every language (now checked against sources, 19 Nov 2026)
+homeEmptyMessage tells people to "Open its Status tab".
+- WhatsApp's own Updates Tab terms (effective 14 July 2025, whatsapp.com/legal/updatestab-terms-of-service) call it the "Updates Tab", the home of Channels and Status.
+- Android Authority's current how-to tells Android users to tap the Updates tab to see statuses.
+- WABetaInfo (beta 2.26.17.x, 2026) reports a limited test that also shows statuses at the top of the Chats tab; the full overview stays in the Updates tab. Notebookcheck (17 Feb 2026) describes the same.
+- Older articles still say "Status tab", so the name has changed over time and is still changing.
+- Not verified: whether WhatsApp Business uses the same names.
+Conclusion: "Status tab" is out of date, and naming "Updates" could also go stale. Recommendation: no tab name at all (option A). Decision pending with the owner.
