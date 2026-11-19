@@ -5,8 +5,8 @@ Method: every key was read with its key name and the English beside the Arabic, 
 ## Result
 | Verdict | Count |
 |---|---|
-| Matches the English | 163 |
-| Corrected | 3 |
+| Matches the English | 161 |
+| Corrected | 5 (3 at first pass, 2 found during the Hebrew pass) |
 
 ## Corrections
 | Key | Before | Back-translation of the old text | Problem | After |
@@ -14,6 +14,8 @@ Method: every key was read with its key name and the English beside the Arabic, 
 | accessStep2 | إذا لم يعرضه المحدد ... | "If the determiner/specifier doesn't show it" | "المحدد" ("the specified one") is not a clear word for the folder picker | إذا لم تعرضه أداة الاختيار ... ("the selection tool") |
 | settingsDisclaimer | ... غير تابع لأي خدمة مراسلة ولا تدعمه | "...not affiliated with any messaging service and does not support it" | The subject of "does not endorse" is unclear: it reads as if the app does not support the service | ... وليس تابعًا لأي خدمة مراسلة ولا تؤيده أي منها ("...and none of them endorses it") |
 | settingsSectionLegal | قانوني | "Legal" (adjective only) | A bare adjective as a section title | معلومات قانونية ("Legal information") |
+
+| toastWrongFolder, errorWrongFolderMessage | ... اختر .Statuses ... | n/a | In right-to-left text the leading dot of ".Statuses" is drawn after the name ("Statuses."), because a dot between Arabic and Latin text takes the right-to-left direction | the name is wrapped in a left-to-right isolate (U+2066 ... U+2069), so it reads ".Statuses" |
 
 ## Checked and left alone
 - The Android picker words in accessStep2 and accessStep3 match Android's own Arabic text (emulator check, API 33 and 34); the only change to step 2 is the picker's name, not the words the person must tap.
