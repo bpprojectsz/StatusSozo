@@ -1,0 +1,55 @@
+device: 13 (API 33)
+picker package: com.google.android.documentsui
+picker apk: /system/priv-app/DocumentsUIGoogle/DocumentsUIGoogle.apk
+aapt2: /usr/local/lib/android/sdk/build-tools/37.0.0/aapt2
+matching lines: 22
+PICKER RESOURCES FOUND: {'use this folder': ['open_tree_button'], 'show hidden files': ['menu_show_hidden_files'], 'allow': ['allow']}
+
+APP STEPS VS ANDROID PICKER WORDS (per language)
+[en] step 1 names our own button "Choose folder": PASS
+[en] accessStep3 contains Android's "use this folder": PASS | Android says: ['Use this folder'] | app says: Tap Use this folder, then Allow.
+[en] accessStep2 contains Android's "show hidden files": PASS | Android says: ['Show hidden files'] | app says: If the picker doesn't show it, open the menu and turn on Show hidden files.
+[en] accessStep3 contains Android's "allow": PASS | Android says: ['Allow'] | app says: Tap Use this folder, then Allow.
+[es] step 1 names our own button "Elegir carpeta": PASS
+[es] accessStep3 contains Android's "use this folder": PASS | Android says: ['Usar esta carpeta'] | app says: Toca Usar esta carpeta y luego Permitir.
+[es] accessStep2 contains Android's "show hidden files": PASS | Android says: ['Mostrar archivos ocultos'] | app says: Si el selector no la muestra, abre el menú y activa Mostrar archivos ocultos.
+[es] accessStep3 contains Android's "allow": PASS | Android says: ['Permitir'] | app says: Toca Usar esta carpeta y luego Permitir.
+[fr] step 1 names our own button "Choisir un dossier": PASS
+[fr] accessStep3 contains Android's "use this folder": PASS | Android says: ['Utiliser ce dossier'] | app says: Touchez Utiliser ce dossier, puis Autoriser.
+[fr] accessStep2 contains Android's "show hidden files": PASS | Android says: ['Afficher les fichiers masqués'] | app says: Si le sélecteur ne l'affiche pas, ouvrez le menu et activez Afficher les fichiers masqués.
+[fr] accessStep3 contains Android's "allow": PASS | Android says: ['Autoriser'] | app says: Touchez Utiliser ce dossier, puis Autoriser.
+[de] step 1 names our own button "Ordner auswählen": PASS
+[de] accessStep3 contains Android's "use this folder": PASS | Android says: ['Diesen Ordner verwenden'] | app says: Tippe auf Diesen Ordner verwenden und dann auf Zulassen.
+[de] accessStep2 contains Android's "show hidden files": PASS | Android says: ['Ausgeblendete Dateien anzeigen'] | app says: Wird er in der Auswahl nicht angezeigt, öffne das Menü und aktiviere Ausgeblendete Dateien anzeigen.
+[de] accessStep3 contains Android's "allow": PASS | Android says: ['Zulassen'] | app says: Tippe auf Diesen Ordner verwenden und dann auf Zulassen.
+[pt] step 1 names our own button "Escolher pasta": PASS
+[pt] accessStep3 contains Android's "use this folder": PASS | Android says: ['Usar esta pasta', 'Utilizar esta pasta'] | app says: Toque em Usar esta pasta e depois em Permitir.
+[pt] accessStep2 contains Android's "show hidden files": PASS | Android says: ['Mostrar arquivos ocultos', 'Mostrar ficheiros ocultos'] | app says: Se o seletor não a mostrar, abra o menu e ative Mostrar arquivos ocultos.
+[pt] accessStep3 contains Android's "allow": PASS | Android says: ['Permitir'] | app says: Toque em Usar esta pasta e depois em Permitir.
+[ar] step 1 names our own button "اختيار مجلد": PASS
+[ar] accessStep3 contains Android's "use this folder": PASS | Android says: ['استخدام هذا المجلد', '\u200f\u202eUse\u202c\u200f \u200f\u202ethis\u202c\u200f \u200f\u202efolder\u202c\u200f'] | app says: اضغط على استخدام هذا المجلد ثم السماح.
+[ar] accessStep2 contains Android's "show hidden files": PASS | Android says: ['إظهار الملفات المخفية', '\u200f\u202eShow\u202c\u200f \u200f\u202ehidden\u202c\u200f \u200f\u202efiles\u202c\u200f'] | app says: إذا لم تعرضه أداة الاختيار، افتح القائمة وفعّل إظهار الملفات المخفية.
+[ar] accessStep3 contains Android's "allow": PASS | Android says: ['السماح', '\u200f\u202eAllow\u202c\u200f'] | app says: اضغط على استخدام هذا المجلد ثم السماح.
+[he] step 1 names our own button "בחירת תיקייה": PASS
+[he] accessStep3 contains Android's "use this folder": PASS | Android says: ['שימוש בתיקייה הזו'] | app says: הקש על שימוש בתיקייה הזו ואז על כן, זה בסדר.
+[he] accessStep2 contains Android's "show hidden files": PASS | Android says: ['הצגת קבצים מוסתרים'] | app says: אם הבורר לא מציג אותה, פתח את התפריט והפעל הצגת קבצים מוסתרים.
+[he] accessStep3 contains Android's "allow": PASS | Android says: ['כן, זה בסדר'] | app says: הקש על שימוש בתיקייה הזו ואז על כן, זה בסדר.
+[hi] step 1 names our own button "फ़ोल्डर चुनें": PASS
+[hi] accessStep3 contains Android's "use this folder": PASS | Android says: ['यह फ़ोल्डर इस्तेमाल करें'] | app says: यह फ़ोल्डर इस्तेमाल करें पर टैप करें, फिर अनुमति दें।
+[hi] accessStep2 contains Android's "show hidden files": PASS | Android says: ['छिपी हुई फ़ाइलें दिखाएं'] | app says: अगर पिकर में वह न दिखे, तो मेनू खोलें और छिपी हुई फ़ाइलें दिखाएं चालू करें।
+[hi] accessStep3 contains Android's "allow": PASS | Android says: ['अनुमति दें'] | app says: यह फ़ोल्डर इस्तेमाल करें पर टैप करें, फिर अनुमति दें।
+[ja] step 1 names our own button "フォルダを選択": PASS
+[ja] accessStep3 contains Android's "use this folder": PASS | Android says: ['このフォルダを使用'] | app says: ［このフォルダを使用］をタップし、［許可］をタップします。
+[ja] accessStep2 contains Android's "show hidden files": PASS | Android says: ['非表示のファイルを表示'] | app says: ピッカーに表示されない場合は、メニューを開いて［非表示のファイルを表示］をオンにします。
+[ja] accessStep3 contains Android's "allow": PASS | Android says: ['許可'] | app says: ［このフォルダを使用］をタップし、［許可］をタップします。
+[ko] step 1 names our own button "폴더 선택": PASS
+[ko] accessStep3 contains Android's "use this folder": PASS | Android says: ['이 폴더 사용'] | app says: 이 폴더 사용을 탭한 다음 허용을 탭하세요.
+[ko] accessStep2 contains Android's "show hidden files": PASS | Android says: ['숨겨진 파일 표시'] | app says: 선택기에 표시되지 않으면 메뉴를 열고 숨겨진 파일 표시를 켜세요.
+[ko] accessStep3 contains Android's "allow": PASS | Android says: ['허용'] | app says: 이 폴더 사용을 탭한 다음 허용을 탭하세요.
+[zh] step 1 names our own button "选择文件夹": PASS
+[zh] accessStep3 contains Android's "use this folder": PASS | Android says: ['使用此文件夹', '使用此資料夾', '使用這個資料夾'] | app says: 点按“使用此文件夹”，然后点按“允许”。
+[zh] accessStep2 contains Android's "show hidden files": PASS | Android says: ['显示隐藏的文件', '顯示已隱藏的檔案', '顯示隱藏的檔案'] | app says: 如果选择器中没有显示，请打开菜单并开启“显示隐藏的文件”。
+[zh] accessStep3 contains Android's "allow": PASS | Android says: ['允許', '允许'] | app says: 点按“使用此文件夹”，然后点按“允许”。
+Success
+APP LANGUAGES SCREEN offers: ['Arabic', 'English', 'English (United States)', 'French', 'German', 'Hebrew', 'Hindi', 'Japanese', 'Korean', 'Portuguese', 'Simplified Chinese', 'Spanish', 'Spanish (United States)']
+APP LANGUAGES SCREEN has all 11 app languages: PASS
