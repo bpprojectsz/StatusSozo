@@ -310,7 +310,7 @@ void main() {
       WidgetTester tester,
     ) async {
       rig.status.pickQueue.add(
-        Ok<FolderGrant>(
+        const Ok<FolderGrant>(
           FolderGrant(
             source: StatusSource.standard,
             treeUri: 'content://tree/standard',

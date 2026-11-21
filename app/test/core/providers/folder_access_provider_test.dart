@@ -296,7 +296,7 @@ void main() {
     test('it stops at the first failure and releases the hold', () async {
       repository.pickQueue
         ..add(
-          Ok<FolderGrant>(
+          const Ok<FolderGrant>(
             FolderGrant(
               source: StatusSource.standard,
               treeUri: 'content://tree/standard',
