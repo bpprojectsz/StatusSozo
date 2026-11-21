@@ -66,6 +66,9 @@ class SafChannelHandler(private val activity: Activity) : MethodChannel.MethodCa
                     )
                 }
                 "freeSpace" -> async(result) { freeSpace(text(call, "target")) }
+                "installedPackages" -> async(result) {
+                    installedPackages(call.argument<List<String>>("packages") ?: emptyList())
+                }
                 "shareCacheSize" -> async(result) { shareCache.size() }
                 "clearShareCache" -> async(result) { shareCache.clear() }
                 else -> result.notImplemented()
@@ -131,6 +134,25 @@ class SafChannelHandler(private val activity: Activity) : MethodChannel.MethodCa
             result.error(ErrorCodes.IO, error.message, null)
         }
     }
+
+    /** The names in [packages] that are installed on this phone. */
+    private fun installedPackages(packages: List<String>): List<String> =
+        packages.filter { name ->
+            try {
+                if (android.os.Build.VERSION.SDK_INT >= 33) {
+                    appContext.packageManager.getPackageInfo(
+                        name,
+                        android.content.pm.PackageManager.PackageInfoFlags.of(0),
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    appContext.packageManager.getPackageInfo(name, 0)
+                }
+                true
+            } catch (error: android.content.pm.PackageManager.NameNotFoundException) {
+                false
+            }
+        }
 
     /** Free bytes where files would go: the cache folder, or the shared storage. */
     private fun freeSpace(target: String): Long {

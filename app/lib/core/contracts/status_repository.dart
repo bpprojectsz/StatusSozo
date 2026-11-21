@@ -18,4 +18,8 @@ abstract interface class StatusRepository {
 
   /// Lists the images and videos in the granted folder, unsorted.
   Future<Result<List<StatusItem>>> list(FolderGrant grant);
+
+  /// Which sources have their messaging app installed, or null when that
+  /// cannot be read. Never throws.
+  Future<Set<StatusSource>?> installedSources();
 }

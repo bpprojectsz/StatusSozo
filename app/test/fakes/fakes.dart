@@ -84,6 +84,9 @@ class FakeStatusRepository implements StatusRepository {
   /// When set, [pickFolder] returns this instead of a generated grant.
   Result<FolderGrant>? pickResult;
 
+  /// Results handed out one per [pickFolder] call before [pickResult] is used.
+  final List<Result<FolderGrant>> pickQueue = <Result<FolderGrant>>[];
+
   /// Errors returned by [list], by source.
   final Map<StatusSource, AppError> listErrors = <StatusSource, AppError>{};
 
@@ -96,6 +99,16 @@ class FakeStatusRepository implements StatusRepository {
 
   /// Delay applied to every call.
   Duration delay = Duration.zero;
+
+  /// What [installedSources] reports; null means it cannot be read.
+  Set<StatusSource>? installed = StatusSource.values.toSet();
+  int installedCalls = 0;
+
+  @override
+  Future<Set<StatusSource>?> installedSources() async {
+    installedCalls++;
+    return installed;
+  }
 
   int pickCalls = 0;
   int hasAccessCalls = 0;
@@ -112,6 +125,9 @@ class FakeStatusRepository implements StatusRepository {
   Future<Result<FolderGrant>> pickFolder(StatusSource source) async {
     pickCalls++;
     await _wait();
+    if (pickQueue.isNotEmpty) {
+      return pickQueue.removeAt(0);
+    }
     return pickResult ??
         Ok<FolderGrant>(
           FolderGrant(

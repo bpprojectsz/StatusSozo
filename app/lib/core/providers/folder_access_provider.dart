@@ -18,7 +18,12 @@ class FolderAccessState {
   FolderAccessState({
     required Map<StatusSource, AccessStatus> status,
     this.connecting,
-  }) : status = Map<StatusSource, AccessStatus>.unmodifiable(status);
+    Set<StatusSource>? installed,
+    this.holdSetup = false,
+  }) : status = Map<StatusSource, AccessStatus>.unmodifiable(status),
+       installed = installed == null
+           ? null
+           : Set<StatusSource>.unmodifiable(installed);
 
   factory FolderAccessState.initial() => FolderAccessState(
     status: <StatusSource, AccessStatus>{
@@ -31,6 +36,13 @@ class FolderAccessState {
   /// The source whose picker is currently open, if any.
   final StatusSource? connecting;
 
+  /// Sources whose messaging app is installed, or null when unknown.
+  final Set<StatusSource>? installed;
+
+  /// True while the first-run flow connects several sources one after the
+  /// other, so the app gate keeps the access screen up between pickers.
+  final bool holdSetup;
+
   AccessStatus statusOf(StatusSource source) =>
       status[source] ?? AccessStatus.unknown;
 
@@ -38,10 +50,14 @@ class FolderAccessState {
     Map<StatusSource, AccessStatus>? status,
     StatusSource? connecting,
     bool clearConnecting = false,
+    Set<StatusSource>? installed,
+    bool? holdSetup,
   }) {
     return FolderAccessState(
       status: status ?? this.status,
       connecting: clearConnecting ? null : (connecting ?? this.connecting),
+      installed: installed ?? this.installed,
+      holdSetup: holdSetup ?? this.holdSetup,
     );
   }
 
@@ -49,11 +65,15 @@ class FolderAccessState {
   bool operator ==(Object other) =>
       other is FolderAccessState &&
       other.connecting == connecting &&
+      other.holdSetup == holdSetup &&
+      setEquals(other.installed, installed) &&
       mapEquals(other.status, status);
 
   @override
   int get hashCode => Object.hash(
     connecting,
+    holdSetup,
+    installed == null ? null : Object.hashAllUnordered(installed!),
     Object.hashAllUnordered(
       status.entries.map(
         (MapEntry<StatusSource, AccessStatus> e) => Object.hash(e.key, e.value),
@@ -93,6 +113,8 @@ class FolderAccessProvider extends ValueNotifier<FolderAccessState> {
   /// means connected; a grant that no longer works needs renewal.
   Future<void> verifyAll() async {
     final int id = ++_verifyId;
+    final Future<Set<StatusSource>?> installedFuture =
+        _repository.installedSources();
     final Map<StatusSource, AccessStatus> next =
         <StatusSource, AccessStatus>{};
     await Future.wait<void>(
@@ -106,10 +128,52 @@ class FolderAccessProvider extends ValueNotifier<FolderAccessState> {
         next[source] = ok ? AccessStatus.connected : AccessStatus.needsRenewal;
       }),
     );
+    final Set<StatusSource>? installed = await installedFuture;
     if (id != _verifyId) {
       return;
     }
-    value = value.copyWith(status: next);
+    value = value.copyWith(status: next, installed: installed);
+  }
+
+  /// The sources to offer on the first run: those whose messaging app is
+  /// installed. When that is unknown, or no app is found, every source is
+  /// offered so nobody is locked out.
+  List<StatusSource> get offeredSources {
+    final Set<StatusSource>? installed = value.installed;
+    final List<StatusSource> offered = <StatusSource>[
+      for (final StatusSource s in StatusSource.values)
+        if (installed == null || installed.contains(s)) s,
+    ];
+    return offered.isEmpty ? StatusSource.values : offered;
+  }
+
+  /// First run: connects [sources] one after the other, opening each picker as
+  /// soon as the previous one finished. Sources already connected are skipped.
+  /// Stops at the first failure (a cancelled picker included) and returns it.
+  /// While it runs, [FolderAccessState.holdSetup] keeps the access screen up.
+  Future<AppError?> connectInOrder(
+    List<StatusSource> sources, {
+    void Function(StatusSource source)? onConnected,
+  }) async {
+    if (value.connecting != null) {
+      return null;
+    }
+    value = value.copyWith(holdSetup: true);
+    try {
+      for (final StatusSource source in sources) {
+        if (value.statusOf(source) == AccessStatus.connected) {
+          continue;
+        }
+        final AppError? error = await connect(source);
+        if (error != null) {
+          return error;
+        }
+        onConnected?.call(source);
+      }
+      return null;
+    } finally {
+      value = value.copyWith(holdSetup: false);
+    }
   }
 
   /// Opens the picker for [source]. Returns the failure, or null on success.

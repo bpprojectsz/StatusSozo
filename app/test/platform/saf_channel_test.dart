@@ -231,6 +231,25 @@ void main() {
       expect(await channel.shareCacheSize(), 0);
     });
 
+    test('installedPackages sends the names and returns the installed ones', () async {
+      native.responder = (MethodCall call) => <Object?>['com.whatsapp'];
+      expect(
+        await channel.installedPackages(<String>['com.whatsapp', 'com.whatsapp.w4b']),
+        <String>['com.whatsapp'],
+      );
+      expect(native.calls.single.method, 'installedPackages');
+      expect(native.calls.single.arguments, <String, Object?>{
+        'packages': <String>['com.whatsapp', 'com.whatsapp.w4b'],
+      });
+    });
+
+    test('installedPackages is null when native says nothing or fails', () async {
+      native.responder = (MethodCall call) => null;
+      expect(await channel.installedPackages(<String>['a']), isNull);
+      native.responder = (MethodCall call) => throw PlatformException(code: 'IO');
+      expect(await channel.installedPackages(<String>['a']), isNull);
+    });
+
     test('freeSpace sends the target and returns the bytes, or null', () async {
       native.responder = (MethodCall call) => 123456789;
       expect(await channel.freeSpace('gallery'), 123456789);

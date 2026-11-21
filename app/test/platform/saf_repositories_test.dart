@@ -189,6 +189,37 @@ void main() {
     });
   });
 
+  group('SafStatusRepository.installedSources', () {
+    late SafStatusRepository repository;
+    setUp(() => repository = SafStatusRepository(channel));
+
+    test('maps installed package names to sources', () async {
+      native.responder = (MethodCall call) => <Object?>['com.whatsapp.w4b'];
+      expect(await repository.installedSources(), <StatusSource>{
+        StatusSource.business,
+      });
+      expect(native.calls.single.arguments, <String, Object?>{
+        'packages': <String>['com.whatsapp', 'com.whatsapp.w4b'],
+      });
+    });
+
+    test('both installed', () async {
+      native.responder = (MethodCall call) =>
+          <Object?>['com.whatsapp', 'com.whatsapp.w4b'];
+      expect(await repository.installedSources(), StatusSource.values.toSet());
+    });
+
+    test('none installed is an empty set, not unknown', () async {
+      native.responder = (MethodCall call) => <Object?>[];
+      expect(await repository.installedSources(), isEmpty);
+    });
+
+    test('unknown when native cannot say', () async {
+      native.responder = (MethodCall call) => null;
+      expect(await repository.installedSources(), isNull);
+    });
+  });
+
   group('MediaStoreSavedRepository', () {
     late MediaStoreSavedRepository repository;
     setUp(() => repository = MediaStoreSavedRepository(channel));

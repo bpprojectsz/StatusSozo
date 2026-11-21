@@ -31,10 +31,12 @@ class AppGate extends StatelessWidget {
         }
         final Set<StatusSource> granted =
             services.settings.settings.grants.keys.toSet();
-        if (granted.isEmpty) {
+        final FolderAccessState access = services.folderAccess.value;
+        // First run connects several sources in a row; the access screen stays
+        // up between the pickers.
+        if (granted.isEmpty || access.holdSetup) {
           return const AccessScreen(key: ValueKey<String>('gate-first'));
         }
-        final FolderAccessState access = services.folderAccess.value;
         final bool pending = granted.any(
           (StatusSource s) => access.statusOf(s) == AccessStatus.unknown,
         );

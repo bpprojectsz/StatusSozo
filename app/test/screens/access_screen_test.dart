@@ -26,13 +26,20 @@ void main() {
   setUp(() => rig = Rig());
   tearDown(() => rig.dispose());
 
+  /// Only the standard app installed, which is the original single-source
+  /// first run. Pass `null` for "unknown" and a set for any other case.
+  const Set<StatusSource> standardOnly = <StatusSource>{StatusSource.standard};
+
   Future<void> pumpAccess(
     WidgetTester tester, {
     AccessMode mode = AccessMode.first,
     StatusSource? source,
     TextDirection direction = TextDirection.ltr,
     double scale = 1,
+    Set<StatusSource>? installed = standardOnly,
   }) async {
+    rig.status.installed = installed;
+    await rig.run(tester, rig.services.folderAccess.verifyAll);
     useSurface(tester);
     await tester.pumpWidget(
       screenApp(
@@ -201,7 +208,7 @@ void main() {
     testScreen('offers the other source and retargets the picker', (
       WidgetTester tester,
     ) async {
-      await pumpAccess(tester);
+      await pumpAccess(tester, mode: AccessMode.renewal, installed: null);
       expect(find.text('Standard'), findsOneWidget);
       expect(find.text('Use Business instead'), findsOneWidget);
 
@@ -225,7 +232,7 @@ void main() {
     ) async {
       await rig.run(tester, () => rig.services.folderAccess.connect(StatusSource.business));
       await rig.run(tester, () => rig.services.source.select(StatusSource.standard));
-      await pumpAccess(tester, mode: AccessMode.renewal);
+      await pumpAccess(tester, mode: AccessMode.renewal, installed: null);
       await tester.tap(find.text('Use Business instead'));
       await tester.pump();
       expect(rig.services.source.value, StatusSource.business);
@@ -242,6 +249,159 @@ void main() {
       expect(find.byType(SecondaryButton), findsNothing);
       expect(find.text('Business'), findsOneWidget);
     });
+  });
+
+  group('first run with both apps installed', () {
+    Future<void> pumpBoth(WidgetTester tester) =>
+        pumpAccess(tester, installed: StatusSource.values.toSet());
+
+    testScreen('shows one row per app, not connected, and no switch button', (
+      WidgetTester tester,
+    ) async {
+      await pumpBoth(tester);
+      expect(find.text('Standard'), findsOneWidget);
+      expect(find.text('Business'), findsOneWidget);
+      expect(find.text('Not connected'), findsNWidgets(2));
+      expect(find.text('Use Business instead'), findsNothing);
+      expect(find.byType(SecondaryButton), findsNothing);
+    });
+
+    testScreen('Choose folder connects Standard and then Business', (
+      WidgetTester tester,
+    ) async {
+      await pumpBoth(tester);
+      await tester.tap(find.text('Choose folder'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(rig.status.pickCalls, 2);
+      for (final StatusSource s in StatusSource.values) {
+        expect(
+          rig.services.folderAccess.value.statusOf(s),
+          AccessStatus.connected,
+        );
+      }
+      expect(rig.services.folderAccess.value.holdSetup, isFalse);
+      expect(rig.services.toasts.value?.code, ToastCode.folderConnected);
+    });
+
+    testScreen('tapping the Business row connects Business first, then Standard', (
+      WidgetTester tester,
+    ) async {
+      final List<StatusSource> picked = <StatusSource>[];
+      rig.services.folderAccess.addListener(() {
+        final StatusSource? c = rig.services.folderAccess.value.connecting;
+        if (c != null && (picked.isEmpty || picked.last != c)) {
+          picked.add(c);
+        }
+      });
+      await pumpBoth(tester);
+      await tester.tap(find.text('Business'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(picked, <StatusSource>[
+        StatusSource.business,
+        StatusSource.standard,
+      ]);
+    });
+
+    testScreen('cancelling the second picker keeps the first and shows no message', (
+      WidgetTester tester,
+    ) async {
+      rig.status.pickQueue.add(
+        Ok<FolderGrant>(
+          FolderGrant(
+            source: StatusSource.standard,
+            treeUri: 'content://tree/standard',
+            grantedAtMs: 1,
+          ),
+        ),
+      );
+      rig.status.pickQueue.add(
+        const Err<FolderGrant>(AppError(AppErrorKind.pickerCancelled)),
+      );
+      await pumpBoth(tester);
+      await tester.tap(find.text('Choose folder'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(rig.status.pickCalls, 2);
+      expect(
+        rig.services.folderAccess.value.statusOf(StatusSource.standard),
+        AccessStatus.connected,
+      );
+      expect(
+        rig.services.folderAccess.value.statusOf(StatusSource.business),
+        AccessStatus.notConnected,
+      );
+      expect(rig.services.toasts.value?.code, isNot(ToastCode.pickerCancelled));
+      expect(rig.services.folderAccess.value.holdSetup, isFalse);
+    });
+
+    testScreen('cancelling the first picker connects nothing and says so', (
+      WidgetTester tester,
+    ) async {
+      rig.status.pickResult = const Err<FolderGrant>(
+        AppError(AppErrorKind.pickerCancelled),
+      );
+      await pumpBoth(tester);
+      await tester.tap(find.text('Choose folder'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.status.pickCalls, 1);
+      expect(rig.services.toasts.value?.code, ToastCode.pickerCancelled);
+    });
+
+    testScreen('a source that is already connected is not asked again', (
+      WidgetTester tester,
+    ) async {
+      await rig.run(
+        tester,
+        () => rig.services.folderAccess.connect(StatusSource.standard),
+      );
+      rig.status.pickCalls = 0;
+      await pumpBoth(tester);
+      expect(find.text('Connected'), findsOneWidget);
+      await tester.tap(find.text('Choose folder'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.status.pickCalls, 1);
+    });
+
+    testScreen('only one app installed: no rows, one picker', (
+      WidgetTester tester,
+    ) async {
+      await pumpAccess(tester);
+      expect(find.text('Not connected'), findsNothing);
+      expect(find.text('Use Business instead'), findsNothing);
+      await tester.tap(find.text('Choose folder'));
+      await tester.pump();
+      await tester.pump();
+      expect(rig.status.pickCalls, 1);
+    });
+
+    testScreen('when the installed apps cannot be read, both are offered', (
+      WidgetTester tester,
+    ) async {
+      await pumpAccess(tester, installed: null);
+      expect(find.text('Standard'), findsOneWidget);
+      expect(find.text('Business'), findsOneWidget);
+    });
+
+    for (final TextDirection direction in TextDirection.values) {
+      testScreen('renders the rows in ${direction.name} at double text', (
+        WidgetTester tester,
+      ) async {
+        await pumpAccess(
+          tester,
+          direction: direction,
+          scale: 2,
+          installed: StatusSource.values.toSet(),
+        );
+        expect(tester.takeException(), isNull);
+      });
+    }
   });
 
   group('layout', () {

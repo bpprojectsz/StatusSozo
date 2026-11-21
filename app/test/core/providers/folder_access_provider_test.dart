@@ -241,4 +241,94 @@ void main() {
       isNot(FolderAccessState.initial()),
     );
   });
+
+  group('installed apps and the first-run chain', () {
+    test('verifyAll reads which apps are installed', () async {
+      repository.installed = <StatusSource>{StatusSource.business};
+      await access.verifyAll();
+      expect(access.value.installed, <StatusSource>{StatusSource.business});
+      expect(access.offeredSources, <StatusSource>[StatusSource.business]);
+    });
+
+    test('unknown installed apps offer every source', () async {
+      repository.installed = null;
+      await access.verifyAll();
+      expect(access.value.installed, isNull);
+      expect(access.offeredSources, StatusSource.values);
+    });
+
+    test('an unreadable check keeps what was known before', () async {
+      repository.installed = <StatusSource>{StatusSource.standard};
+      await access.verifyAll();
+      repository.installed = null;
+      await access.verifyAll();
+      expect(access.value.installed, <StatusSource>{StatusSource.standard});
+    });
+
+    test('no app found offers every source so nobody is locked out', () async {
+      repository.installed = <StatusSource>{};
+      await access.verifyAll();
+      expect(access.offeredSources, StatusSource.values);
+    });
+
+    test('connectInOrder opens the pickers one after the other', () async {
+      final List<StatusSource> order = <StatusSource>[];
+      final AppError? error = await access.connectInOrder(
+        StatusSource.values,
+        onConnected: order.add,
+      );
+      expect(error, isNull);
+      expect(order, StatusSource.values);
+      expect(repository.pickCalls, 2);
+      expect(access.hasUsableSource, isTrue);
+      expect(access.connectedSources, StatusSource.values);
+    });
+
+    test('it holds the setup screen while it runs and lets go after', () async {
+      final List<bool> holds = <bool>[];
+      access.addListener(() => holds.add(access.value.holdSetup));
+      expect(access.value.holdSetup, isFalse);
+      await access.connectInOrder(StatusSource.values);
+      expect(holds.contains(true), isTrue);
+      expect(access.value.holdSetup, isFalse);
+    });
+
+    test('it stops at the first failure and releases the hold', () async {
+      repository.pickQueue
+        ..add(
+          Ok<FolderGrant>(
+            FolderGrant(
+              source: StatusSource.standard,
+              treeUri: 'content://tree/standard',
+              grantedAtMs: 1,
+            ),
+          ),
+        )
+        ..add(const Err<FolderGrant>(AppError(AppErrorKind.pickerCancelled)));
+      final AppError? error = await access.connectInOrder(
+        StatusSource.values,
+      );
+      expect(error?.kind, AppErrorKind.pickerCancelled);
+      expect(access.connectedSources, <StatusSource>[StatusSource.standard]);
+      expect(access.value.holdSetup, isFalse);
+    });
+
+    test('a source that is already connected is skipped', () async {
+      await access.connect(StatusSource.standard);
+      repository.pickCalls = 0;
+      await access.connectInOrder(StatusSource.values);
+      expect(repository.pickCalls, 1);
+    });
+
+    test('while a picker is open it does nothing', () async {
+      repository.delay = const Duration(milliseconds: 50);
+      final Future<AppError?> first = access.connect(StatusSource.standard);
+      final AppError? second = await access.connectInOrder(
+        StatusSource.values,
+      );
+      expect(second, isNull);
+      expect(access.value.holdSetup, isFalse);
+      await first;
+    });
+  });
 }

@@ -233,6 +233,18 @@ class SafChannel {
     return result.valueOrNull ?? 0;
   }
 
+  /// The names in [packages] that are installed, or null if that cannot be
+  /// read.
+  Future<List<String>?> installedPackages(List<String> packages) async {
+    final Result<List<String>?> result = await _call<List<String>?>(
+      'installedPackages',
+      <String, Object?>{'packages': packages},
+      (Object? raw) =>
+          raw is List ? raw.whereType<String>().toList() : null,
+    );
+    return result.valueOrNull;
+  }
+
   /// Free bytes at [target] ('gallery' or 'cache'), or null if unknown.
   Future<int?> freeSpace(String target) async {
     final Result<int?> result = await _call<int?>(

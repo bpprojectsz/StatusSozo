@@ -67,6 +67,20 @@ class SafStatusRepository implements StatusRepository {
       _channel.releaseFolder(grant.treeUri);
 
   @override
+  Future<Set<StatusSource>?> installedSources() async {
+    final List<String>? names = await _channel.installedPackages(<String>[
+      for (final StatusSource s in StatusSource.values) s.packageName,
+    ]);
+    if (names == null) {
+      return null;
+    }
+    return <StatusSource>{
+      for (final StatusSource s in StatusSource.values)
+        if (names.contains(s.packageName)) s,
+    };
+  }
+
+  @override
   Future<Result<List<StatusItem>>> list(FolderGrant grant) async {
     final Result<List<Map<String, Object?>>> rows = await _channel.listFolder(
       grant.treeUri,

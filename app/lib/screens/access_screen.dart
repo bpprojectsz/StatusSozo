@@ -15,6 +15,7 @@ import 'package:statussozo/widgets/layout/app_nav_bar.dart';
 import 'package:statussozo/widgets/layout/screen_scaffold.dart';
 import 'package:statussozo/widgets/primitives/app_chip.dart';
 import 'package:statussozo/widgets/primitives/app_group.dart';
+import 'package:statussozo/widgets/primitives/app_row.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
 import 'package:statussozo/widgets/primitives/secondary_button.dart';
 
@@ -74,7 +75,53 @@ class _AccessScreenState extends State<AccessScreen> {
       ? StatusSource.business
       : StatusSource.standard;
 
+  bool get _first => widget.mode == AccessMode.first;
+
+  /// First run: connects [start] and then every other offered source that is
+  /// not connected yet, one picker straight after the other.
+  Future<void> _chooseInOrder(StatusSource start) async {
+    final services = AppScope.of(context);
+    final List<StatusSource> offered = services.folderAccess.offeredSources;
+    final List<StatusSource> order = <StatusSource>[
+      start,
+      for (final StatusSource s in offered)
+        if (s != start &&
+            services.folderAccess.value.statusOf(s) != AccessStatus.connected)
+          s,
+    ];
+    final AppError? error = await services.folderAccess.connectInOrder(
+      order,
+      onConnected: (StatusSource _) =>
+          services.toasts.show(ToastCode.folderConnected),
+    );
+    if (error == null) {
+      return;
+    }
+    // Skipping the second picker after the first worked is a choice, not a
+    // failure, so it gets no message.
+    if (error.kind == AppErrorKind.pickerCancelled &&
+        services.folderAccess.hasUsableSource) {
+      return;
+    }
+    services.toasts.show(toastForError(error.kind));
+  }
+
+  /// The first offered source that is not connected yet.
+  StatusSource _nextToConnect() {
+    final services = AppScope.of(context);
+    final List<StatusSource> offered = services.folderAccess.offeredSources;
+    for (final StatusSource s in offered) {
+      if (services.folderAccess.value.statusOf(s) != AccessStatus.connected) {
+        return s;
+      }
+    }
+    return offered.first;
+  }
+
   Future<void> _choose() async {
+    if (_first) {
+      return _chooseInOrder(_nextToConnect());
+    }
     final services = AppScope.of(context);
     final StatusSource target = _resolveTarget();
     final AppError? error = await services.folderAccess.connect(target);
@@ -99,6 +146,27 @@ class _AccessScreenState extends State<AccessScreen> {
     }
   }
 
+  Widget _sourceRow(
+    AppLocalizations l10n,
+    FolderAccessProvider access,
+    StatusSource source,
+    bool connecting,
+  ) {
+    final bool connected =
+        access.value.statusOf(source) == AccessStatus.connected;
+    return AppRow(
+      icon: AppIcons.folder,
+      label: sourceName(l10n, source),
+      trailing: AppChip(
+        label: connected ? l10n.commonConnected : l10n.commonNotConnected,
+        tone: connected ? AppChipTone.success : AppChipTone.neutral,
+      ),
+      onPressed: (connected || connecting)
+          ? null
+          : () => unawaited(_chooseInOrder(source)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final services = AppScope.of(context);
@@ -120,7 +188,11 @@ class _AccessScreenState extends State<AccessScreen> {
       listenable: services.folderAccess,
       builder: (BuildContext context, Widget? _) {
         final bool connecting = services.folderAccess.value.connecting != null;
-        final bool showOther = !pushed;
+        final List<StatusSource> offered = services.folderAccess.offeredSources;
+        // First run with both apps installed: one row per app, with a tick once
+        // connected, instead of the "use the other one" button.
+        final bool showRows = _first && offered.length > 1;
+        final bool showOther = !pushed && !showRows && offered.length > 1;
         return ScreenScaffold(
           navBar: pushed
               ? AppNavBar.pushed(
@@ -140,10 +212,19 @@ class _AccessScreenState extends State<AccessScreen> {
                       _Hero(
                         title: title,
                         body: l10n.accessBody(l10n.appName),
-                        sourceLabel: sourceName(l10n, target),
+                        sourceLabel: showRows ? null : sourceName(l10n, target),
                         colors: colors,
                         styles: styles,
                       ),
+                      if (showRows) ...<Widget>[
+                        const SizedBox(height: AppSpacing.md),
+                        AppGroup(
+                          children: <Widget>[
+                            for (final StatusSource s in offered)
+                              _sourceRow(l10n, services.folderAccess, s, connecting),
+                          ],
+                        ),
+                      ],
                       const SizedBox(height: AppSpacing.md),
                       AppGroup(
                         dividerInset: AppSpacing.md + _Step.numeral + AppSpacing.md,
@@ -211,7 +292,7 @@ class _Hero extends StatelessWidget {
 
   final String title;
   final String body;
-  final String sourceLabel;
+  final String? sourceLabel;
   final AppColors colors;
   final AppTextStyles styles;
 
@@ -246,8 +327,10 @@ class _Hero extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
-                Flexible(child: AppChip(label: sourceLabel)),
+                if (sourceLabel != null) ...<Widget>[
+                  const SizedBox(width: AppSpacing.md),
+                  Flexible(child: AppChip(label: sourceLabel!)),
+                ],
               ],
             ),
             const SizedBox(height: AppSpacing.md),
