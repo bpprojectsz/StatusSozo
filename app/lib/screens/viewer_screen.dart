@@ -73,7 +73,14 @@ class _ViewerScreenState extends State<ViewerScreen> {
   @override
   void initState() {
     super.initState();
-    unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky));
+    // Hide only the status bar. The navigation bar stays, so the banner at the
+    // bottom keeps a gap above the buttons or the gesture strip, as on Home.
+    unawaited(
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: const <SystemUiOverlay>[SystemUiOverlay.bottom],
+      ),
+    );
   }
 
   @override

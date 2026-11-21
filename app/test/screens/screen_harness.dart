@@ -192,6 +192,9 @@ Widget screenApp(
 class PlatformRecorder {
   final List<String> uiModes = <String>[];
 
+  /// The overlays kept visible by each manual mode call.
+  final List<List<String>> overlays = <List<String>>[];
+
   void install() {
     TestWidgetsFlutterBinding.ensureInitialized();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -200,6 +203,12 @@ class PlatformRecorder {
         ) async {
           if (call.method == 'SystemChrome.setEnabledSystemUIMode') {
             uiModes.add(call.arguments as String);
+          }
+          if (call.method == 'SystemChrome.setEnabledSystemUIOverlays') {
+            uiModes.add('SystemUiMode.manual');
+            overlays.add(
+              (call.arguments as List<Object?>).cast<String>().toList(),
+            );
           }
           return null;
         });

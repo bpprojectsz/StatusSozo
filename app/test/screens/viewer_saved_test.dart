@@ -254,12 +254,15 @@ void main() {
       expect(find.byType(ZoomableImage), findsOneWidget);
     });
 
-    testScreen('hides the system bars and restores them on exit', (
+    testScreen('hides only the status bar, keeps the navigation bar, and restores both on exit', (
       WidgetTester tester,
     ) async {
       final SemanticsHandle handle = tester.ensureSemantics();
       await openViewer(tester, photos(1));
-      expect(platform.uiModes, contains('SystemUiMode.immersiveSticky'));
+      expect(platform.uiModes, isNot(contains('SystemUiMode.immersiveSticky')));
+      expect(platform.overlays, <List<String>>[
+        <String>['SystemUiOverlay.bottom'],
+      ]);
       await tester.tap(find.bySemanticsLabel('Close viewer'));
       await tester.pumpAndSettle();
       expect(platform.uiModes.last, 'SystemUiMode.edgeToEdge');
