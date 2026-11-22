@@ -122,6 +122,9 @@ class AppSettings {
   /// known.
   final int? reviewLastAskedMs;
 
+  /// Home shows every connected source together instead of one at a time.
+  final bool viewAll;
+
   /// Copies with changes. Pass [clearLanguage] to reset [languageCode] to null.
   AppSettings copyWith({
     int? schemaVersion,
