@@ -97,6 +97,17 @@ tap_text '^allow$'
 sleep 5
 shot 04_after_allow
 
+# First run with both apps offered: the second picker opens straight after the
+# first. Skip it with Back, which leaves the first source connected.
+if has_text 'use this folder'; then
+  note "SECOND PICKER OPENED AFTER THE FIRST"
+  shot 04b_second_picker
+  adb shell input keyevent KEYCODE_BACK
+  sleep 4
+else
+  note "NO SECOND PICKER"
+fi
+
 if has_text 'Photos|Videos'; then note "HOME REACHED"; else note "HOME NOT REACHED"; fi
 shot 05_home
 

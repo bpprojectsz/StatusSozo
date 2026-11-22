@@ -45,6 +45,7 @@ StatusItem statusItem(
   int modifiedMs = 1000,
   int sizeBytes = 100,
   String? uri,
+  StatusSource source = StatusSource.standard,
 }) {
   return StatusItem(
     uri: uri ?? 'content://status/$name',
@@ -52,6 +53,7 @@ StatusItem statusItem(
     mime: mime,
     sizeBytes: sizeBytes,
     modifiedMs: modifiedMs,
+    source: source,
   );
 }
 
@@ -163,8 +165,11 @@ class FakeStatusRepository implements StatusRepository {
     if (error != null) {
       return Err<List<StatusItem>>(error);
     }
+    // Like the real repository, stamp every item with the folder it came from.
     return Ok<List<StatusItem>>(
-      List<StatusItem>.of(itemsBySource[grant.source] ?? <StatusItem>[]),
+      (itemsBySource[grant.source] ?? <StatusItem>[])
+          .map((StatusItem i) => i.copyWith(source: grant.source))
+          .toList(),
     );
   }
 }

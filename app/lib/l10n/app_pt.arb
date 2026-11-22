@@ -165,5 +165,7 @@
   "toastLowStorage": "Não há espaço suficiente. Libere espaço e tente novamente.",
   "errorLowStorageTitle": "Espaço insuficiente",
   "errorLowStorageMessage": "Libere espaço no seu telefone e tente novamente.",
-  "errorLowStorageAction": "Tentar novamente"
+  "errorLowStorageAction": "Tentar novamente",
+  "sourceAll": "Todos",
+  "tileLabelWithSource": "{label}, {source}"
 }

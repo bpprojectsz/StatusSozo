@@ -769,5 +769,21 @@
   "errorLowStorageAction": "Try again",
   "@errorLowStorageAction": {
     "description": "Button on the low storage error."
+  },
+  "sourceAll": "All",
+  "@sourceAll": {
+    "description": "Home: the choice that shows every connected source together, next to Standard and Business."
+  },
+  "tileLabelWithSource": "{label}, {source}",
+  "@tileLabelWithSource": {
+    "description": "Accessibility label of a tile in the combined view: the tile label, then which source it comes from.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -80,10 +80,25 @@ void main() {
       mime: 'image/jpeg',
       sizeBytes: 1200,
       modifiedMs: 1700000000000,
+      source: StatusSource.business,
     );
 
-    test('json round trip', () {
+    test('json round trip keeps the source', () {
       expect(StatusItem.fromJson(item.toJson()), item);
+      expect(StatusItem.fromJson(item.toJson()).source, StatusSource.business);
+    });
+
+    test('a native row without a source takes the one it was read from', () {
+      final Map<String, Object?> row = item.toJson()..remove('source');
+      expect(
+        StatusItem.fromJson(row, source: StatusSource.standard).source,
+        StatusSource.standard,
+      );
+      expect(StatusItem.fromJson(row).source, StatusSource.standard);
+    });
+
+    test('the same file in two sources is two different items', () {
+      expect(item, isNot(item.copyWith(source: StatusSource.standard)));
     });
 
     test('id kind and copyWith', () {

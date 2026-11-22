@@ -159,7 +159,6 @@ class AppServices {
     final StatusListProvider statusList = StatusListProvider(
       repository: statusRepository,
       settings: settings,
-      source: source,
     );
     final SavedLibraryProvider savedLibrary = SavedLibraryProvider(
       savedRepository,
@@ -250,13 +249,18 @@ class AppServices {
   SaveSummary? _lastSummary;
 
   bool _warningShown = false;
-  AccessStatus _lastSourceStatus = AccessStatus.unknown;
+  final Map<StatusSource, AccessStatus> _lastStatus =
+      <StatusSource, AccessStatus>{
+        for (final StatusSource s in StatusSource.values) s: AccessStatus.unknown,
+      };
   StatusSource? _lastSource;
+  bool _lastShowAll = true;
   bool _disposed = false;
 
   /// Connects the providers to each other. Called once by the factories.
   void _wire() {
     _lastSource = source.value;
+    _lastShowAll = source.showAll;
     // A list that fails because access was lost re-checks every grant.
     statusList.onAccessLost = () => unawaited(folderAccess.verifyAll());
     settings.addListener(_onSettingsChanged);
@@ -304,25 +308,31 @@ class AppServices {
     );
   }
 
-  // Switching source leaves selection mode.
+  // Switching between All, Standard and Business leaves selection mode.
   void _onSourceChanged() {
-    if (source.value != _lastSource) {
+    if (source.value != _lastSource || source.showAll != _lastShowAll) {
       _lastSource = source.value;
+      _lastShowAll = source.showAll;
       homeSelection.clear();
-      _lastSourceStatus = folderAccess.value.statusOf(source.value);
     }
   }
 
-  // When the selected source gains or loses a working grant (connect or
-  // disconnect), reload its list. The very first verification at startup is
-  // left to bootstrap().
+  // When any source gains or loses a working grant (connect or disconnect),
+  // reload the list. The very first verification at startup is left to
+  // bootstrap().
   void _onAccessChanged() {
-    final AccessStatus now = folderAccess.value.statusOf(source.value);
-    final AccessStatus before = _lastSourceStatus;
-    _lastSourceStatus = now;
-    if (before != AccessStatus.unknown &&
-        before != now &&
-        (now == AccessStatus.connected || now == AccessStatus.notConnected)) {
+    bool reload = false;
+    for (final StatusSource s in StatusSource.values) {
+      final AccessStatus now = folderAccess.value.statusOf(s);
+      final AccessStatus before = _lastStatus[s] ?? AccessStatus.unknown;
+      _lastStatus[s] = now;
+      if (before != AccessStatus.unknown &&
+          before != now &&
+          (now == AccessStatus.connected || now == AccessStatus.notConnected)) {
+        reload = true;
+      }
+    }
+    if (reload) {
       unawaited(statusList.refresh());
     }
   }

@@ -165,5 +165,7 @@
   "toastLowStorage": "空き容量が足りません。容量を空けてからもう一度お試しください。",
   "errorLowStorageTitle": "空き容量が足りません",
   "errorLowStorageMessage": "スマートフォンの空き容量を増やしてから、もう一度お試しください。",
-  "errorLowStorageAction": "再試行"
+  "errorLowStorageAction": "再試行",
+  "sourceAll": "すべて",
+  "tileLabelWithSource": "{label}、{source}"
 }

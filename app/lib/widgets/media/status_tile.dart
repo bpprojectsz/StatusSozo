@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
+import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
@@ -54,6 +55,7 @@ class StatusTile extends StatelessWidget {
     this.selected = false,
     this.selectionMode = false,
     this.saved = false,
+    this.sourceMark,
     this.onTap,
     this.onLongPress,
   });
@@ -63,6 +65,10 @@ class StatusTile extends StatelessWidget {
   final bool selected;
   final bool selectionMode;
   final bool saved;
+
+  /// Which app the item comes from. Set only in the combined view, where it
+  /// shows as a small letter badge top-start and is added to the label.
+  final StatusSource? sourceMark;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
@@ -114,6 +120,15 @@ class StatusTile extends StatelessWidget {
                     iconColor: colors.onScrim,
                   ),
                 ),
+              if (sourceMark != null)
+                PositionedDirectional(
+                  top: AppSpacing.xs,
+                  start: AppSpacing.xs,
+                  child: _SourceBadge(
+                    letter: _sourceLetter(l10n, sourceMark!),
+                    colors: colors,
+                  ),
+                ),
               if (selectionMode)
                 PositionedDirectional(
                   top: AppSpacing.xs,
@@ -130,13 +145,61 @@ class StatusTile extends StatelessWidget {
       fill: true,
       onPressed: onTap,
       onLongPress: onLongPress,
-      semanticLabel: tileLabel(
-        l10n,
-        isVideo: isVideo,
-        saved: saved,
-        selected: selected,
-      ),
+      semanticLabel: sourceMark == null
+          ? tileLabel(l10n, isVideo: isVideo, saved: saved, selected: selected)
+          : l10n.tileLabelWithSource(
+              tileLabel(
+                l10n,
+                isVideo: isVideo,
+                saved: saved,
+                selected: selected,
+              ),
+              _sourceName(l10n, sourceMark!),
+            ),
       child: tile,
+    );
+  }
+}
+
+String _sourceName(AppLocalizations l10n, StatusSource source) =>
+    switch (source) {
+      StatusSource.standard => l10n.sourceStandard,
+      StatusSource.business => l10n.sourceBusiness,
+    };
+
+/// The first letter of the source's own name, so it needs no extra text.
+String _sourceLetter(AppLocalizations l10n, StatusSource source) {
+  final String name = _sourceName(l10n, source);
+  return name.isEmpty ? '' : String.fromCharCode(name.runes.first);
+}
+
+class _SourceBadge extends StatelessWidget {
+  const _SourceBadge({required this.letter, required this.colors});
+
+  final String letter;
+  final AppColors colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colors.scrim,
+        borderRadius: AppRadii.pillRadius,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm - AppSpacing.xxs,
+          vertical: AppSpacing.xxs,
+        ),
+        child: ExcludeSemantics(
+          child: Text(
+            letter,
+            style: AppTextStyles.of(context).caption.copyWith(
+              color: colors.onScrim,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

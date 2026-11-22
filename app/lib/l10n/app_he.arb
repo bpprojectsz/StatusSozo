@@ -165,5 +165,7 @@
   "toastLowStorage": "אין מספיק מקום באחסון. פנה מקום ונסה שוב.",
   "errorLowStorageTitle": "אין מספיק מקום באחסון",
   "errorLowStorageMessage": "פנה מקום בטלפון ונסה שוב.",
-  "errorLowStorageAction": "נסה שוב"
+  "errorLowStorageAction": "נסה שוב",
+  "sourceAll": "הכול",
+  "tileLabelWithSource": "{label}, {source}"
 }

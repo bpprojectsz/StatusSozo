@@ -93,7 +93,7 @@ class SafStatusRepository implements StatusRepository {
           continue;
         }
         try {
-          items.add(StatusItem.fromJson(row));
+          items.add(StatusItem.fromJson(row, source: grant.source));
         } on FormatException catch (error) {
           AppLog.warn('status', 'dropped a malformed row', error);
         }

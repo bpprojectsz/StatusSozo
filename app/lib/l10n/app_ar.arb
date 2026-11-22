@@ -165,5 +165,7 @@
   "toastLowStorage": "مساحة التخزين غير كافية. أفرغ بعض المساحة وحاول مرة أخرى.",
   "errorLowStorageTitle": "مساحة التخزين غير كافية",
   "errorLowStorageMessage": "أفرغ بعض المساحة على هاتفك ثم حاول مرة أخرى.",
-  "errorLowStorageAction": "إعادة المحاولة"
+  "errorLowStorageAction": "إعادة المحاولة",
+  "sourceAll": "الكل",
+  "tileLabelWithSource": "{label}، {source}"
 }

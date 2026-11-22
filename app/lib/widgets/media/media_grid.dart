@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
+import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/widgets/media/status_tile.dart';
@@ -22,12 +23,16 @@ class SliverMediaGrid extends StatelessWidget {
     this.selectedIds = const <String>{},
     this.savedNames = const <String>{},
     this.selectionMode = false,
+    this.showSource = false,
     this.onTap,
     this.onLongPress,
   });
 
   final List<ViewableMedia> items;
   final ThumbnailSource source;
+
+  /// Marks each status tile with the app it comes from (the combined view).
+  final bool showSource;
 
   /// URIs of the selected items.
   final Set<String> selectedIds;
@@ -52,6 +57,7 @@ class SliverMediaGrid extends StatelessWidget {
             selected: selectedIds.contains(media.uri),
             selectionMode: selectionMode,
             saved: savedNames.contains(media.name),
+            sourceMark: showSource && media is StatusItem ? media.source : null,
             onTap: onTap == null ? null : () => onTap!(index),
             onLongPress: onLongPress == null ? null : () => onLongPress!(index),
           );
@@ -75,6 +81,7 @@ class MediaGridView extends StatelessWidget {
     this.selectedIds = const <String>{},
     this.savedNames = const <String>{},
     this.selectionMode = false,
+    this.showSource = false,
     this.onTap,
     this.onLongPress,
     this.footer,
@@ -87,6 +94,7 @@ class MediaGridView extends StatelessWidget {
   final Set<String> selectedIds;
   final Set<String> savedNames;
   final bool selectionMode;
+  final bool showSource;
   final void Function(int index)? onTap;
   final void Function(int index)? onLongPress;
   final Widget? footer;
@@ -120,6 +128,7 @@ class MediaGridView extends StatelessWidget {
               selectedIds: selectedIds,
               savedNames: savedNames,
               selectionMode: selectionMode,
+              showSource: showSource,
               onTap: onTap,
               onLongPress: onLongPress,
             ),

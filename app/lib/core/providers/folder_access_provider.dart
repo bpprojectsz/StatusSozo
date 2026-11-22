@@ -212,6 +212,10 @@ class FolderAccessProvider extends ValueNotifier<FolderAccessState> {
         if (!currentUsable) {
           unawaited(_source.select(source));
         }
+        // With both apps connected the natural view is all of them together.
+        if (connectedSources.length > 1) {
+          unawaited(_source.selectAll());
+        }
         return null;
     }
   }

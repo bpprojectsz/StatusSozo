@@ -9,6 +9,7 @@ import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/status_list_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
+import 'package:statussozo/core/services/status_organizer.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
 import 'package:statussozo/screens/access_screen.dart';
@@ -109,9 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() => _pulling = false); // ui-local
     }
   }
-
-  List<StatusItem> _tabItems(StatusListState list) =>
-      _tab == _MediaTab.photos ? list.photos : list.videos;
 
   void _setTab(_MediaTab tab) {
     if (tab == _tab) {
@@ -235,6 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required AccessStatus access,
     required StatusSource source,
     required List<StatusItem> tabItems,
+    required bool showSource,
     required Set<String> selectedIds,
     required bool selectionMode,
   }) {
@@ -282,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 source: services.thumbnails,
                 selectedIds: selectedIds,
                 selectionMode: selectionMode,
+                showSource: showSource,
                 savedNames: services.savedLibrary.value.names,
                 onTap: (int i) => _onTap(tabItems, i),
                 onLongPress: (int i) => _onLongPress(tabItems, i),
@@ -317,12 +317,32 @@ class _HomeScreenState extends State<HomeScreen> {
         final StatusListState list = services.statusList.value;
         final selection = services.homeSelection.value;
         final StatusSource source = services.source.value;
-        final List<StatusItem> tabItems = _tabItems(list);
-        final AccessStatus access = services.folderAccess.value.statusOf(
-          source,
-        );
         final bool bothConnected =
             services.folderAccess.connectedSources.length > 1;
+        // All three views read the same merged list, so switching is instant.
+        // Null means every connected source together.
+        final StatusSource? scope = (bothConnected && services.source.showAll)
+            ? null
+            : source;
+        final List<StatusItem> scoped = list.itemsFor(scope);
+        final List<StatusItem> photos = StatusOrganizer.photos(scoped);
+        final List<StatusItem> videos = StatusOrganizer.videos(scoped);
+        final List<StatusItem> tabItems = _tab == _MediaTab.photos
+            ? photos
+            : videos;
+        final AccessStatus access = scope == null
+            ? AccessStatus.connected
+            : services.folderAccess.value.statusOf(scope);
+        // A source that needs access again, while another one is showing.
+        final List<StatusSource> renewal = scope == null
+            ? const <StatusSource>[]
+            : <StatusSource>[
+                for (final StatusSource s in StatusSource.values)
+                  if (s != scope &&
+                      services.folderAccess.value.statusOf(s) ==
+                          AccessStatus.needsRenewal)
+                    s,
+              ];
 
         final Widget navBar = selection.active
             ? AppNavBar.selection(
@@ -389,16 +409,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppSpacing.gutter,
                       0,
                     ),
-                    child: SegmentedTabs<StatusSource>(
+                    child: SegmentedTabs<StatusSource?>(
                       semanticLabel: l10n.semSwitchSource,
-                      value: source,
-                      onChanged: (StatusSource next) =>
-                          unawaited(services.source.select(next)),
-                      segments: <SegmentItem<StatusSource>>[
+                      value: scope,
+                      onChanged: (StatusSource? next) => unawaited(
+                        next == null
+                            ? services.source.selectAll()
+                            : services.source.select(next),
+                      ),
+                      segments: <SegmentItem<StatusSource?>>[
+                        SegmentItem<StatusSource?>(
+                          value: null,
+                          label: l10n.sourceAll,
+                          count: list.countFor(null),
+                        ),
                         for (final StatusSource s in StatusSource.values)
-                          SegmentItem<StatusSource>(
+                          SegmentItem<StatusSource?>(
                             value: s,
                             label: sourceName(l10n, s),
+                            count: list.countFor(s),
                           ),
                       ],
                     ),
@@ -420,12 +449,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SegmentItem<_MediaTab>(
                               value: _MediaTab.photos,
                               label: l10n.tabPhotos,
-                              count: list.photos.length,
+                              count: photos.length,
                             ),
                             SegmentItem<_MediaTab>(
                               value: _MediaTab.videos,
                               label: l10n.tabVideos,
-                              count: list.videos.length,
+                              count: videos.length,
                             ),
                           ],
                         ),
@@ -447,11 +476,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                if (renewal.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      AppSpacing.gutter,
+                      0,
+                      AppSpacing.gutter,
+                      AppSpacing.sm,
+                    ),
+                    child: Wrap(
+                      spacing: AppSpacing.sm,
+                      runSpacing: AppSpacing.sm,
+                      children: <Widget>[
+                        for (final StatusSource s in renewal)
+                          Semantics(
+                            label: l10n.tileLabelWithSource(
+                              l10n.accessTitleRenewal,
+                              sourceName(l10n, s),
+                            ),
+                            container: true,
+                            excludeSemantics: true,
+                            child: AppChip(
+                              label: sourceName(l10n, s),
+                              tone: AppChipTone.warning,
+                              onPressed: () => _connect(s),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                 Expanded(
                   child: _content(
                     list: list,
                     access: access,
                     source: source,
+                    showSource: scope == null,
                     tabItems: tabItems,
                     selectedIds: selection.ids,
                     selectionMode: selection.active,

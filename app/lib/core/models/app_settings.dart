@@ -21,6 +21,7 @@ class AppSettings {
     this.reviewLastDay,
     this.reviewAskCount = 0,
     this.reviewLastAskedMs,
+    this.viewAll = true,
   }) : grants = Map<StatusSource, FolderGrant>.unmodifiable(grants);
 
   /// Tolerant decoding: unknown enum values fall back to defaults and bad
@@ -80,6 +81,7 @@ class AppSettings {
           tryReadInt(json, 'reviewAskCount') ??
           (json['reviewAsked'] == true ? 1 : 0),
       reviewLastAskedMs: tryReadInt(json, 'reviewLastAskedMs'),
+      viewAll: json['viewAll'] is bool ? json['viewAll']! as bool : true,
     );
   }
 
@@ -133,6 +135,7 @@ class AppSettings {
     String? reviewLastDay,
     int? reviewAskCount,
     int? reviewLastAskedMs,
+    bool? viewAll,
   }) {
     return AppSettings(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -145,6 +148,7 @@ class AppSettings {
       reviewLastDay: reviewLastDay ?? this.reviewLastDay,
       reviewAskCount: reviewAskCount ?? this.reviewAskCount,
       reviewLastAskedMs: reviewLastAskedMs ?? this.reviewLastAskedMs,
+      viewAll: viewAll ?? this.viewAll,
     );
   }
 
@@ -162,6 +166,7 @@ class AppSettings {
     'reviewLastDay': reviewLastDay,
     'reviewAskCount': reviewAskCount,
     'reviewLastAskedMs': reviewLastAskedMs,
+    'viewAll': viewAll,
   };
 
   @override
@@ -176,6 +181,7 @@ class AppSettings {
       other.reviewLastDay == reviewLastDay &&
       other.reviewAskCount == reviewAskCount &&
       other.reviewLastAskedMs == reviewLastAskedMs &&
+      other.viewAll == viewAll &&
       mapEquals(other.grants, grants);
 
   @override
@@ -189,6 +195,7 @@ class AppSettings {
     reviewLastDay,
     reviewAskCount,
     reviewLastAskedMs,
+    viewAll,
     Object.hashAllUnordered(
       grants.entries.map(
         (MapEntry<StatusSource, FolderGrant> e) => Object.hash(e.key, e.value),
