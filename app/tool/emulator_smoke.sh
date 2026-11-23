@@ -8,6 +8,7 @@ PKG=com.zdmgold.statussozo
 APK=app/build/app/outputs/flutter-apk/app-debug.apk
 OUT=/tmp/emu
 STAT=/sdcard/Android/media/com.whatsapp/WhatsApp/Media/.Statuses
+BIZ="/sdcard/Android/media/com.whatsapp.w4b/WhatsApp Business/Media/.Statuses"
 mkdir -p "$OUT"
 : > "$OUT/summary.txt"
 note() { echo "$1" | tee -a "$OUT/summary.txt"; }
@@ -80,6 +81,13 @@ head -3 "$OUT/push.txt" | tee -a "$OUT/summary.txt"
 adb shell ls -la "$STAT" 2>&1 | head -6 | tee -a "$OUT/summary.txt"
 note "files in the status folder: $(adb shell ls "$STAT" 2>/dev/null | wc -l)"
 
+# A few different statuses for the second app, so the All view has both.
+adb shell mkdir -p "$BIZ" 2>&1 | tee -a "$OUT/summary.txt"
+for f in $(ls /tmp/media | head -4) $(ls /tmp/media | grep '\.mp4$' | head -1); do
+  adb push "/tmp/media/$f" "$BIZ/BZ-$f" 2>&1 | tail -1 >> "$OUT/push.txt"
+done
+note "files in the second app's folder: $(adb shell ls "$BIZ" 2>/dev/null | wc -l)"
+
 adb install -r "$APK" 2>&1 | tail -1 | tee -a "$OUT/summary.txt"
 adb logcat -c
 adb shell am start -W -n "$PKG/.MainActivity" > /dev/null
@@ -98,15 +106,19 @@ sleep 5
 shot 04_after_allow
 
 # First run with both apps offered: the second picker opens straight after the
-# first. Skip it with Back, which leaves the first source connected.
+# first. Connect it too, so Home opens on the All view.
 if has_text 'use this folder'; then
   note "SECOND PICKER OPENED AFTER THE FIRST"
   shot 04b_second_picker
-  adb shell input keyevent KEYCODE_BACK
-  sleep 4
+  tap_text 'use this folder'
+  sleep 3
+  shot 04c_second_use_folder
+  tap_text '^allow$'
+  sleep 5
 else
   note "NO SECOND PICKER"
 fi
+shot 04d_home_all
 
 if has_text 'Photos|Videos'; then note "HOME REACHED"; else note "HOME NOT REACHED"; fi
 shot 05_home
