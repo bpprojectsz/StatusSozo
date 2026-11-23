@@ -1,0 +1,33 @@
+device: 13 (API 33), Physical size: 1080x2340
+media on the runner: 14 files
+/tmp/media/IMG-20261107-WA0001.jpg: 1 file pushed, 0 skipped. 64.4 MB/s (19995 bytes in 0.000s)
+/tmp/media/IMG-20261107-WA0002.jpg: 1 file pushed, 0 skipped. 75.4 MB/s (24455 bytes in 0.000s)
+/tmp/media/IMG-20261107-WA0003.jpg: 1 file pushed, 0 skipped. 63.3 MB/s (20270 bytes in 0.000s)
+total 448
+-rw-rw---- 1 u0_a163 media_rw 19995 2026-11-23 10:09 IMG-20261107-WA0001.jpg
+-rw-rw---- 1 u0_a163 media_rw 24455 2026-11-23 10:09 IMG-20261107-WA0002.jpg
+-rw-rw---- 1 u0_a163 media_rw 20270 2026-11-23 10:09 IMG-20261107-WA0003.jpg
+-rw-rw---- 1 u0_a163 media_rw 21450 2026-11-23 10:09 IMG-20261107-WA0004.jpg
+-rw-rw---- 1 u0_a163 media_rw 19866 2026-11-23 10:09 IMG-20261107-WA0005.jpg
+files in the status folder: 14
+mkdir: 'Business': Read-only file system
+files in the second app's folder: 0
+Success
+tapped '^Choose folder$' at 540 2015
+tapped 'use this folder' at 540 2208
+tapped '^allow$' at 870 1369
+SECOND PICKER OPENED AFTER THE FIRST
+tapped 'use this folder' at 540 2208
+tapped '^allow$' at 870 1369
+HOME REACHED
+frame timing:
+Total frames rendered: 38
+Janky frames: 17 (44.74%)
+Janky frames (legacy): 18 (47.37%)
+50th percentile: 65ms
+90th percentile: 150ms
+95th percentile: 150ms
+99th percentile: 150ms
+saved pictures: IMG-20261107-WA0006.jpg 
+RELAUNCH GOES STRAIGHT TO HOME
+no crash
