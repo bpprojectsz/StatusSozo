@@ -627,11 +627,12 @@ void main() {
       await tester.pump();
       await tester.pump();
       await tester.pump();
-      final Set<StatusSource> saved = rig.saved.saves
-          .map((StatusItem i) => i.source)
-          .toSet();
-      expect(rig.saved.saves, hasLength(5));
-      expect(saved, StatusSource.values.toSet());
+      expect(rig.saved.saveCalls, 5);
+      expect(rig.saved.savedNames, containsAll(<String>['b1.jpg', 'b2.jpg']));
+      expect(
+        rig.saved.savedNames.where((String n) => n.startsWith('p')),
+        hasLength(3),
+      );
       handle.dispose();
     });
 
