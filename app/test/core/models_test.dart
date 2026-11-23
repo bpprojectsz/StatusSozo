@@ -73,6 +73,19 @@ void main() {
     });
   });
 
+  group('AppSettings viewAll', () {
+    test('defaults to true, round trips, and tolerates garbage', () {
+      expect(AppSettings.defaults().viewAll, isTrue);
+      final AppSettings off = AppSettings.defaults().copyWith(viewAll: false);
+      expect(AppSettings.fromJson(off.toJson()).viewAll, isFalse);
+      expect(
+        AppSettings.fromJson(<String, Object?>{'viewAll': 'yes'}).viewAll,
+        isTrue,
+      );
+      expect(AppSettings.fromJson(<String, Object?>{}).viewAll, isTrue);
+    });
+  });
+
   group('StatusItem', () {
     const StatusItem item = StatusItem(
       uri: 'content://a/1',

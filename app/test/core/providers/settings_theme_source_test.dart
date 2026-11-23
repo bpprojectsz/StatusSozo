@@ -154,15 +154,45 @@ void main() {
       expect(source.value, StatusSource.standard);
     });
 
-    test('select notifies only on change', () async {
+    test('starts on All', () {
+      expect(source.showAll, isTrue);
+    });
+
+    test('select notifies only on change, and leaves All', () async {
       int notifications = 0;
       source.addListener(() => notifications++);
       await source.select(StatusSource.standard);
-      expect(notifications, 0);
-      await source.select(StatusSource.business);
+      expect(source.showAll, isFalse);
+      expect(notifications, 1);
+      await source.select(StatusSource.standard);
       expect(notifications, 1);
       await source.select(StatusSource.business);
+      expect(notifications, 2);
+      await source.select(StatusSource.business);
+      expect(notifications, 2);
+    });
+
+    test('selectAll notifies once, persists, and select leaves it again', () async {
+      await source.select(StatusSource.business);
+      int notifications = 0;
+      source.addListener(() => notifications++);
+      await source.selectAll();
+      expect(source.showAll, isTrue);
       expect(notifications, 1);
+      expect(store.stored.viewAll, isTrue);
+      await source.selectAll();
+      expect(notifications, 1);
+      await source.select(StatusSource.business);
+      expect(source.showAll, isFalse);
+      expect(store.stored.viewAll, isFalse);
+      expect(notifications, 2);
+    });
+
+    test('selectAll keeps the last single source', () async {
+      await source.select(StatusSource.business);
+      await source.selectAll();
+      expect(source.value, StatusSource.business);
+      expect(store.stored.lastSource, StatusSource.business);
     });
 
     test('select persists', () async {
@@ -175,6 +205,14 @@ void main() {
         (AppSettings s) => s.copyWith(lastSource: StatusSource.business),
       );
       expect(source.value, StatusSource.business);
+    });
+
+    test('follows viewAll changes made to settings', () async {
+      int notifications = 0;
+      source.addListener(() => notifications++);
+      await settings.update((AppSettings s) => s.copyWith(viewAll: false));
+      expect(source.showAll, isFalse);
+      expect(notifications, 1);
     });
   });
 }

@@ -64,6 +64,31 @@ void main() {
 
   int tiles() => find.byType(StatusTile).evaluate().length;
 
+  /// Standard (3 photos, 2 videos) and Business (2 photos, 1 video) connected.
+  Future<void> primeBoth(WidgetTester tester) async {
+    rig.status.itemsBySource[StatusSource.business] = <StatusItem>[
+      statusItem('b1.jpg', modifiedMs: 450),
+      statusItem('b2.jpg', modifiedMs: 150),
+      statusItem('bv.mp4', mime: 'video/mp4', modifiedMs: 60),
+    ];
+    await rig.primeIn(
+      tester,
+      sources: <StatusSource>[StatusSource.standard, StatusSource.business],
+    );
+  }
+
+  List<StatusTile> tileWidgets(WidgetTester tester) => tester
+      .widgetList<StatusTile>(find.byType(StatusTile))
+      .toList();
+
+  List<int?> segmentCounts(WidgetTester tester) => tester
+      .widget<SegmentedTabs<StatusSource?>>(
+        find.byType(SegmentedTabs<StatusSource?>),
+      )
+      .segments
+      .map((SegmentItem<StatusSource?> s) => s.count)
+      .toList();
+
   group('loaded list', () {
     testScreen('renders the photos from the fakes', (
       WidgetTester tester,
@@ -385,12 +410,9 @@ void main() {
     testScreen('with both connected a selector replaces the chip', (
       WidgetTester tester,
     ) async {
-      await rig.primeIn(
-        tester,
-        sources: <StatusSource>[StatusSource.standard, StatusSource.business],
-      );
+      await primeBoth(tester);
       await pumpHome(tester);
-      expect(find.byType(SegmentedTabs<StatusSource>), findsOneWidget);
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsOneWidget);
       expect(find.byType(AppChip), findsNothing);
       await tester.tap(find.text('Business'));
       await tester.pumpAndSettle();
@@ -402,7 +424,7 @@ void main() {
       WidgetTester tester,
     ) async {
       await primeAndPump(tester);
-      expect(find.byType(SegmentedTabs<StatusSource>), findsNothing);
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsNothing);
       expect(find.byType(AppChip), findsOneWidget);
     });
 
@@ -467,5 +489,211 @@ void main() {
       await tester.pump(const Duration(seconds: 2));
       expect(find.byType(AppLoadingIndicator), findsNothing);
     });
+  });
+
+  group('the All view', () {
+    testScreen('is the default with both connected and shows both apps together', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      expect(rig.services.source.showAll, isTrue);
+      // Photos tab: 3 standard + 2 business.
+      expect(tiles(), 5);
+      expect(
+        tileWidgets(tester).map((StatusTile t) => (t.media as StatusItem).source).toSet(),
+        StatusSource.values.toSet(),
+      );
+    });
+
+    testScreen('the selector has All, Standard and Business, each with its count', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      final SegmentedTabs<StatusSource?> tabs = tester
+          .widget<SegmentedTabs<StatusSource?>>(
+            find.byType(SegmentedTabs<StatusSource?>),
+          );
+      expect(
+        tabs.segments.map((SegmentItem<StatusSource?> s) => s.value),
+        <StatusSource?>[null, StatusSource.standard, StatusSource.business],
+      );
+      expect(tabs.value, isNull);
+      // 8 items together, 5 in Standard, 3 in Business: no switching needed.
+      expect(segmentCounts(tester), <int?>[8, 5, 3]);
+    });
+
+    testScreen('every tile carries its source in the All view only', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      expect(
+        tileWidgets(tester).every((StatusTile t) => t.sourceMark != null),
+        isTrue,
+      );
+      await tester.tap(find.text('Standard'));
+      await tester.pumpAndSettle();
+      expect(tiles(), 3);
+      expect(
+        tileWidgets(tester).every((StatusTile t) => t.sourceMark == null),
+        isTrue,
+      );
+    });
+
+    testScreen('Photos and Videos counts follow the chosen view', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await primeBoth(tester);
+      await pumpHome(tester);
+      expect(find.bySemanticsLabel('Photos, 5 items'), findsOneWidget);
+      expect(find.bySemanticsLabel('Videos, 3 items'), findsOneWidget);
+      await tester.tap(find.text('Business'));
+      await tester.pumpAndSettle();
+      expect(find.bySemanticsLabel('Photos, 2 items'), findsOneWidget);
+      expect(find.bySemanticsLabel('Videos, 1 item'), findsOneWidget);
+      handle.dispose();
+    });
+
+    testScreen('choosing Business shows only Business, and All brings both back', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      await tester.tap(find.text('Business'));
+      await tester.pumpAndSettle();
+      expect(rig.services.source.showAll, isFalse);
+      expect(rig.services.source.value, StatusSource.business);
+      expect(tiles(), 2);
+      await tester.tap(find.text('All'));
+      await tester.pumpAndSettle();
+      expect(rig.services.source.showAll, isTrue);
+      expect(tiles(), 5);
+    });
+
+    testScreen('switching is instant: no new listing is made', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      final int before = rig.status.listCalls;
+      await tester.tap(find.text('Business'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('All'));
+      await tester.pumpAndSettle();
+      expect(rig.status.listCalls, before);
+    });
+
+    testScreen('newest first across both apps', (WidgetTester tester) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      final List<String> names = tileWidgets(tester)
+          .map((StatusTile t) => (t.media as StatusItem).name)
+          .toList();
+      // b1 (450) is the newest photo of all; p3 (100) the oldest photo.
+      expect(names.first, 'b1.jpg');
+      expect(names.last, isNot('b1.jpg'));
+    });
+
+    testScreen('switching view leaves selection mode', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      await tester.longPress(find.byType(StatusTile).first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(rig.services.homeSelection.value.active, isTrue);
+      await tester.tap(find.text('Business'));
+      await tester.pumpAndSettle();
+      expect(rig.services.homeSelection.value.active, isFalse);
+    });
+
+    testScreen('select all and save work across both apps', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await primeBoth(tester);
+      await pumpHome(tester);
+      await tester.longPress(find.byType(StatusTile).first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.bySemanticsLabel('Select all'));
+      await tester.pump();
+      expect(find.text('5 selected'), findsOneWidget);
+      await tester.tap(find.text('Save 5'));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      final Set<StatusSource> saved = rig.saved.saves
+          .map((StatusItem i) => i.source)
+          .toSet();
+      expect(rig.saved.saves, hasLength(5));
+      expect(saved, StatusSource.values.toSet());
+      handle.dispose();
+    });
+
+    testScreen('one source needing access again shows a warning chip, not a blocked screen', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      rig.status.lostAccess.add(StatusSource.business);
+      await rig.run(tester, () => rig.services.folderAccess.verifyAll());
+      await pumpHome(tester);
+      expect(rig.services.folderAccess.connectedSources, <StatusSource>[
+        StatusSource.standard,
+      ]);
+      // Standard keeps showing, with a chip for Business.
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsNothing);
+      expect(tiles(), 3);
+      expect(find.widgetWithText(AppChip, 'Business'), findsOneWidget);
+      await tester.tap(find.widgetWithText(AppChip, 'Business'));
+      await tester.pumpAndSettle();
+      expect(find.text('Choose the folder again'), findsOneWidget);
+    });
+
+    testScreen('connecting the second app moves Home to the All view', (
+      WidgetTester tester,
+    ) async {
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsNothing);
+      await rig.run(
+        tester,
+        () => rig.services.folderAccess.connect(StatusSource.business),
+      );
+      await tester.pumpAndSettle();
+      expect(rig.services.source.showAll, isTrue);
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsOneWidget);
+    });
+
+    testScreen('disconnecting one app falls back to the other', (
+      WidgetTester tester,
+    ) async {
+      await primeBoth(tester);
+      await pumpHome(tester);
+      await rig.run(
+        tester,
+        () => rig.services.folderAccess.disconnect(StatusSource.business),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(SegmentedTabs<StatusSource?>), findsNothing);
+      expect(rig.services.folderAccess.connectedSources, <StatusSource>[
+        StatusSource.standard,
+      ]);
+      expect(tiles(), 3);
+    });
+
+    for (final TextDirection direction in TextDirection.values) {
+      testScreen('lays out in ${direction.name} at double text size', (
+        WidgetTester tester,
+      ) async {
+        await primeBoth(tester);
+        await pumpHome(tester, direction: direction, scale: 2);
+        expect(tester.takeException(), isNull);
+      });
+    }
   });
 }

@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:statussozo/core/contracts/thumbnail_source.dart';
 import 'package:statussozo/core/models/status_item.dart';
+import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/models/viewable_media.dart';
 import 'package:statussozo/core/result.dart';
 import 'package:statussozo/design/design.dart';
@@ -158,6 +159,7 @@ void main() {
       bool selected = false,
       bool selectionMode = false,
       bool saved = false,
+      StatusSource? sourceMark,
       VoidCallback? onTap,
       VoidCallback? onLongPress,
       TextDirection direction = TextDirection.ltr,
@@ -170,6 +172,7 @@ void main() {
             selected: selected,
             selectionMode: selectionMode,
             saved: saved,
+            sourceMark: sourceMark,
             onTap: onTap,
             onLongPress: onLongPress,
           ),
@@ -177,6 +180,34 @@ void main() {
         direction: direction,
       );
     }
+
+    testWidgets('no source badge unless asked for', (WidgetTester tester) async {
+      await tester.pumpWidget(tile());
+      expect(find.text('S'), findsNothing);
+      expect(find.text('B'), findsNothing);
+    });
+
+    testWidgets('a source badge shows the first letter of the source name', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(tile(sourceMark: StatusSource.business));
+      expect(find.text('B'), findsOneWidget);
+      await tester.pumpWidget(tile(sourceMark: StatusSource.standard));
+      expect(find.text('S'), findsOneWidget);
+    });
+
+    testWidgets('the source is part of the semantics label', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await tester.pumpWidget(tile(sourceMark: StatusSource.business));
+      expect(find.bySemanticsLabel('Photo, Business'), findsOneWidget);
+      await tester.pumpWidget(
+        tile(sourceMark: StatusSource.standard, saved: true),
+      );
+      expect(find.bySemanticsLabel('Photo, saved, Standard'), findsOneWidget);
+      handle.dispose();
+    });
 
     testWidgets('is square', (WidgetTester tester) async {
       await tester.pumpWidget(tile());
