@@ -1,0 +1,7 @@
+Total frames rendered: 23
+Janky frames: 11 (47.83%)
+Janky frames (legacy): 10 (43.48%)
+50th percentile: 30ms
+90th percentile: 133ms
+95th percentile: 150ms
+99th percentile: 200ms
