@@ -154,3 +154,12 @@ Play account type and creation date; AdMob publisher ID; his "build" go-ahead; r
 - Spanish uses the Latin American set. Portuguese stays Brazilian wording (a European set was offered, no answer yet).
 - homeEmptyMessage keeps "Open its Status tab" (option C). Checked 19 Nov 2026: current WhatsApp calls the tab Updates and is still changing it; the wording may be out of date for some users. Same phrase is in website/index.html, website/support.html and store_submission/ASO_METADATA.md.
 - Japanese keeps ソース for "source" (Korean uses 출처); offered 取得元, no answer yet.
+
+
+## b21 (owner's three requests after the first phone test)
+- Viewer: only the status bar is hidden, the navigation bar stays, so the banner sits above the buttons like Home (`SystemUiMode.manual`, overlays: bottom).
+- First run: the app asks Android which of the two apps are installed (package names in the manifest `<queries>`, no permission). The access screen lists them with a Not connected / Connected chip; Choose folder (or tapping a row) connects one and opens the next picker straight away (`FolderAccessProvider.connectInOrder`, `holdSetup` keeps the access screen up). If nothing is detected, or detection fails, both are offered. Cancelling the second picker keeps the first, with no message.
+- Home: an All view is the default when two sources are connected. The selector reads All / Standard / Business with a count on each. `StatusListProvider` now lists every connected source at once and merges them newest first (`StatusItem.source`); a failing source is recorded in `errors` and the other still shows; the whole list is an error only when every source fails. Each tile shows the first letter of its source name in the All view, and its accessibility label names the source. A source that needs access again while the other shows gets a warning chip.
+- New strings: sourceAll, tileLabelWithSource (11 languages).
+- Emulator (API 33 and 34, commit 25ca3cd): the second picker opened by itself, both sources connected, Home opened on All (All 19, Standard 14, Business 5), the viewer banner sits above the gesture bar, a test interstitial showed after a photo save in the viewer.
+- Known limit, not changed: duplicate detection (the Saved badge and the "already saved" skip) still goes by file name only. Two different files with the same name from the two apps would be treated as one.
