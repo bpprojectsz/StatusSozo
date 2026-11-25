@@ -711,8 +711,9 @@ void main() {
       final List<NavIconButton> chips = tester
           .widgetList<NavIconButton>(find.byType(NavIconButton))
           .toList();
+      // A fifth chip, Share, belongs to the hidden selection bar.
       expect(
-        chips.map((NavIconButton c) => c.semanticLabel).toList(),
+        chips.take(4).map((NavIconButton c) => c.semanticLabel).toList(),
         <String>['Theme', 'Language', 'Saved', 'Settings'],
       );
       handle.dispose();
