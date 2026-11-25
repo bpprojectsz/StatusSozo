@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:statussozo/app/app_scope.dart';
 import 'package:statussozo/core/app_config.dart';
 import 'package:statussozo/core/errors/app_error.dart';
+import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
@@ -30,6 +31,8 @@ import 'package:statussozo/widgets/primitives/loading_indicator.dart';
 import 'package:statussozo/widgets/primitives/nav_icon_button.dart';
 import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 import 'package:statussozo/widgets/sheets/app_sheet.dart';
+import 'package:statussozo/widgets/sheets/language_sheet.dart';
+import 'package:statussozo/widgets/sheets/theme_sheet.dart';
 
 enum _MediaTab { photos, videos }
 
@@ -360,6 +363,30 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             : AppNavBar.home(
                 actions: <Widget>[
+                  NavIconButton(
+                    icon: AppIcons.theme,
+                    semanticLabel: l10n.settingsTheme,
+                    onPressed: () => unawaited(
+                      showThemeSheet(
+                        context,
+                        current: services.theme.value,
+                        onSelected: (ThemePreference next) =>
+                            unawaited(services.theme.setPreference(next)),
+                      ),
+                    ),
+                  ),
+                  NavIconButton(
+                    icon: AppIcons.language,
+                    semanticLabel: l10n.settingsLanguage,
+                    onPressed: () => unawaited(
+                      showLanguageSheet(
+                        context,
+                        current: services.locale.value,
+                        onSelected: (String? next) =>
+                            unawaited(services.locale.setLanguage(next)),
+                      ),
+                    ),
+                  ),
                   NavIconButton(
                     icon: AppIcons.saved,
                     semanticLabel: l10n.navSaved,

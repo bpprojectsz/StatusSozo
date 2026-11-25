@@ -5,16 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:statussozo/core/errors/app_error.dart';
+import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/models/status_item.dart';
 import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
 import 'package:statussozo/screens/home_screen.dart';
+import 'package:statussozo/screens/saved_screen.dart';
 import 'package:statussozo/widgets/icons/app_icons.dart';
 import 'package:statussozo/widgets/media/selection_bar.dart';
 import 'package:statussozo/widgets/media/status_tile.dart';
 import 'package:statussozo/widgets/primitives/app_chip.dart';
 import 'package:statussozo/widgets/primitives/loading_indicator.dart';
+import 'package:statussozo/widgets/primitives/nav_icon_button.dart';
 import 'package:statussozo/widgets/primitives/segmented_tabs.dart';
 
 import '../fakes/fakes.dart';
@@ -695,6 +698,98 @@ void main() {
         await pumpHome(tester, direction: direction, scale: 2);
         expect(tester.takeException(), isNull);
       });
+    }
+  });
+
+  group('the header', () {
+    testScreen('has Theme, Language, Saved and Settings chips in that order', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      final List<NavIconButton> chips = tester
+          .widgetList<NavIconButton>(find.byType(NavIconButton))
+          .toList();
+      expect(
+        chips.map((NavIconButton c) => c.semanticLabel).toList(),
+        <String>['Theme', 'Language', 'Saved', 'Settings'],
+      );
+      handle.dispose();
+    });
+
+    testScreen('Theme opens a sheet with the three choices and applies one', (
+      WidgetTester tester,
+    ) async {
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      await tester.tap(find.byType(NavIconButton).at(0));
+      await tester.pumpAndSettle();
+      expect(find.text('System'), findsOneWidget);
+      expect(find.text('Light'), findsOneWidget);
+      expect(find.text('Dark'), findsOneWidget);
+      await tester.tap(find.text('Dark'));
+      await tester.pumpAndSettle();
+      expect(rig.services.theme.value, ThemePreference.dark);
+      expect(find.text('Dark'), findsNothing);
+    });
+
+    testScreen('Language opens the language sheet and applies one', (
+      WidgetTester tester,
+    ) async {
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      await tester.tap(find.byType(NavIconButton).at(1));
+      await tester.pumpAndSettle();
+      expect(find.text('System default'), findsOneWidget);
+      await tester.tap(find.text('Deutsch'));
+      await tester.pumpAndSettle();
+      expect(rig.services.locale.value, 'de');
+    });
+
+    testScreen('Saved and Settings still open their screens', (
+      WidgetTester tester,
+    ) async {
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      await tester.tap(find.byType(NavIconButton).at(2));
+      await tester.pumpAndSettle();
+      expect(find.byType(SavedScreen), findsOneWidget);
+    });
+
+    testScreen('selection mode replaces the header chips', (
+      WidgetTester tester,
+    ) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await rig.primeIn(tester);
+      await pumpHome(tester);
+      await tester.longPress(find.byType(StatusTile).first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.bySemanticsLabel('Theme'), findsNothing);
+      expect(find.bySemanticsLabel('Language'), findsNothing);
+      handle.dispose();
+    });
+
+    for (final TextDirection direction in TextDirection.values) {
+      for (final double scale in <double>[1, 2]) {
+        testScreen('fits in ${direction.name} at ${scale}x on a 360 dp phone', (
+          WidgetTester tester,
+        ) async {
+          await rig.primeIn(tester);
+          useSurface(tester, width: 360);
+          await tester.pumpWidget(
+            screenApp(
+              rig,
+              const HomeScreen(),
+              direction: direction,
+              textScale: scale,
+            ),
+          );
+          await tester.pump(const Duration(milliseconds: 600));
+          expect(tester.takeException(), isNull);
+        });
+      }
     }
   });
 }
