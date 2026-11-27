@@ -13,6 +13,8 @@ import 'package:statussozo/screens/viewer_screen.dart';
 import 'package:statussozo/widgets/media/status_tile.dart';
 import 'package:statussozo/widgets/primitives/nav_icon_button.dart';
 import 'package:statussozo/widgets/primitives/primary_button.dart';
+import 'package:statussozo/widgets/sheets/app_sheet.dart';
+import 'package:statussozo/widgets/viewer/video_surface.dart';
 
 import '../fakes/fakes.dart';
 import '../widgets/harness.dart';
@@ -40,6 +42,10 @@ void main() {
   setUp(() {
     rig = Rig();
     platform = PlatformRecorder()..install();
+    // These are process-wide, so a test that ends mid-video or with a sheet
+    // open must not leak into the next one.
+    VideoSurface.debugReset();
+    SheetTracker.open = 0;
   });
   tearDown(() {
     platform.uninstall();

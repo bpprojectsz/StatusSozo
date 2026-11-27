@@ -389,8 +389,10 @@ void main() {
     test('a pending ad and the last time survive a restart', () async {
       await provider.start();
       await countUp(7);
+      expect(ads.showCalls, 1);
       clock = clock.add(const Duration(minutes: 1));
-      await countUp(3);
+      await countUp(9);
+      expect(pending(), isTrue);
       provider.dispose();
       final SettingsProvider again = SettingsProvider(store);
       await again.load();
