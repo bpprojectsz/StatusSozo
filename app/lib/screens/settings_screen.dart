@@ -9,6 +9,7 @@ import 'package:statussozo/core/models/status_source.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/folder_access_provider.dart';
 import 'package:statussozo/core/providers/toast_provider.dart';
+import 'package:statussozo/core/services/interstitial_policy.dart';
 import 'package:statussozo/design/design.dart';
 import 'package:statussozo/l10n/gen/app_localizations.dart';
 import 'package:statussozo/screens/access_screen.dart';
@@ -66,7 +67,13 @@ class SettingsScreen extends StatelessWidget {
     final AppColors colors = AppColors.of(context);
     final AppTextStyles styles = AppTextStyles.of(context);
 
-    return ScreenScaffold(
+    return PopScope(
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) {
+          unawaited(services.ads.onAction(AdAction.settingsClosed));
+        }
+      },
+      child: ScreenScaffold(
       navBar: AppNavBar.pushed(
         title: l10n.settingsTitle,
         onBack: () => Navigator.of(context).pop(),
@@ -412,6 +419,7 @@ class _FolderRow extends StatelessWidget {
       label: sourceName(l10n, source),
       trailing: chip,
       onPressed: () => _openSheet(context, status),
+      ),
     );
   }
 }
@@ -449,6 +457,7 @@ class _StorageRowState extends State<_StorageRow> {
     final services = AppScope.of(context);
     await services.share.clearCache();
     services.toasts.show(ToastCode.cacheCleared);
+    unawaited(services.ads.onAction(AdAction.clearTemporaryFiles));
     await _read();
   }
 

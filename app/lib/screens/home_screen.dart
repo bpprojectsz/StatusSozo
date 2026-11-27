@@ -169,12 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await services.save.save(items);
     final int saved = services.save.value.last?.saved.length ?? 0;
     if (saved > 0) {
-      unawaited(
-        services.ads.maybeShowInterstitial(
-          InterstitialTrigger.batchSave,
-          items: saved,
-        ),
-      );
+      unawaited(services.ads.onAction(AdAction.saveFromHome));
     }
   }
 
@@ -183,7 +178,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await services.share.share(_selectedItems());
     if (result.errorOrNull != null) {
       services.toasts.show(toastForShareError(result.errorOrNull));
+    } else {
+      unawaited(services.ads.onAction(AdAction.shareHome));
     }
+  }
+
+  void _openSaved() {
+    unawaited(AppScope.of(context).ads.onAction(AdAction.openSaved));
+    _push(const SavedScreen());
   }
 
   void _connect(StatusSource source) {
@@ -390,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   NavIconButton(
                     icon: AppIcons.saved,
                     semanticLabel: l10n.navSaved,
-                    onPressed: () => _push(const SavedScreen()),
+                    onPressed: _openSaved,
                   ),
                   NavIconButton(
                     icon: AppIcons.settings,

@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
+import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
+import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 
 import '../../fakes/fakes.dart';
@@ -8,24 +12,47 @@ import '../../fakes/fakes.dart';
 void main() {
   late FakeAdService ads;
   late FakeConsentService consent;
+  late FakeSettingsStore store;
+  late SettingsProvider settings;
   late DateTime clock;
   late AdProvider provider;
+
+  /// The pause before an ad. Tests open it by hand, or by default at once.
+  bool holdOpensAtOnce = true;
+  final List<Completer<void>> holds = <Completer<void>>[];
+
+  Future<void> hold(Duration pause) {
+    if (holdOpensAtOnce) {
+      return Future<void>.value();
+    }
+    final Completer<void> c = Completer<void>();
+    holds.add(c);
+    return c.future;
+  }
 
   AdProvider build() => AdProvider(
     ads: ads,
     consent: consent,
-    policy: InterstitialPolicy(nowMs: () => clock.millisecondsSinceEpoch),
+    policy: const InterstitialPolicy(),
+    settings: settings,
     now: () => clock,
+    delay: hold,
   );
 
-  setUp(() {
+  setUp(() async {
     ads = FakeAdService();
     consent = FakeConsentService();
+    store = FakeSettingsStore();
+    settings = SettingsProvider(store);
+    await settings.load();
     clock = DateTime(2026, 11, 3, 12);
+    holdOpensAtOnce = true;
+    holds.clear();
     provider = build();
   });
   tearDown(() {
     provider.dispose();
+    settings.dispose();
   });
 
   group('start', () {
@@ -196,94 +223,223 @@ void main() {
   });
 
   group('interstitials', () {
-    Future<bool> batch() => provider.maybeShowInterstitial(
-      InterstitialTrigger.batchSave,
-      items: 3,
-    );
+    Future<void> act([AdAction action = AdAction.viewerClosed]) async {
+      await provider.onAction(action);
+      await pumpEventQueue();
+    }
 
-    test('never before ads are ready', () async {
-      expect(await batch(), isFalse);
+    Future<void> countUp(int n, [AdAction action = AdAction.viewerClosed]) async {
+      for (int i = 0; i < n; i++) {
+        await act(action);
+      }
+    }
+
+    int tally() => settings.settings.adTally;
+    bool pending() => settings.settings.adPending;
+
+    test('nothing is counted before ads are ready', () async {
+      await countUp(10);
+      expect(tally(), 0);
       expect(ads.showCalls, 0);
     });
 
-    test('never without consent', () async {
+    test('nothing is counted without consent', () async {
       consent.outcome = const ConsentOutcome(
         canRequestAds: false,
         privacyOptionsRequired: false,
       );
       await provider.start();
-      expect(await batch(), isFalse);
+      await countUp(10);
+      expect(tally(), 0);
       expect(ads.showCalls, 0);
     });
 
-    test('shows when the rules allow', () async {
+    test('six actions count and show nothing', () async {
       await provider.start();
-      expect(await batch(), isTrue);
+      await countUp(6);
+      expect(tally(), 6);
+      expect(pending(), isFalse);
+      expect(ads.showCalls, 0);
+    });
+
+    test('the seventh shows an ad after the pause, and resets the tally', () async {
+      await provider.start();
+      await countUp(6);
+      holdOpensAtOnce = false;
+      await act();
+      expect(pending(), isTrue);
+      expect(tally(), 7);
+      // The pause has not ended: nothing yet.
+      expect(ads.showCalls, 0);
+      holds.single.complete();
+      await pumpEventQueue();
       expect(ads.showCalls, 1);
+      expect(tally(), 0);
+      expect(pending(), isFalse);
+      expect(settings.settings.adLastShownMs, clock.millisecondsSinceEpoch);
       expect(provider.lastInterstitialAt, clock);
     });
 
-    test('does not show when none is loaded yet and asks for one', () async {
-      ads.loadMakesReady = false;
+    test('two actions during one pause make one attempt', () async {
       await provider.start();
-      final int before = ads.loadCalls;
-      expect(await batch(), isFalse);
-      expect(ads.loadCalls, greaterThan(before));
+      await countUp(6);
+      holdOpensAtOnce = false;
+      await act();
+      await act();
+      await act();
+      expect(holds, hasLength(1));
+      holds.single.complete();
+      await pumpEventQueue();
+      expect(ads.showCalls, 1);
     });
 
-    test('a batch of one item does not qualify', () async {
+    test('inside the gap the ad stays pending and the tally stops', () async {
       await provider.start();
-      expect(
-        await provider.maybeShowInterstitial(
-          InterstitialTrigger.batchSave,
-          items: 1,
-        ),
-        isFalse,
-      );
-    });
-
-    test('keeps seven minutes between interstitials', () async {
-      await provider.start();
-      expect(await batch(), isTrue);
+      await countUp(7);
+      expect(ads.showCalls, 1);
       clock = clock.add(const Duration(minutes: 5));
-      expect(await batch(), isFalse);
-      clock = clock.add(const Duration(minutes: 3));
-      expect(await batch(), isTrue);
+      await countUp(12);
+      expect(ads.showCalls, 1);
+      expect(pending(), isTrue);
+      expect(tally(), 7);
     });
 
-    test('has no daily limit', () async {
+    test('the first action after the gap shows the pending ad', () async {
+      await provider.start();
+      await countUp(7);
+      clock = clock.add(const Duration(minutes: 5));
+      await countUp(8);
+      expect(ads.showCalls, 1);
+      clock = clock.add(const Duration(minutes: 2));
+      await act(AdAction.deleteSaved);
+      expect(ads.showCalls, 2);
+      expect(pending(), isFalse);
+      expect(tally(), 0);
+    });
+
+    test('swiping counts and never shows the ad', () async {
+      await provider.start();
+      await countUp(7, AdAction.viewerSwipe);
+      expect(tally(), 7);
+      expect(pending(), isTrue);
+      expect(ads.showCalls, 0);
+      await act(AdAction.videoEnded);
+      expect(ads.showCalls, 1);
+    });
+
+    test('there is no daily limit', () async {
       await provider.start();
       for (int i = 0; i < 40; i++) {
         clock = clock.add(const Duration(minutes: 8));
-        expect(await batch(), isTrue, reason: 'ad ${i + 1}');
+        await countUp(7);
+        expect(ads.showCalls, i + 1, reason: 'ad ${i + 1}');
       }
     });
 
-    test('a failed show records nothing', () async {
+    test('with no ad loaded it asks for one and waits a minute before trying again', () async {
+      ads.loadMakesReady = false;
+      await provider.start();
+      final int loadsAtStart = ads.loadCalls;
+      await countUp(7);
+      expect(ads.showCalls, 0);
+      expect(ads.loadCalls, greaterThan(loadsAtStart));
+      expect(pending(), isTrue);
+      final int loadsAfterFail = ads.loadCalls;
+      clock = clock.add(const Duration(seconds: 30));
+      await act();
+      expect(ads.loadCalls, loadsAfterFail);
+      clock = clock.add(const Duration(seconds: 31));
+      await act();
+      expect(ads.loadCalls, greaterThan(loadsAfterFail));
+    });
+
+    test('an ad that fails to show keeps everything pending', () async {
       await provider.start();
       ads.showResult = false;
-      expect(await batch(), isFalse);
+      await countUp(7);
+      expect(ads.showCalls, 1);
+      expect(pending(), isTrue);
+      expect(tally(), 7);
       expect(provider.lastInterstitialAt, isNull);
+      // Not again within a minute.
+      ads.loadMakesReady = true;
+      await act();
+      expect(ads.showCalls, 1);
     });
 
-    test('every fifth viewer close qualifies', () async {
+    test('the tally survives a restart', () async {
       await provider.start();
-      for (int i = 1; i <= 4; i++) {
-        expect(
-          await provider.maybeShowInterstitial(InterstitialTrigger.viewerClose),
-          isFalse,
-        );
-      }
-      expect(
-        await provider.maybeShowInterstitial(InterstitialTrigger.viewerClose),
-        isTrue,
+      await countUp(5);
+      provider.dispose();
+      final SettingsProvider again = SettingsProvider(store);
+      await again.load();
+      provider = AdProvider(
+        ads: ads,
+        consent: consent,
+        policy: const InterstitialPolicy(),
+        settings: again,
+        now: () => clock,
+        delay: hold,
       );
+      await provider.start();
+      await countUp(2);
+      expect(ads.showCalls, 1);
+      again.dispose();
+    });
+
+    test('a pending ad and the last time survive a restart', () async {
+      await provider.start();
+      await countUp(7);
+      clock = clock.add(const Duration(minutes: 1));
+      await countUp(3);
+      provider.dispose();
+      final SettingsProvider again = SettingsProvider(store);
+      await again.load();
+      expect(again.settings.adPending, isTrue);
+      expect(again.settings.adLastShownMs, isNotNull);
+      again.dispose();
+    });
+
+    test('a guard that says no keeps the ad pending until the next action', () async {
+      await provider.start();
+      bool videoPlaying = true;
+      provider.interruptionGuards.add(() => !videoPlaying);
+      await countUp(7);
+      expect(ads.showCalls, 0);
+      expect(pending(), isTrue);
+      videoPlaying = false;
+      await act();
+      expect(ads.showCalls, 1);
+    });
+
+    test('guards are checked after the pause, not before', () async {
+      await provider.start();
+      await countUp(6);
+      bool sheetOpen = false;
+      provider.interruptionGuards.add(() => !sheetOpen);
+      holdOpensAtOnce = false;
+      await act();
+      sheetOpen = true;
+      holds.single.complete();
+      await pumpEventQueue();
+      expect(ads.showCalls, 0);
+      expect(pending(), isTrue);
+    });
+
+    test('never while the app is not in front', () async {
+      await provider.start();
+      provider.setForeground(foreground: false);
+      await countUp(7);
+      expect(ads.showCalls, 0);
+      provider.setForeground(foreground: true);
+      await act();
+      expect(ads.showCalls, 1);
     });
 
     test('loads the next interstitial after one is shown', () async {
       await provider.start();
       final int before = ads.loadCalls;
-      await batch();
+      await countUp(7);
       expect(ads.loadCalls, greaterThan(before));
     });
   });

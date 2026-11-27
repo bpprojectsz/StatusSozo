@@ -88,6 +88,9 @@ class _SavedScreenState extends State<SavedScreen> {
   Future<void> _share() async {
     final services = AppScope.of(context);
     final result = await services.share.share(_selected());
+    if (result.errorOrNull == null) {
+      unawaited(services.ads.onAction(AdAction.shareSaved));
+    }
     if (result.errorOrNull != null) {
       services.toasts.show(toastForShareError(result.errorOrNull));
     }
@@ -115,12 +118,7 @@ class _SavedScreenState extends State<SavedScreen> {
     services.savedSelection.clear();
     if (outcome.deleted > 0) {
       services.toasts.show(ToastCode.deleted, count: outcome.deleted);
-      unawaited(
-        services.ads.maybeShowInterstitial(
-          InterstitialTrigger.savedDelete,
-          items: outcome.deleted,
-        ),
-      );
+      unawaited(services.ads.onAction(AdAction.deleteSaved));
     }
     if (outcome.failed > 0) {
       services.toasts.show(ToastCode.deleteFailed);
@@ -199,6 +197,8 @@ class _SavedScreenState extends State<SavedScreen> {
           onPopInvokedWithResult: (bool didPop, Object? result) {
             if (!didPop) {
               services.savedSelection.clear();
+            } else {
+              unawaited(services.ads.onAction(AdAction.savedClosed));
             }
           },
           child: ScreenScaffold(

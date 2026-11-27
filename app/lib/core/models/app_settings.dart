@@ -22,6 +22,9 @@ class AppSettings {
     this.reviewAskCount = 0,
     this.reviewLastAskedMs,
     this.viewAll = true,
+    this.adTally = 0,
+    this.adPending = false,
+    this.adLastShownMs,
   }) : grants = Map<StatusSource, FolderGrant>.unmodifiable(grants);
 
   /// Tolerant decoding: unknown enum values fall back to defaults and bad
@@ -82,6 +85,11 @@ class AppSettings {
           (json['reviewAsked'] == true ? 1 : 0),
       reviewLastAskedMs: tryReadInt(json, 'reviewLastAskedMs'),
       viewAll: json['viewAll'] is bool ? json['viewAll']! as bool : true,
+      adTally: (tryReadInt(json, 'adTally') ?? 0).clamp(0, 1000000),
+      adPending: json['adPending'] is bool
+          ? json['adPending']! as bool
+          : false,
+      adLastShownMs: tryReadInt(json, 'adLastShownMs'),
     );
   }
 
@@ -125,6 +133,15 @@ class AppSettings {
   /// Home shows every connected source together instead of one at a time.
   final bool viewAll;
 
+  /// Counted actions since the last full-screen ad (the single app-wide tally).
+  final int adTally;
+
+  /// The tally reached its target and an ad is waiting for its turn.
+  final bool adPending;
+
+  /// When the last full-screen ad was shown (epoch milliseconds), or null.
+  final int? adLastShownMs;
+
   /// Copies with changes. Pass [clearLanguage] to reset [languageCode] to null.
   AppSettings copyWith({
     int? schemaVersion,
@@ -139,6 +156,9 @@ class AppSettings {
     int? reviewAskCount,
     int? reviewLastAskedMs,
     bool? viewAll,
+    int? adTally,
+    bool? adPending,
+    int? adLastShownMs,
   }) {
     return AppSettings(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -152,6 +172,9 @@ class AppSettings {
       reviewAskCount: reviewAskCount ?? this.reviewAskCount,
       reviewLastAskedMs: reviewLastAskedMs ?? this.reviewLastAskedMs,
       viewAll: viewAll ?? this.viewAll,
+      adTally: adTally ?? this.adTally,
+      adPending: adPending ?? this.adPending,
+      adLastShownMs: adLastShownMs ?? this.adLastShownMs,
     );
   }
 
@@ -170,6 +193,9 @@ class AppSettings {
     'reviewAskCount': reviewAskCount,
     'reviewLastAskedMs': reviewLastAskedMs,
     'viewAll': viewAll,
+    'adTally': adTally,
+    'adPending': adPending,
+    'adLastShownMs': adLastShownMs,
   };
 
   @override
@@ -185,6 +211,9 @@ class AppSettings {
       other.reviewAskCount == reviewAskCount &&
       other.reviewLastAskedMs == reviewLastAskedMs &&
       other.viewAll == viewAll &&
+      other.adTally == adTally &&
+      other.adPending == adPending &&
+      other.adLastShownMs == adLastShownMs &&
       mapEquals(other.grants, grants);
 
   @override
@@ -199,6 +228,9 @@ class AppSettings {
     reviewAskCount,
     reviewLastAskedMs,
     viewAll,
+    adTally,
+    adPending,
+    adLastShownMs,
     Object.hashAllUnordered(
       grants.entries.map(
         (MapEntry<StatusSource, FolderGrant> e) => Object.hash(e.key, e.value),

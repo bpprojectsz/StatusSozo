@@ -93,6 +93,11 @@ class _SheetMessage extends StatelessWidget {
   }
 }
 
+/// How many sheets are open right now. A full-screen ad never appears over one.
+abstract final class SheetTracker {
+  static int open = 0;
+}
+
 class _AppSheetRoute<T> extends PopupRoute<T> {
   _AppSheetRoute({
     required this.title,
@@ -113,6 +118,25 @@ class _AppSheetRoute<T> extends PopupRoute<T> {
   final Color _scrim;
   final String _dismissLabel;
   final bool _reduceMotion;
+  bool _counted = false;
+
+  @override
+  void install() {
+    super.install();
+    if (!_counted) {
+      _counted = true;
+      SheetTracker.open++;
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_counted) {
+      _counted = false;
+      SheetTracker.open--;
+    }
+    super.dispose();
+  }
 
   @override
   Color? get barrierColor => _scrim;

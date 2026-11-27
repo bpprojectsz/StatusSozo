@@ -32,6 +32,7 @@ class VideoSurface extends StatefulWidget {
     super.key,
     this.poster,
     this.onTap,
+    this.onEnded,
     this.controlsBuilder,
   });
 
@@ -40,7 +41,20 @@ class VideoSurface extends StatefulWidget {
   final bool active;
   final Widget? poster;
   final VoidCallback? onTap;
+
+  /// Called once each time the video plays to its end.
+  final VoidCallback? onEnded;
   final VideoControlsBuilder? controlsBuilder;
+
+  /// A video is loading or playing right now. A full-screen ad never appears
+  /// over it.
+  static bool get inProgress {
+    final VideoState? state = _VideoSurfaceState._current?._state;
+    if (state == null) {
+      return false;
+    }
+    return !state.hasError && !state.ended && (state.playing || !state.initialised);
+  }
 
   /// Forgets the surface that owns the live session. For tests only.
   @visibleForTesting
@@ -56,6 +70,7 @@ class _VideoSurfaceState extends State<VideoSurface> {
   VideoSession? _session;
   VideoState _state = const VideoState();
   int _generation = 0;
+  bool _endedFired = false;
 
   @override
   void initState() {
@@ -121,7 +136,14 @@ class _VideoSurfaceState extends State<VideoSurface> {
     if (session == null || !mounted) {
       return;
     }
-    setState(() => _state = session.state.value); // ui-local
+    final VideoState next = session.state.value;
+    setState(() => _state = next); // ui-local
+    if (next.ended && !_endedFired) {
+      _endedFired = true;
+      widget.onEnded?.call();
+    } else if (!next.ended) {
+      _endedFired = false;
+    }
   }
 
   /// Disposes the session. When called from another surface during a build,

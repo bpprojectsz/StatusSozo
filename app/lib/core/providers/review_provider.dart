@@ -36,6 +36,14 @@ class ReviewProvider {
   final DateTime Function() _now;
 
   bool _requesting = false;
+  DateTime? _lastRequestAt;
+
+  /// True when a review was requested within [span]. Used to keep a full-screen
+  /// ad away from the review dialog.
+  bool requestedWithin(Duration span) {
+    final DateTime? last = _lastRequestAt;
+    return last != null && _now().difference(last) < span;
+  }
 
   /// How long to wait after the [asks]th request before the next one.
   static Duration cooldownAfter(int asks) {
@@ -100,6 +108,7 @@ class ReviewProvider {
           reviewLastAskedMs: nowMs,
         ),
       );
+      _lastRequestAt = _now();
       await _service.requestReview();
     } on Object catch (error) {
       AppLog.warn('review', 'The review prompt failed', error);

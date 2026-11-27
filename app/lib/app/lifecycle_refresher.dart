@@ -30,6 +30,9 @@ class LifecycleRefresher with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Only "resumed" means the app is in front. Covered by another app (the
+    // share sheet, for one) or in the background, no ad may appear.
+    _services.ads.setForeground(foreground: state == AppLifecycleState.resumed);
     if (state == AppLifecycleState.resumed) {
       unawaited(_refresh());
     }

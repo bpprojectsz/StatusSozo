@@ -47,6 +47,8 @@ import 'package:statussozo/platform/system_haptics.dart';
 import 'package:statussozo/platform/ump_consent_service.dart';
 import 'package:statussozo/platform/url_link_launcher.dart';
 import 'package:statussozo/platform/video_player_session.dart';
+import 'package:statussozo/widgets/sheets/app_sheet.dart';
+import 'package:statussozo/widgets/viewer/video_surface.dart';
 
 /// The dependency container and wiring. This file (and the temporary spike) is
 /// the only place platform classes are constructed; everything else receives
@@ -173,9 +175,8 @@ class AppServices {
     final AdProvider ads = AdProvider(
       ads: adService,
       consent: consent,
-      policy: InterstitialPolicy(
-        nowMs: () => (now ?? DateTime.now)().millisecondsSinceEpoch,
-      ),
+      policy: const InterstitialPolicy(),
+      settings: settings,
       now: now,
     );
     final DateTime Function() clock = now ?? DateTime.now;
@@ -192,6 +193,13 @@ class AppServices {
             clock().difference(last) < AppConfig.reviewQuietAfterInterstitial;
       },
     );
+    // A full-screen ad never appears over a video, a sheet, or just after a
+    // review request.
+    ads.interruptionGuards.addAll(<bool Function()>[
+      () => !VideoSurface.inProgress,
+      () => SheetTracker.open == 0,
+      () => !review.requestedWithin(AppConfig.interstitialAfterReview),
+    ]);
     final AppServices services = AppServices._(
       statusRepository: statusRepository,
       savedRepository: savedRepository,

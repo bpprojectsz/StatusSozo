@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:statussozo/core/contracts/ad_service.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
+import 'package:statussozo/core/models/app_settings.dart';
+import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';
 
 /// Where ads stand for the whole app.
@@ -48,11 +50,15 @@ class AdProvider extends ValueNotifier<AdProviderState> {
     required AdService ads,
     required ConsentService consent,
     required InterstitialPolicy policy,
+    required SettingsProvider settings,
     DateTime Function()? now,
+    Future<void> Function(Duration pause)? delay,
   }) : _ads = ads,
        _consent = consent,
        _policy = policy,
+       _settings = settings,
        _now = now ?? DateTime.now,
+       _delay = delay ?? Future<void>.delayed,
        super(const AdProviderState(phase: AdsPhase.idle)) {
     addListener(_syncEnabled);
   }
@@ -60,7 +66,9 @@ class AdProvider extends ValueNotifier<AdProviderState> {
   final AdService _ads;
   final ConsentService _consent;
   final InterstitialPolicy _policy;
+  final SettingsProvider _settings;
   final DateTime Function() _now;
+  final Future<void> Function(Duration pause) _delay;
 
   bool _starting = false;
   bool _showing = false;
@@ -72,6 +80,21 @@ class AdProvider extends ValueNotifier<AdProviderState> {
   /// schedule another, so a broken consent step can never loop.
   bool _retryUsed = false;
   DateTime? _lastInterstitialAt;
+
+  bool _foreground = true;
+  bool _attemptScheduled = false;
+  int? _lastFailedMs;
+
+  /// Checks that must all say yes at the moment an ad would appear: no video
+  /// in progress, no sheet or dialog open, no review request just made. If one
+  /// says no, the ad stays pending and waits for the next action.
+  final List<bool Function()> interruptionGuards = <bool Function()>[];
+
+  /// The app is in front of the person (not in the background, not covered by
+  /// another app such as the share sheet).
+  void setForeground({required bool foreground}) {
+    _foreground = foreground;
+  }
 
   /// An interstitial is on screen right now.
   bool get showingInterstitial => _showing;
@@ -171,30 +194,92 @@ class AdProvider extends ValueNotifier<AdProviderState> {
     await _apply(await _consent.showPrivacyOptions());
   }
 
-  /// Shows an interstitial if the rules allow it. Returns whether one was
-  /// shown. Never throws.
-  Future<bool> maybeShowInterstitial(
-    InterstitialTrigger trigger, {
-    int items = 0,
-  }) async {
-    if (!enabled || _showing) {
-      return false;
+  InterstitialState get _state => InterstitialState(
+    tally: _settings.settings.adTally,
+    pending: _settings.settings.adPending,
+    lastShownMs: _settings.settings.adLastShownMs,
+  );
+
+  Future<void> _save(InterstitialState next) => _settings.update(
+    (AppSettings s) => s.copyWith(
+      adTally: next.tally,
+      adPending: next.pending,
+      // A reset to "never shown" cannot happen, so a null never overwrites.
+      adLastShownMs: next.lastShownMs,
+    ),
+  );
+
+  /// Counts one action toward the next full-screen ad. After the target the ad
+  /// is pending; it shows a short pause after the first action that may show
+  /// it, once the gap since the last ad has passed. Never throws, and does
+  /// nothing while ads are off.
+  Future<void> onAction(AdAction action) async {
+    if (!enabled) {
+      return;
     }
-    if (!_policy.allows(trigger, items: items)) {
-      return false;
+    final int nowMs = _now().millisecondsSinceEpoch;
+    final InterstitialState before = _state;
+    final AdDecision decision = _policy.onAction(
+      action,
+      before,
+      nowMs: nowMs,
+      lastFailedMs: _lastFailedMs,
+    );
+    if (decision.state != before) {
+      await _save(decision.state);
+    }
+    if (decision.attempt) {
+      _scheduleAttempt();
+    }
+  }
+
+  void _scheduleAttempt() {
+    if (_attemptScheduled) {
+      return;
+    }
+    _attemptScheduled = true;
+    unawaited(
+      _delay(_policy.hold).then((void _) async {
+        _attemptScheduled = false;
+        await _attempt();
+      }),
+    );
+  }
+
+  /// Everything is checked again after the pause, because the person may have
+  /// moved on (started a video, opened a sheet, left the app).
+  Future<void> _attempt() async {
+    if (!enabled || _showing || !_foreground) {
+      return;
+    }
+    final int nowMs = _now().millisecondsSinceEpoch;
+    final InterstitialState state = _state;
+    if (!state.pending || !_policy.gapPassed(state, nowMs)) {
+      return;
+    }
+    for (final bool Function() guard in interruptionGuards) {
+      if (!guard()) {
+        return;
+      }
     }
     if (!_ads.interstitialReady.value) {
+      // Nothing to show yet: load one, and do not try again for a minute.
+      _lastFailedMs = nowMs;
       unawaited(_ads.loadInterstitial());
-      return false;
+      return;
     }
     _showing = true;
     try {
       final bool shown = await _ads.showInterstitial();
       if (shown) {
+        _lastFailedMs = null;
         _lastInterstitialAt = _now();
-        _policy.markShown();
+        await _save(_policy.shown(_now().millisecondsSinceEpoch));
+      } else {
+        _lastFailedMs = _now().millisecondsSinceEpoch;
       }
-      return shown;
+    } on Object {
+      _lastFailedMs = _now().millisecondsSinceEpoch;
     } finally {
       _showing = false;
       unawaited(_ads.loadInterstitial());

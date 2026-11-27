@@ -63,9 +63,21 @@ abstract final class AppConfig {
   static const Duration adRetryDelay = Duration(seconds: 60);
 
   // Interstitial rules.
+  // One tally for the whole app: every counted action adds one. At this many
+  // an ad becomes pending, and it shows on the first action that may show it
+  // once the gap since the last ad has passed.
+  static const int actionsPerInterstitial = 7;
   static const Duration interstitialMinGap = Duration(minutes: 7);
-  static const int viewerClosesPerInterstitial = 5;
-  static const int batchSaveMinItems = 2;
+
+  /// A short pause between the action and the ad, so the result is seen first.
+  static const Duration interstitialHold = Duration(seconds: 2);
+
+  /// After an attempt that showed nothing (offline, no ad ready), the next
+  /// attempt waits at least this long.
+  static const Duration interstitialRetryAfterFailure = Duration(seconds: 60);
+
+  /// No interstitial this soon after a review request.
+  static const Duration interstitialAfterReview = Duration(seconds: 60);
 
   // Review prompt: the first request comes after this many saved items on this
   // many different days. After that only the wait counts: 30 days after the

@@ -95,11 +95,11 @@ class _ViewerScreenState extends State<ViewerScreen> {
 
   @override
   void dispose() {
-    // Every fifth close may show an interstitial. The viewer is gone by now,
-    // so a video can never be playing.
+    // Closing the viewer is a counted action. The ad, if it is due, waits a
+    // moment and checks again that no video is playing.
     final AdProvider? ads = _ads;
     if (ads != null) {
-      unawaited(ads.maybeShowInterstitial(InterstitialTrigger.viewerClose));
+      unawaited(ads.onAction(AdAction.viewerClosed));
     }
     _pager.dispose();
     unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
@@ -134,6 +134,11 @@ class _ViewerScreenState extends State<ViewerScreen> {
       _zoomed = false;
     });
     _prefetch(index);
+    // Swiping counts toward the tally but never shows the ad itself.
+    final AdProvider? ads = _ads;
+    if (ads != null) {
+      unawaited(ads.onAction(AdAction.viewerSwipe));
+    }
   }
 
   void _toggleOverlay() {
@@ -157,6 +162,8 @@ class _ViewerScreenState extends State<ViewerScreen> {
     );
     if (result.errorOrNull != null) {
       services.toasts.show(toastForShareError(result.errorOrNull));
+    } else {
+      unawaited(services.ads.onAction(AdAction.shareOne));
     }
   }
 
@@ -168,14 +175,9 @@ class _ViewerScreenState extends State<ViewerScreen> {
     }
     await services.save.save(<StatusItem>[item]);
     final int saved = services.save.value.last?.saved.length ?? 0;
-    // Never over a video: only a saved photo may be followed by an ad.
-    if (saved > 0 && !item.kind.isVideo) {
-      unawaited(
-        services.ads.maybeShowInterstitial(
-          InterstitialTrigger.viewerSave,
-          items: saved,
-        ),
-      );
+    // A saved video counts too; the ad itself waits until it is not playing.
+    if (saved > 0) {
+      unawaited(services.ads.onAction(AdAction.viewerSave));
     }
   }
 
@@ -208,6 +210,7 @@ class _ViewerScreenState extends State<ViewerScreen> {
       return;
     }
     services.toasts.show(ToastCode.deleted, count: 1);
+    unawaited(services.ads.onAction(AdAction.deleteViewer));
     if (_items.length == 1) {
       Navigator.of(context).pop();
       return;
@@ -223,15 +226,6 @@ class _ViewerScreenState extends State<ViewerScreen> {
       _pager.jumpToPage(_current);
     }
     _prefetch(_current);
-    // Never over a video: the item now showing must be a photo.
-    if (!_items[_current].kind.isVideo) {
-      unawaited(
-        services.ads.maybeShowInterstitial(
-          InterstitialTrigger.viewerDelete,
-          items: 1,
-        ),
-      );
-    }
   }
 
   @override
@@ -265,6 +259,9 @@ class _ViewerScreenState extends State<ViewerScreen> {
                   factory: services.videoFactory,
                   active: index == _current,
                   onTap: _toggleOverlay,
+                  onEnded: () => unawaited(
+                    services.ads.onAction(AdAction.videoEnded),
+                  ),
                   poster: MediaThumbnail(
                     media: media,
                     source: services.thumbnails,
