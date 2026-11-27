@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statussozo/core/contracts/consent_service.dart';
-import 'package:statussozo/core/models/app_settings.dart';
 import 'package:statussozo/core/providers/ad_provider.dart';
 import 'package:statussozo/core/providers/settings_provider.dart';
 import 'package:statussozo/core/services/interstitial_policy.dart';

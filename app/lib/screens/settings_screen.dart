@@ -339,6 +339,7 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
+      ),
     );
   }
 }
@@ -419,7 +420,6 @@ class _FolderRow extends StatelessWidget {
       label: sourceName(l10n, source),
       trailing: chip,
       onPressed: () => _openSheet(context, status),
-      ),
     );
   }
 }
